@@ -63,7 +63,7 @@ public class Person {
 			@Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam") @NotNull String surname,
 			@Pattern(regexp = "[0-9] {6} - [0-9] {5}", message = "Neatbilstošs personas kods") @NotNull @Size(min = 12, max = 12) String personcode,
 			User user) {
-		super();
+		
 		this.name = name;
 		this.surname = surname;
 		this.personcode = personcode;

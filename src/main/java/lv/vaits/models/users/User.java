@@ -49,7 +49,7 @@ public class User {
 	private Person person;
 
 	public User(@NotNull String password, @NotNull @Email String email, Person person) {
-		super();
+		
 		this.password = password;
 		this.email = email;
 		this.person = person;
