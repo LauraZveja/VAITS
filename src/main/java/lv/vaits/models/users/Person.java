@@ -44,6 +44,7 @@ public class Person {
 	@NotNull
 	@Size(min = 12, max = 12)
 	//TODO apdomāt un pievienot risinājumu ārzemju studentiem un jaunajiem LV personas kodiem
-	private String personCode;
+	@Column(name = "Personcode")
+	private String personcode;
 
 }
