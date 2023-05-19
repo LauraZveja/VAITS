@@ -4,6 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -46,5 +48,25 @@ public class Person {
 	//TODO apdomāt un pievienot risinājumu ārzemju studentiem un jaunajiem LV personas kodiem
 	@Column(name = "Personcode")
 	private String personcode;
+	
+	//TODO uztaisīt one to one saiti
+	
+	@OneToOne
+	@JoinColumn(name = "Idu")
+	private User user;
+
+	public Person(
+			@NotNull @Size(min = 3, max = 15) @NotNull @Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam") String name,
+			@Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam") @NotNull String surname,
+			@Pattern(regexp = "[0-9] {6} - [0-9] {5}", message = "Neatbilstošs personas kods") @NotNull @Size(min = 12, max = 12) String personcode,
+			User user) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.personcode = personcode;
+		this.user = user;
+	}
+	
+	
 
 }

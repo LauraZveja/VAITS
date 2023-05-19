@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -43,6 +44,16 @@ public class User {
 		this.email = email;
 	}
 	
+	//TODO uztaisīt one to one saiti 
+	@OneToOne(mappedBy = "user")
+	private Person person;
+
+	public User(@NotNull String password, @NotNull @Email String email, Person person) {
+		super();
+		this.password = password;
+		this.email = email;
+		this.person = person;
+	}
 	
 	
 
