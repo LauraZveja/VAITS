@@ -1,5 +1,8 @@
 package lv.vaits.models;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lv.vaits.models.users.Student;
 
 @Table(name = "course_table")
 @Entity
@@ -42,6 +46,19 @@ public class Course {
 	@Min(value = 1)
 	@Max(value = 20)
 	private int creditPoints;
+	
+	private Collection<Student> debtStudents = new ArrayList<>();
+
+	public Course(
+			@Size(min = 3, max = 25) @NotNull @Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam") String title,
+			@NotNull @Min(1) @Max(20) int creditPoints) {
+		super();
+		this.title = title;
+		this.creditPoints = creditPoints;
+		
+	}
+	
+	
 		
 
 }
