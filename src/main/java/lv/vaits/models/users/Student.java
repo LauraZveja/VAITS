@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -17,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lv.vaits.models.Course;
+import lv.vaits.models.Thesis;
 
 @Table(name = "student_table")
 @Entity
@@ -43,6 +45,9 @@ public class Student extends Person{
 	joinColumns = @JoinColumn(name = "Idc"),
 	inverseJoinColumns = @JoinColumn(name = "Ids"))
 	private Collection<Course> debtCourse = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "student")
+	private Collection<Thesis> thesis;
 
 	public Student(
 			@NotNull @Size(min = 3, max = 15) @NotNull @Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam") String name,
