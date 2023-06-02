@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.models.users.Student;
 
 @Table(name = "thesis_table")
@@ -23,7 +24,7 @@ import lv.vaits.models.users.Student;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
+//@ToString
 public class Thesis {
 
 	@Setter(value = AccessLevel.NONE)
@@ -65,5 +66,12 @@ public class Thesis {
 	@ManyToOne
 	@JoinColumn(name = "Ids")
 	private Student student;
+	
+	@ManyToOne
+	@JoinColumn(name = "Ida")
+	private AcademicStaff supervisor;
+	
+	//TODO izveidot saiti, ja nepieciešams, ar konsultantu, vērtētāju utt/
+	
 
 }
