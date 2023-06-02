@@ -1,6 +1,7 @@
 package lv.vaits.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import jakarta.persistence.Column;
@@ -9,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -72,6 +75,16 @@ public class Thesis {
 	private AcademicStaff supervisor;
 	
 	//TODO izveidot saiti, ja nepieciešams, ar konsultantu, vērtētāju utt/
+	@ManyToMany
+	@JoinTable(name = "thesis_reviewers", joinColumns = @JoinColumn(name = "Idt"),
+	inverseJoinColumns = @JoinColumn(name = "Ida"))
+	private Collection<AcademicStaff> reviewers = new ArrayList<>();
+	
+	public void addReviewer(AcademicStaff reviewer) {
+		if(!reviewers.contains(reviewer)) {
+			reviewers.add(reviewer);
+		}
+	}
 	
 
 }
