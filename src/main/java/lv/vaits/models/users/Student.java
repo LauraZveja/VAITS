@@ -60,6 +60,12 @@ public class Student extends Person{
 		this.financialDebt = financialDebt;
 	}
 	
+	public void addDebtCourse(Course course) {
+		if(!debtCourse.contains(course)) {
+			debtCourse.add(course);
+		}
+	}
+	
 	
 
 }

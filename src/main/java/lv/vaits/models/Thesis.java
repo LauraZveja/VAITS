@@ -85,6 +85,20 @@ public class Thesis {
 			reviewers.add(reviewer);
 		}
 	}
+
+	public Thesis(String titleLv, String titleEn, String aim, String tasks, Student student, AcademicStaff supervisor) {
+		
+		this.titleLv = titleLv;
+		this.titleEn = titleEn;
+		this.aim = aim;
+		this.tasks = tasks;
+		this.student = student;
+		this.supervisor = supervisor;
+		this.submitDateTime = LocalDateTime.now();
+		this.accStatus = AcceptanceStatus.SUBMITTED;
+	}
+	
+	
 	
 
 }
