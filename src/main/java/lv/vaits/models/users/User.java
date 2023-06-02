@@ -48,12 +48,6 @@ public class User {
 	@OneToOne(mappedBy = "user")
 	private Person person;
 
-	public User(@NotNull String password, @NotNull @Email String email, Person person) {
-		
-		this.password = password;
-		this.email = email;
-		this.person = person;
-	}
 	
 	
 

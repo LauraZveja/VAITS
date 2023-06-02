@@ -33,8 +33,8 @@ public class Student extends Person{
 	//TODO izveidot sasaisti ar Course klasi, ManyToMany
 	@Column(name = "MatriculaNo")
 	@NotNull
-	@Size(min = 8, max = 20)
-	@Pattern(regexp = "[0-9] {8,20}")
+	///@Size(min = 8, max = 20)
+	//@Pattern(regexp = "[0-9] {8,20}")
 	private String matriculaNo;
 	
 	@Column(name = "FinancialDebt")
@@ -42,18 +42,28 @@ public class Student extends Person{
 	
 	@ManyToMany
 	@JoinTable(name = "student_debt_course_table",
-	joinColumns = @JoinColumn(name = "Idc"),
-	inverseJoinColumns = @JoinColumn(name = "Ids"))
+	joinColumns = @JoinColumn(name = "Ids"),
+	inverseJoinColumns = @JoinColumn(name = "Idc"))
 	private Collection<Course> debtCourse = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "student")
 	private Collection<Thesis> thesis;
 
 	public Student(
-			@NotNull @Size(min = 3, max = 15) @NotNull @Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam") String name,
-			@Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam") @NotNull String surname,
-			@Pattern(regexp = "[0-9] {6} - [0-9] {5}", message = "Neatbilstošs personas kods") @NotNull @Size(min = 12, max = 12) String personcode,
-			User user, @NotNull @Size(min = 8, max = 20) @Pattern(regexp = "[0-9] {8,20}") String matriculaNo,
+			@NotNull 
+			//@Size(min = 3, max = 15) 
+			//@Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam") 
+			String name,
+			//@Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam") 
+			@NotNull 
+			String surname,
+			//@Pattern(regexp = "[0-9] {6} - [0-9] {5}", message = "Neatbilstošs personas kods") 
+			@NotNull 
+			//@Size(min = 12, max = 12) 
+			String personcode,
+			User user, 
+			//@NotNull @Size(min = 8, max = 20) @Pattern(regexp = "[0-9] {8,20}") 
+			String matriculaNo,
 			boolean financialDebt) {
 		super(name, surname, personcode, user);
 		this.matriculaNo = matriculaNo;

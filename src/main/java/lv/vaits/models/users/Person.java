@@ -1,6 +1,7 @@
 package lv.vaits.models.users;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,6 +23,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity
 public class Person {
 	
 	//TODO uzlikt Data JPA anotācijas
@@ -37,17 +39,17 @@ public class Person {
 	@Column(name = "Name")
 	@Size(min = 3, max =15)
 	@NotNull
-	@Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam")
+	//@Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam")
 	private String name;
 	
 	@Column(name = "Surname")
-	@Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam")
+	//@Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam")
 	@NotNull
 	private String surname;
 	
-	@Pattern(regexp = "[0-9] {6} - [0-9] {5}", message = "Neatbilstošs personas kods")
+	//@Pattern(regexp = "[0-9] {6} - [0-9] {5}", message = "Neatbilstošs personas kods")
 	@NotNull
-	@Size(min = 12, max = 12)
+	//@Size(min = 12, max = 12)
 	//TODO apdomāt un pievienot risinājumu ārzemju studentiem un jaunajiem LV personas kodiem
 	@Column(name = "Personcode")
 	private String personcode;

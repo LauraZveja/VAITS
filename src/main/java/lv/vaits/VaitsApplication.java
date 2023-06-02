@@ -5,12 +5,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import lv.vaits.models.Comment;
 import lv.vaits.models.Course;
 import lv.vaits.models.Thesis;
 import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.models.users.Degree;
 import lv.vaits.models.users.Student;
 import lv.vaits.models.users.User;
+import lv.vaits.repos.ICommentRepo;
 import lv.vaits.repos.ICourseRepo;
 import lv.vaits.repos.IThesisRepo;
 import lv.vaits.repos.users.IAcademicStaffRepo;
@@ -26,7 +28,7 @@ public class VaitsApplication {
 	}
 
 	@Bean
-	public CommandLineRunner testModelLayer(IUserRepo userRepo, IPersonRepo personRepo, IStudentRepo studentRepo, IAcademicStaffRepo staffRepo, ICourseRepo courseRepo, IThesisRepo thesisRepo) {
+	public CommandLineRunner testModelLayer(IUserRepo userRepo, IPersonRepo personRepo, IStudentRepo studentRepo, IAcademicStaffRepo staffRepo, ICourseRepo courseRepo, IThesisRepo thesisRepo, ICommentRepo commentRepo) {
 		return new CommandLineRunner() {
 			
 			@Override
@@ -40,7 +42,7 @@ public class VaitsApplication {
 				userRepo.save(us3);
 				userRepo.save(us4);
 				
-				Course c1 = new Course("Java", 4);
+				Course c1 = new Course("Javaa", 4);
 				Course c2 = new Course("Datastr", 4);
 				courseRepo.save(c1);
 				courseRepo.save(c2);
@@ -52,7 +54,7 @@ public class VaitsApplication {
 				staffRepo.save(ac2);
 				
 				Student s1 = new Student("Janis", "Berzins", "212121-212121", us3, "12345678", false);
-				Student s2 = new Student("Baiba", "Kalnina", "222121-222121", us3, "12245678", true);
+				Student s2 = new Student("Baiba", "Kalnina", "222121-222121", us4, "12245678", true);
 				
 				s2.addDebtCourse(c1);
 				s2.addDebtCourse(c2);
@@ -75,6 +77,11 @@ public class VaitsApplication {
 				personRepo.save(ac1);
 				personRepo.save(ac2);
 				
+				Comment com1 = new Comment("Neprecīzs nosaukums", ac2, th1);
+				Comment com2 = new Comment("Nepareizs mērķis", ac1, th2);
+				
+				commentRepo.save(com1);
+				commentRepo.save(com2);
 				
 				
 			}
