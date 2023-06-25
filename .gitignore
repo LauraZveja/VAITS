@@ -15,7 +15,6 @@ target/
 .mvn/
 mvnw
 mvnw.cmd
-/src/main/resources/application.properties
 
 ### IntelliJ IDEA ###
 .idea
