@@ -31,6 +31,7 @@ public class VaitsApplication {
 	public CommandLineRunner testModelLayer(IUserRepo userRepo, IPersonRepo personRepo, IStudentRepo studentRepo, IAcademicStaffRepo staffRepo, ICourseRepo courseRepo, IThesisRepo thesisRepo, ICommentRepo commentRepo) {
 		return new CommandLineRunner() {
 			
+			
 			@Override
 			public void run(String... args) throws Exception {
 				User us1 = new User("123", "s22zvejlaur@venta.lv");  //pasniedzejs
