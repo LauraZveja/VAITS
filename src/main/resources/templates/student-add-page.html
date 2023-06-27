@@ -1,0 +1,53 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<form action="#" th:action="@{/student/addNew}" th:object="${student}" method="post">
+	<table>
+		<tr>
+			<td>Name</td>
+			<td><input type="text" th:field="*{name}" /></td>
+			<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+			<tr />
+		<tr>
+			<td>Surname</td>
+			<td><input type="text" th:field="*{surname}" /></td>
+			<td th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></td>
+			<tr />
+		<tr>
+			<td>Personcode</td>
+			<td><input type="text" th:field="*{personcode}" /></td>
+			<td th:if="${#fields.hasErrors('personcode')}" th:errors="*{personcode}"></td>
+			<tr />
+		<tr>
+			<td>User</td>
+			<td>
+				<select th:field="*{user}">
+					<option th:each="user : ${allUsers}" th:value="${user.idu}" th:text="${user.idu}"></option>
+				</select>
+			</td>
+			<td th:if="${#fields.hasErrors('user')}" th:errors="*{user}"></td>
+		</tr>
+
+		<td>Matricula number</td>
+		<td><input type="text" th:field="*{matriculaNo}" /></td>
+		<td th:if="${#fields.hasErrors('matriculaNo')}" th:errors="*{matriculaNo}"></td>
+		<tr />
+		<tr>
+			<td>Student financial debt</td>
+			<td>
+				<input type="radio" th:field="*{financialDebt}" value="true" /> Yes
+				<input type="radio" th:field="*{financialDebt}" value="false" /> No
+			</td>
+			<td th:if="${#fields.hasErrors('financialDebt')}" th:errors="*{financialDebt}"></td>
+		</tr>
+
+
+
+		<tr>
+			<td><button type="submit">Save Student</button></td>
+		</tr>
+	</table>
+
+</form>
+
+
+</html>

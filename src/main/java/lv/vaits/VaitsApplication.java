@@ -38,10 +38,12 @@ public class VaitsApplication {
 				User us2 = new User("123", "s23zvejlaur@venta.lv"); // pasniedzejs
 				User us3 = new User("123", "s24zvejlaur@venta.lv"); // students
 				User us4 = new User("123", "s25zvejlaur@venta.lv"); // students
+				User us5 = new User("123", "s25zvejlaur@venta.lv"); // students
 				userRepo.save(us1);
 				userRepo.save(us2);
 				userRepo.save(us3);
 				userRepo.save(us4);
+				userRepo.save(us5);
 
 				Course c1 = new Course("Javaa", 4);
 				Course c2 = new Course("Datastr", 4);

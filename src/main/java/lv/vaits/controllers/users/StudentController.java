@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
-import lv.vaits.models.Course;
 import lv.vaits.models.Thesis;
 import lv.vaits.models.users.Student;
 import lv.vaits.services.ICourseServices;
 import lv.vaits.services.users.IStudentServices;
+import lv.vaits.services.users.IUserServices;
 
 @Controller
 public class StudentController {
@@ -27,8 +27,12 @@ public class StudentController {
 	@Autowired
 	private ICourseServices courseServices;
 
+	@Autowired
+	private IUserServices userServices;
+
 	@GetMapping("/student/addNew")
-	public String insertStudentGetFunc(Student student) {
+	public String insertStudentGetFunc(Student student, Model model) {
+		model.addAttribute("allUsers", userServices.retrieveAllUsers());
 		return "student-add-page";
 	}
 
@@ -55,7 +59,7 @@ public class StudentController {
 
 	@GetMapping("/student/showAll")
 	public String allStudentsGetFunc(Model model) {
-		model.addAttribute("alldStudents", studentServices.retrieveAllStudents());
+		model.addAttribute("allStudents", studentServices.retrieveAllStudents());
 		return "student-all-page";
 	}
 
@@ -63,6 +67,7 @@ public class StudentController {
 	public String updateStudentByIdGetFunc(@PathVariable("id") Long id, Model model) {
 		try {
 			model.addAttribute("student", studentServices.retrieveStudentById(id));
+			model.addAttribute("allUsers", userServices.retrieveAllUsers());
 			return "student-update-page";
 		} catch (Exception e) {
 			return "error-page";
@@ -70,10 +75,10 @@ public class StudentController {
 	}
 
 	@PostMapping("/student/update/{id}")
-	public String updateStudentByIdPostFunc(@PathVariable("id") int id, @Valid Student student, BindingResult result) {
+	public String updateStudentByIdPostFunc(@PathVariable("id") Long id, @Valid Student student, BindingResult result) {
 		if (!result.hasErrors()) {
 			try {
-				Student temp = studentServices.updateStudentById(student.getIdp(), student.getName(),
+				Student temp = studentServices.updateStudentById(id, student.getName(),
 						student.getSurname(), student.getPersoncode(), student.getUser(), student.getMatriculaNo(),
 						student.isFinancialDebt());
 				return "redirect:/student/showAll/" + temp.getIdp();
@@ -89,7 +94,7 @@ public class StudentController {
 	public String deleteStudentById(@PathVariable("id") Long id, Model model) {
 		try {
 			studentServices.deleteStudentById(id);
-			model.addAttribute("alldDrivers", studentServices.retrieveAllStudents());
+			model.addAttribute("allStudents", studentServices.retrieveAllStudents());
 			return "student-all-page";
 		} catch (Exception e) {
 			return "error-page";
@@ -100,7 +105,7 @@ public class StudentController {
 	public String allDebtCoursesByStudentsIdGetFunc(@PathVariable("id") Long id, Model model) {
 		try {
 			model.addAttribute("allDebtCourses", studentServices.retrieveAllDebtCoursesByStudentId(id));
-			return "debtCourse-all-page";
+			return "student-debtors-page";
 		} catch (Exception e) {
 			return "error-page";
 		}
@@ -112,7 +117,7 @@ public class StudentController {
 		try {
 			model.addAttribute("studentid", studentid);
 			model.addAttribute("allCourses", courseServices.selectAllCourse());
-			return "debtCourse-add-page";
+			return "student-debtors-add-page";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "redirect:/student/error";
