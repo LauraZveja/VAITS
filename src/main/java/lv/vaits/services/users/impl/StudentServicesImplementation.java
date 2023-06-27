@@ -3,6 +3,7 @@ package lv.vaits.services.users.impl;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import lv.vaits.models.Comment;
 import lv.vaits.models.Course;
@@ -10,75 +11,160 @@ import lv.vaits.models.Thesis;
 import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.models.users.Student;
 import lv.vaits.models.users.User;
+import lv.vaits.repos.ICommentRepo;
+import lv.vaits.repos.ICourseRepo;
+import lv.vaits.repos.IThesisRepo;
 import lv.vaits.repos.users.IStudentRepo;
 import lv.vaits.services.users.IStudentServices;
 
+@Service
 public class StudentServicesImplementation implements IStudentServices {
 
 	@Autowired
 	private IStudentRepo studentRepo;
 
+	@Autowired
+	private ICourseRepo courseRepo;
+
+	@Autowired
+	private IThesisRepo thesisRepo;
+
+	@Autowired
+	private ICommentRepo commentsRepo;
+
 	@Override
 	public Student createNewStudent(String name, String surname, String personcode, User user, String matriculaNo,
 			boolean financialDebt) {
-		// TODO Auto-generated method stub
-		return null;
+		return studentRepo.save(new Student(name, surname, personcode, user, matriculaNo, financialDebt));
 	}
 
 	@Override
-	public Student retrieveStudentById(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public Student retrieveStudentById(Long id) throws Exception {
+		if (studentRepo.existsById(id)) {
+			return studentRepo.findById(id).get();
+		} else {
+			throw new Exception("Wrong id");
+		}
 	}
 
 	@Override
 	public ArrayList<Student> retrieveAllStudents() {
-		// TODO Auto-generated method stub
-		return null;
+		return (ArrayList<Student>) studentRepo.findAll();
 	}
 
 	@Override
-	public Student updateStudentById(int id, String name, String surname, String personcode, User user,
+	public Student updateStudentById(Long id, String name, String surname, String personcode, User user,
 			String matriculaNo, boolean financialDebt) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if (studentRepo.existsById(id)) {
+			Student updatedStudent = studentRepo.findById(id).get();
+			updatedStudent.setName(name);
+			updatedStudent.setSurname(surname);
+			updatedStudent.setPersoncode(personcode);
+			updatedStudent.setUser(user);
+			updatedStudent.setMatriculaNo(matriculaNo);
+			updatedStudent.setFinancialDebt(financialDebt);
+			return studentRepo.save(updatedStudent);
+		} else {
+			throw new Exception("Wrong id");
+		}
 	}
 
 	@Override
-	public void deleteStudentById(int id) throws Exception {
-		// TODO Auto-generated method stub
+	public void deleteStudentById(Long id) throws Exception {
+		if (studentRepo.existsById(id)) {
+			studentRepo.deleteById(id);
+		} else {
+			throw new Exception("Wrong id");
+		}
 
 	}
 
 	@Override
-	public ArrayList<Course> retrieveAllEnrolledCourses() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Course> retrieveAllDebtCoursesByStudentId(Long id) throws Exception {
+		if (studentRepo.existsById(id)) {
+			return courseRepo.findByDebtStudentsIdp(id);
+		} else {
+			throw new Exception("Wrong id");
+		}
 	}
 
 	@Override
-	public void enrollInCourse(Course course) throws Exception {
-		// TODO Auto-generated method stub
-
+	public void addDebtCourseByStudentIdAndCourseId(Long idStudent, Long idCourse) throws Exception {
+		if (studentRepo.existsById(idStudent)) {
+			if (courseRepo.existsById(idCourse)) {
+				Course course = courseRepo.findById(idCourse).get();
+				Student student = studentRepo.findById(idStudent).get();
+				if (!course.getDebtStudents().contains(student)) {
+					course.addStudent(student);
+				} else {
+					System.out.println("Student already enrolled in course!");
+				}
+				if (!student.getDebtCourse().contains(course)) {
+					student.addDebtCourse(course);
+				} else {
+					System.out.println("Course already attended by Student!");
+				}
+			} else {
+				throw new Exception("Wrong Course id");
+			}
+		} else {
+			throw new Exception("Wrong Student id");
+		}
 	}
 
 	@Override
-	public Thesis retrieveStudentThesisByStudentId(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public void removeDebtCourseByStudentIdAndCourseId(Long idStudent, Long idCourse) throws Exception {
+		if (studentRepo.existsById(idStudent)) {
+			if (courseRepo.existsById(idCourse)) {
+				Course course = courseRepo.findById(idCourse).get();
+				Student student = studentRepo.findById(idStudent).get();
+				if (course.getDebtStudents().contains(student)) {
+					course.getDebtStudents().remove(student);
+				} else {
+					System.out.println("Course does not have this Student as a debtor!");
+				}
+				if (student.getDebtCourse().contains(course)) {
+					student.getDebtCourse().remove(course);
+				} else {
+					System.out.println("Student has no debt in this Course!");
+				}
+			} else {
+				throw new Exception("Wrong Course id");
+			}
+		} else {
+			throw new Exception("Wrong Student id");
+		}
 	}
 
 	@Override
-	public Thesis submitThesis(String titleLv, String titleEn, String aim, String tasks, Student student,
-			AcademicStaff supervisor) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Thesis> retrieveStudentThesisByStudentId(Long id) throws Exception {
+		if (studentRepo.existsById(id)) {
+			return thesisRepo.findByStudentIdp(id);
+		} else {
+			throw new Exception("Wrong id");
+		}
 	}
 
 	@Override
-	public ArrayList<Comment> retrieveAllCommentsByThesisId() {
-		// TODO Auto-generated method stub
-		return null;
+	public Thesis submitThesisByStudentId(String titleLv, String titleEn, String aim, String tasks, Long idStudent,
+			AcademicStaff supervisor) throws Exception {
+		if (studentRepo.existsById(idStudent)) {
+			return thesisRepo
+					.save(new Thesis(titleLv, titleEn, aim, tasks, studentRepo.findById(idStudent).get(), supervisor));
+		} else {
+			throw new Exception("Wrong id");
+		}
+	}
+	
+	
+
+	@Override
+	public ArrayList<Comment> retrieveAllCommentsByThesisId(Long id) throws Exception {
+		if (thesisRepo.existsById(id)) {
+			return commentsRepo.findByThesisIdt(id);
+		} else {
+			throw new Exception("Wrong id");
+		}
 	}
 
 }
