@@ -28,10 +28,4 @@ public interface IAcademicStaffServices {
 	void removeThesisFromReview(int id) throws Exception;
 	
 	ArrayList<Thesis> retrieveAllTheses();
-	
-	
-	
-	
-	
-
 }
