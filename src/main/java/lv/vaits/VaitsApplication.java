@@ -1,5 +1,7 @@
 package lv.vaits;
 
+import java.time.LocalDate;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,13 +9,19 @@ import org.springframework.context.annotation.Bean;
 
 import lv.vaits.models.Comment;
 import lv.vaits.models.Course;
+import lv.vaits.models.CalendarSchedule;
+import lv.vaits.models.Faculty;
+import lv.vaits.models.LevelOfStudy;
 import lv.vaits.models.Thesis;
 import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.models.users.Degree;
 import lv.vaits.models.users.Student;
 import lv.vaits.models.users.User;
+import lv.vaits.models.StudyProgram;
+import lv.vaits.repos.ICalendarSchedule;
 import lv.vaits.repos.ICommentRepo;
 import lv.vaits.repos.ICourseRepo;
+import lv.vaits.repos.IStudyProgramRepo;
 import lv.vaits.repos.IThesisRepo;
 import lv.vaits.repos.users.IAcademicStaffRepo;
 import lv.vaits.repos.users.IPersonRepo;
@@ -28,7 +36,7 @@ public class VaitsApplication {
 	}
 
 	@Bean
-	public CommandLineRunner testModelLayer(IUserRepo userRepo, IPersonRepo personRepo, IStudentRepo studentRepo, IAcademicStaffRepo staffRepo, ICourseRepo courseRepo, IThesisRepo thesisRepo, ICommentRepo commentRepo) {
+	public CommandLineRunner testModelLayer(IUserRepo userRepo, IPersonRepo personRepo, IStudentRepo studentRepo, IAcademicStaffRepo staffRepo, ICourseRepo courseRepo, IThesisRepo thesisRepo, ICommentRepo commentRepo, IStudyProgramRepo studyRepo, ICalendarSchedule calendarRepo) {
 		return new CommandLineRunner() {
 			
 			
@@ -84,6 +92,23 @@ public class VaitsApplication {
 				commentRepo.save(com1);
 				commentRepo.save(com2);
 				
+				StudyProgram studyProgram1 = new StudyProgram("Programmēšanas speciālists", Faculty.ITF, LevelOfStudy.FIRST_LEVEL);
+				StudyProgram studyProgram2 = new StudyProgram("Datorzinātnes", Faculty.ITF, LevelOfStudy.BACHELOR);
+				
+				studyRepo.save(studyProgram1);
+				studyRepo.save(studyProgram2);
+				
+				CalendarSchedule calendarSchedule1 = new CalendarSchedule(2023, "Aktivitāte", LocalDate.of(2023, 7, 31), studyProgram1);
+				CalendarSchedule calendarSchedule2 = new CalendarSchedule(2023, "Aktivitātes", LocalDate.of(2023, 8, 10), studyProgram2);
+				
+				calendarRepo.save(calendarSchedule1);
+				calendarRepo.save(calendarSchedule2);
+				
+				studyProgram1.addCalendarSchedule(calendarSchedule1);
+				studyProgram2.addCalendarSchedule(calendarSchedule2);
+				
+				studyRepo.save(studyProgram1);
+				studyRepo.save(studyProgram2);
 				
 			}
 		};
