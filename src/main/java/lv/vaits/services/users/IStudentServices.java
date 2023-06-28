@@ -29,13 +29,12 @@ public interface IStudentServices {
 
 	void addDebtCourseByStudentId(Long idStudent, List<Long> debtCourses) throws Exception;
 	
-	void removeDebtCourseByStudentIdAndCourseId(Long idStudent, Long idCourse) throws Exception;
+	void removeDebtCourseByStudentId(Long idStudent, List<Long> debtCourses) throws Exception;
 
 	ArrayList<Thesis> retrieveStudentThesisByStudentId(Long id) throws Exception;
 
 	Thesis submitThesisByStudentId(String titleLv, String titleEn, String aim, String tasks, Long idStudent,
 			AcademicStaff supervisor) throws Exception;
 
-	ArrayList<Comment> retrieveAllCommentsByThesisId(Long id) throws Exception;
 
 }

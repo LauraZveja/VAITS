@@ -6,6 +6,8 @@ import java.util.Collection;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -53,49 +55,49 @@ public class Thesis {
 	@Column(name = "Tasks")
 	private String tasks;
 
-	//TODO servisā vai konstruktorā pie jauna objekta izveidas jāuzliek LocalDateTime.now()
+	// TODO servisā vai konstruktorā pie jauna objekta izveidas jāuzliek
+	// LocalDateTime.now()
 	@Column(name = "SubmitDateTime")
 	private LocalDateTime submitDateTime;
-	
+
 	@Column(name = "statusFromSupervisor")
 	private boolean statusFromSupervisor;
-	
-	//TODO servisā vai konstruktorā uzlikt submit pēc noklusējuma
+
+	// TODO servisā vai konstruktorā uzlikt submit pēc noklusējuma
 	@Column(name = "accStatus")
+	@Enumerated(EnumType.STRING)
 	private AcceptanceStatus accStatus;
-	
+
 	@Column(name = "accDateTime")
 	private LocalDateTime accDateTime;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "Ids")
 	private Student student;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "Ida")
 	private AcademicStaff supervisor;
-	
-	//TODO izveidot saiti, ja nepieciešams, ar konsultantu, vērtētāju utt/
+
+	// TODO izveidot saiti, ja nepieciešams, ar konsultantu, vērtētāju utt/
 	@ManyToMany
-	@JoinTable(name = "thesis_reviewers", joinColumns = @JoinColumn(name = "Idt"),
-	inverseJoinColumns = @JoinColumn(name = "Ida"))
+	@JoinTable(name = "thesis_reviewers", joinColumns = @JoinColumn(name = "Idt"), inverseJoinColumns = @JoinColumn(name = "Ida"))
 	private Collection<AcademicStaff> reviewers = new ArrayList<>();
-	
+
 	public void addReviewer(AcademicStaff reviewer) {
-		if(!reviewers.contains(reviewer)) {
+		if (!reviewers.contains(reviewer)) {
 			reviewers.add(reviewer);
 		}
 	}
-	
+
 	@OneToMany(mappedBy = "thesis")
 	private Collection<Comment> comments;
-	
+
 	@OneToMany(mappedBy = "thesis")
 	private Collection<OtherApplications> otherApplications;
-	
 
 	public Thesis(String titleLv, String titleEn, String aim, String tasks, Student student, AcademicStaff supervisor) {
-		
+
 		this.titleLv = titleLv;
 		this.titleEn = titleEn;
 		this.aim = aim;
@@ -103,14 +105,21 @@ public class Thesis {
 		this.student = student;
 		this.supervisor = supervisor;
 		this.submitDateTime = LocalDateTime.now();
+		this.accDateTime = LocalDateTime.now();
 		this.accStatus = AcceptanceStatus.SUBMITTED;
 		this.otherApplications = new ArrayList<>();
+		this.comments = new ArrayList<>();
 	}
-	
-	
+
 	public void addOtherApplicationToThesis(OtherApplications inputOtherApplication) {
-		if(!otherApplications.contains(inputOtherApplication)) {
+		if (!otherApplications.contains(inputOtherApplication)) {
 			otherApplications.add(inputOtherApplication);
+		}
+	}
+
+	public void addCommentToThesis(Comment inputComment) {
+		if (!comments.contains(inputComment)) {
+			comments.add(inputComment);
 		}
 	}
 

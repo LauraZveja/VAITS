@@ -18,6 +18,7 @@ import lv.vaits.models.Course;
 import lv.vaits.models.Thesis;
 import lv.vaits.models.users.Student;
 import lv.vaits.services.ICourseServices;
+import lv.vaits.services.users.IAcademicStaffServices;
 import lv.vaits.services.users.IStudentServices;
 import lv.vaits.services.users.IUserServices;
 
@@ -32,6 +33,9 @@ public class StudentController {
 
 	@Autowired
 	private IUserServices userServices;
+
+	@Autowired
+	private IAcademicStaffServices academicStaffServices;
 
 	@GetMapping("/student/addNew")
 	public String insertStudentGetFunc(Student student, Model model) {
@@ -133,53 +137,52 @@ public class StudentController {
 			@RequestParam("debtCourses") List<Long> debtCourseIds) throws Exception {
 		studentServices.addDebtCourseByStudentId(studentid, debtCourseIds);
 		return "redirect:/student/showAllDebtCourses/" + studentid;
+	}
 
+	@GetMapping("/student/showAllDebtCourses/remove/{studentid}")
+	public String deleteDebtCourseByStudentIdGetFunc(@PathVariable("studentid") Long studentid, Model model) {
+		try {
+			model.addAttribute("studentid", studentid);
+			model.addAttribute("studentDebtCourses", studentServices.retrieveAllDebtCoursesByStudentId(studentid));
+			return "student-debtors-remove-page";
+		} catch (Exception e) {
+			return "redirect:/student/error";
+		}
+	}
+
+	@PostMapping("/student/showAllDebtCourses/remove/{studentid}")
+	public String deleteDebtCourseByStudentIdPostFunc(@PathVariable("studentid") Long studentid,
+			@RequestParam("debtCourses") List<Long> debtCourseIds) throws Exception {
+		studentServices.removeDebtCourseByStudentId(studentid, debtCourseIds);
+		return "redirect:/student/showAllDebtCourses/" + studentid;
 	}
 
 	@GetMapping("/student/thesis/{id}")
 	public String studentThesisGetFunc(@PathVariable("id") Long id, Model model) {
 		try {
-			model.addAttribute("thesis", studentServices.retrieveStudentThesisByStudentId(id));
+			model.addAttribute("thesisList", studentServices.retrieveStudentThesisByStudentId(id));
 			return "student-thesis-page";
 		} catch (Exception e) {
 			return "error-page";
 		}
 	}
 
-	@GetMapping("/student/thesis/addNew")
-	public String insertStudentThesisGetFunc(Thesis thesis, Model model) {
-		model.addAttribute("allStudents", studentServices.retrieveAllStudents());
+	@GetMapping("/student/thesis/addNew/{id}")
+	public String insertStudentThesisGetFunc(@PathVariable("id") Long id, Thesis thesis, Model model) {
+		model.addAttribute("allSupervisors", academicStaffServices.retrieveAllAcademicStaff());
 		return "student-thesis-add-page";
 	}
 
-	@PostMapping("/student/thesis/addNew")
-	public String insertStudentThesisPostFunc(@Valid Thesis thesis, BindingResult result) throws Exception {
+	@PostMapping("/student/thesis/addNew/{id}")
+	public String insertStudentThesisPostFunc(@PathVariable("id") Long id, @Valid Thesis thesis, BindingResult result)
+			throws Exception {
 		if (!result.hasErrors()) {
 			studentServices.submitThesisByStudentId(thesis.getTitleLv(), thesis.getTitleEn(), thesis.getAim(),
-					thesis.getTasks(), thesis.getStudent().getIdp(), thesis.getSupervisor());
-			return "redirect:/student/thesis/all";
+					thesis.getTasks(), id, thesis.getSupervisor());
+			return "redirect:/student/thesis/" + id;
 		} else {
 			return "error-page";
 		}
-	}
-
-	@GetMapping("/student/thesis/comments")
-	public String showCommentsForThesisGetFunc(@RequestParam("studentId") Long studentId, Model model)
-			throws Exception {
-		ArrayList<Student> allStudents = studentServices.retrieveAllStudents();
-		model.addAttribute("allStudents", allStudents);
-		Student selectedStudent = null;
-		for (Student student : allStudents) {
-			if (student.getIdp() == studentId) {
-				selectedStudent = student;
-				break;
-			}
-		}
-		if (selectedStudent == null) {
-			throw new Exception("Invalid student ID");
-		}
-		model.addAttribute("thesis", studentServices.retrieveStudentThesisByStudentId(selectedStudent.getIdp()));
-		return "student-thesis-comments-page";
 	}
 
 	@GetMapping("/student/error")

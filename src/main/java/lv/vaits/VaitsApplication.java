@@ -83,15 +83,15 @@ public class VaitsApplication {
 
 				Thesis th1 = new Thesis("Sistēmas izstrāde", "Development of System", "Development", "1...2.3..4", s1,
 						ac1);
-				Thesis th2 = new Thesis("Programmas izstrāde", "Development of Program", "Development", "1...2.3..4",
-						s2, ac2);
+				Thesis th2 = new Thesis("Programmas izstrāde", "Development of Program", "Non Development", "1...2.3..5",
+						s1, ac2);
 
 				th1.addReviewer(ac1);
 				th2.addReviewer(ac2);
 				thesisRepo.save(th1);
 				thesisRepo.save(th2);
-				ac1.addThesisForReviews(th2);
-				ac2.addThesisForReviews(th1);
+				ac1.addThesisForReviews(th1);
+				ac2.addThesisForReviews(th2);
 				personRepo.save(ac1);
 				personRepo.save(ac2);
 
@@ -125,7 +125,7 @@ public class VaitsApplication {
 				OtherApplications changeTopicApplication = new OtherApplications(ApplicationType.CHANGE_THESIS_TOPIC,
 						"Application for changing the topic of thesis.", th1);
 				OtherApplications submissionExtensionApplication = new OtherApplications(
-						ApplicationType.SUBMISSION_EXTENSION, "Application for requuesting extension of submission.",
+						ApplicationType.SUBMISSION_EXTENSION, "Application for requesting extension of submission.",
 						th2);
 
 				otherApplicationRepo.save(changeTopicApplication);
