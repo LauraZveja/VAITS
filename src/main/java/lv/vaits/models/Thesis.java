@@ -96,6 +96,9 @@ public class Thesis {
 	@OneToMany(mappedBy = "thesis")
 	private Collection<OtherApplications> otherApplications;
 
+	@OneToMany(mappedBy = "thesis")
+	private Collection<ThesisApplications> thesisApplications;
+
 	public Thesis(String titleLv, String titleEn, String aim, String tasks, Student student, AcademicStaff supervisor) {
 
 		this.titleLv = titleLv;
