@@ -1,0 +1,81 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<style>
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			border-spacing: 0;
+		}
+
+		th,
+		td {
+			padding: 8px;
+			border: 1px solid #ddd;
+			text-align: left;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>All Students</h1>
+	<table>
+		<tr>
+			<th>Thesis ID</th>
+			<th>Title LV</th>
+			<th>Title ENG</th>
+			<th>Aim</th>
+			<th>Tasks</th>
+			<th>Date and time of submission</th>
+			<th>Acceptance status from Supervisor</th>
+			<th>Acceptance status from Faculty</th>
+			<th>Last status change day and time from Faculty</th>
+			<th>Supervisor</th>
+			<th>Reviewers</th>
+			<th>Comments</th>
+
+		</tr>
+		<th:block th:each="thesis : ${thesisList}">
+			<tr>
+				<td th:text="${thesis.getIdt()}"></td>
+				<td th:text="${thesis.getTitleLv()}"></td>
+				<td th:text="${thesis.getTitleEn()}"></td>
+				<td th:text="${thesis.getAim()}"></td>
+				<td th:text="${thesis.getTasks()}"></td>
+				<td
+					th:text="${#temporals.format(thesis.getSubmitDateTime(), 'yyyy-MM-dd') + ' ' + #temporals.format(thesis.getSubmitDateTime(), 'HH:mm:ss')}">
+				</td>
+				<td th:text="${thesis.isStatusFromSupervisor()}"></td>
+				<td th:text="${thesis.getAccStatus()}"></td>
+				<td
+					th:text="${#temporals.format(thesis.getAccDateTime(), 'yyyy-MM-dd') + ' ' + #temporals.format(thesis.getAccDateTime(), 'HH:mm:ss')}">
+				</td>
+				<td th:text="${thesis.getSupervisor().getName} + ' ' + ${thesis.getSupervisor().getSurname}"></td>
+				<td>
+					<span th:each="reviewer, iterStat : ${thesis.getReviewers()}">
+						<span th:text="${reviewer.getName()}"></span>
+						<span> </span>
+						<span th:text="${reviewer.getSurname()}"></span>
+						<span th:unless="${iterStat.last}">
+							<br /><br />
+						</span>
+					</span>
+				</td>
+				<td>
+					<span th:each="comment, iterStat : ${thesis.getComments()}">
+						<span th:text="${comment.getDescription()}"></span>
+						<span th:unless="${iterStat.last}">
+							<br /><br />
+						</span>
+					</span>
+				</td>
+			</tr>
+		</th:block>
+	</table>
+</body>
+
+</html>

@@ -2,6 +2,7 @@ package lv.vaits.services.users;
 
 import java.util.ArrayList;
 
+
 import lv.vaits.models.Thesis;
 import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.models.users.Student;
@@ -21,7 +22,7 @@ public interface IAcademicStaffServices {
 	
 	Thesis assignThesis(String titleLv, String titleEn, String aim, String tasks, Student student);
 	
-	Thesis getThesisByAcademicStaffMember(AcademicStaff supervisor, String titleLv, String titleEn, String aim, String tasks, Student student);
+	ArrayList<Thesis> getThesisByAcademicStaffMemberId(Long id) throws Exception;
 	
 	Thesis addThesisForReview(String titleLv, String titleEn, String aim, String tasks, Student student, AcademicStaff supervisor );
 	
@@ -29,3 +30,4 @@ public interface IAcademicStaffServices {
 	
 	ArrayList<Thesis> retrieveAllTheses();
 }
+

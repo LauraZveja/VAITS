@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import lv.vaits.models.Thesis;
@@ -100,7 +101,40 @@ public class AcademicStaffController {
 		
 	}
 	
-	//@GetMapping("/thesis/addReview")
+	@PostMapping("/thesis/assign/{id}/review")
+	public String assignReviewToThesis(@PathVariable("id") Long id, @RequestParam("review") String reviewText) {
+		Thesis thesis = academicStaffServices.retrieveThesisById(id);
+	    thesis.setReview(reviewText);
+	    academicStaffServices.saveThesis(thesis);
+	    return "redirect:/thesis/assign/";
+	}
+	
+	@PostMapping("/thesis/{thesisId}/review/{reviewId}")
+	public String deleteReview(@PathVariable("thesisId") Long thesisId, @PathVariable("reviewId") Long reviewId) {
+	    Thesis thesis = academicStaffServices.retrieveThesisById(thesisId);
+	    
+	    if (thesis.getReview().equals(reviewText)) {
+	        thesis.setReview(null);
+	        academicStaffServices.saveThesis(thesis);
+	        return "redirect:/thesis/assign/";
+	    } else {
+	        return "error-page";
+	    }
+	}
+	
+	@PostMapping("/thesis/{thesisId}/review/{reviewId}")
+	public String updateReview(@PathVariable("thesisId") Long thesisId, @PathVariable("reviewId") Long reviewId, @RequestParam("review") String updatedReviewText) {
+	    Thesis thesis = academicStaffServices.retrieveThesisById(thesisId);
+	    
+	    if (thesis.getReview().equals(reviewText)) {
+	        thesis.setReview(updatedReviewText);
+	        academicStaffServices.saveThesis(thesis);
+	        return "redirect:/thesis/assign/";
+	    } else {
+	        return "error-page";
+	    }
+	}
+
 	
 	
 	

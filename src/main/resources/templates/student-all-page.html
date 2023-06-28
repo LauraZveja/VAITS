@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<style>
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			border-spacing: 0;
+		}
+
+		th,
+		td {
+			padding: 8px;
+			border: 1px solid #ddd;
+			text-align: left;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>All Students</h1>
+	<table>
+		<tr>
+			<th>Student ID</th>
+			<th>Name</th>
+			<th>Surname</th>
+			<th>Personcode</th>
+			<th>User e-mail</th>
+			<th>Matricula number</th>
+			<th>Student financial debt</th>
+		</tr>
+		<th:block th:each="student : ${allStudents}">
+			<tr>
+				<td th:text="${student.getIdp()}"></td>
+				<td th:text="${student.getName()}"></td>
+				<td th:text="${student.getSurname()}"></td>
+				<td th:text="${student.getPersoncode()}"></td>
+				<td th:text="${student.getUser().getEmail()}"></td>
+				<td th:text="${student.getMatriculaNo()}"></td>
+				<td th:text="${student.isFinancialDebt()}"></td>
+
+			</tr>
+		</th:block>
+	</table>
+</body>
+
+</html>
