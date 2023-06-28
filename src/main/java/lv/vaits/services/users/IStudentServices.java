@@ -1,6 +1,8 @@
 package lv.vaits.services.users;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import lv.vaits.models.Comment;
 import lv.vaits.models.Course;
@@ -25,7 +27,7 @@ public interface IStudentServices {
 
 	ArrayList<Course> retrieveAllDebtCoursesByStudentId(Long id) throws Exception;
 
-	void addDebtCourseByStudentIdAndCourseId(Long idStudent, Long idCourse) throws Exception;
+	void addDebtCourseByStudentId(Long idStudent, List<Long> debtCourses) throws Exception;
 	
 	void removeDebtCourseByStudentIdAndCourseId(Long idStudent, Long idCourse) throws Exception;
 

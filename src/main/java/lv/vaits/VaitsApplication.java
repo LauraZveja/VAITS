@@ -70,7 +70,7 @@ public class VaitsApplication {
 				Student s1 = new Student("Janis", "Berzins", "212121-212121", us3, "12345678", false);
 				Student s2 = new Student("Baiba", "Kalnina", "222121-222121", us4, "12245678", true);
 
-				s2.addDebtCourse(c1);
+				s1.addDebtCourse(c1);
 				s2.addDebtCourse(c2);
 				studentRepo.save(s1);
 				studentRepo.save(s2);

@@ -1,6 +1,8 @@
 package lv.vaits.services.users.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,23 +91,18 @@ public class StudentServicesImplementation implements IStudentServices {
 	}
 
 	@Override
-	public void addDebtCourseByStudentIdAndCourseId(Long idStudent, Long idCourse) throws Exception {
+	public void addDebtCourseByStudentId(Long idStudent, List<Long> debtCourses) throws Exception {
 		if (studentRepo.existsById(idStudent)) {
-			if (courseRepo.existsById(idCourse)) {
-				Course course = courseRepo.findById(idCourse).get();
-				Student student = studentRepo.findById(idStudent).get();
-				if (!course.getDebtStudents().contains(student)) {
-					course.addStudent(student);
-				} else {
-					System.out.println("Student already enrolled in course!");
+			Student student = studentRepo.findById(idStudent).get();
+			for (Long courseId : debtCourses) {
+				if (!courseRepo.findById(courseId).get().getDebtStudents().contains(student)) {
+					courseRepo.findById(courseId).get().addStudent(student);
+					courseRepo.save(courseRepo.findById(courseId).get());
 				}
-				if (!student.getDebtCourse().contains(course)) {
-					student.addDebtCourse(course);
-				} else {
-					System.out.println("Course already attended by Student!");
+				if (!student.getDebtCourse().contains(courseRepo.findById(courseId).get())) {
+					student.addDebtCourse(courseRepo.findById(courseId).get());
+					studentRepo.save(student);
 				}
-			} else {
-				throw new Exception("Wrong Course id");
 			}
 		} else {
 			throw new Exception("Wrong Student id");
@@ -155,8 +152,6 @@ public class StudentServicesImplementation implements IStudentServices {
 			throw new Exception("Wrong id");
 		}
 	}
-	
-	
 
 	@Override
 	public ArrayList<Comment> retrieveAllCommentsByThesisId(Long id) throws Exception {

@@ -1,6 +1,8 @@
 package lv.vaits.controllers.users;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
+import lv.vaits.models.Course;
 import lv.vaits.models.Thesis;
 import lv.vaits.models.users.Student;
 import lv.vaits.services.ICourseServices;
@@ -78,8 +81,8 @@ public class StudentController {
 	public String updateStudentByIdPostFunc(@PathVariable("id") Long id, @Valid Student student, BindingResult result) {
 		if (!result.hasErrors()) {
 			try {
-				Student temp = studentServices.updateStudentById(id, student.getName(),
-						student.getSurname(), student.getPersoncode(), student.getUser(), student.getMatriculaNo(),
+				Student temp = studentServices.updateStudentById(id, student.getName(), student.getSurname(),
+						student.getPersoncode(), student.getUser(), student.getMatriculaNo(),
 						student.isFinancialDebt());
 				return "redirect:/student/showAll/" + temp.getIdp();
 			} catch (Exception e) {
@@ -104,35 +107,33 @@ public class StudentController {
 	@GetMapping("/student/showAllDebtCourses/{id}")
 	public String allDebtCoursesByStudentsIdGetFunc(@PathVariable("id") Long id, Model model) {
 		try {
+			model.addAttribute("student", studentServices.retrieveStudentById(id));
 			model.addAttribute("allDebtCourses", studentServices.retrieveAllDebtCoursesByStudentId(id));
 			return "student-debtors-page";
 		} catch (Exception e) {
+			e.printStackTrace();
 			return "error-page";
 		}
 	}
 
 	@GetMapping("/student/showAllDebtCourses/add/{studentid}")
-	public String addDebtCourseByStudentsIdGetFunc(@PathVariable("studentid") Long studentid, Long courseId,
-			Model model) {
+	public String addDebtCourseByStudentsIdGetFunc(@PathVariable("studentid") Long studentid, Model model) {
 		try {
 			model.addAttribute("studentid", studentid);
-			model.addAttribute("allCourses", courseServices.selectAllCourse());
+			model.addAttribute("studentDebtCourses", studentServices.retrieveAllDebtCoursesByStudentId(studentid));
+			model.addAttribute("allDebtCourses", courseServices.selectAllCourse());
 			return "student-debtors-add-page";
 		} catch (Exception e) {
-			e.printStackTrace();
 			return "redirect:/student/error";
 		}
 	}
 
 	@PostMapping("/student/showAllDebtCourses/add/{studentid}")
-	public String addDebtCourseByStudentsIdPostFunc(@PathVariable("studentid") Long studentid, @Valid Long courseId,
-			BindingResult result) throws Exception {
-		if (!result.hasErrors()) {
-			studentServices.addDebtCourseByStudentIdAndCourseId(studentid, courseId);
-			return "redirect:/student/debtors/" + studentid;
-		} else {
-			return "redirect:/student/error";
-		}
+	public String addDebtCourseByStudentsIdPostFunc(@PathVariable("studentid") Long studentid,
+			@RequestParam("debtCourses") List<Long> debtCourseIds) throws Exception {
+		studentServices.addDebtCourseByStudentId(studentid, debtCourseIds);
+		return "redirect:/student/showAllDebtCourses/" + studentid;
+
 	}
 
 	@GetMapping("/student/thesis/{id}")
