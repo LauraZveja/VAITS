@@ -112,6 +112,7 @@ public class Thesis {
 		this.accStatus = AcceptanceStatus.SUBMITTED;
 		this.otherApplications = new ArrayList<>();
 		this.comments = new ArrayList<>();
+		this.thesisApplications = new ArrayList<>();
 	}
 
 	public void addOtherApplicationToThesis(OtherApplications inputOtherApplication) {
@@ -123,6 +124,12 @@ public class Thesis {
 	public void addCommentToThesis(Comment inputComment) {
 		if (!comments.contains(inputComment)) {
 			comments.add(inputComment);
+		}
+	}
+
+	public void addThesisApplicationToThesis(ThesisApplications inputThesisApplications) {
+		if (!thesisApplications.contains(inputThesisApplications)) {
+			thesisApplications.add(inputThesisApplications);
 		}
 	}
 

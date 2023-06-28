@@ -1,6 +1,7 @@
 package lv.vaits;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +15,7 @@ import lv.vaits.models.CalendarSchedule;
 import lv.vaits.models.Faculty;
 import lv.vaits.models.LevelOfStudy;
 import lv.vaits.models.Thesis;
+import lv.vaits.models.ThesisApplications;
 import lv.vaits.models.OtherApplications;
 import lv.vaits.models.StudentStudyProgram;
 import lv.vaits.models.users.AcademicStaff;
@@ -27,6 +29,7 @@ import lv.vaits.repos.ICourseRepo;
 import lv.vaits.repos.IOtherApplications;
 import lv.vaits.repos.IStudentStudyProgramRepo;
 import lv.vaits.repos.IStudyProgramRepo;
+import lv.vaits.repos.IThesisApplications;
 import lv.vaits.repos.IThesisRepo;
 import lv.vaits.repos.users.IAcademicStaffRepo;
 import lv.vaits.repos.users.IPersonRepo;
@@ -44,7 +47,7 @@ public class VaitsApplication {
 	public CommandLineRunner testModelLayer(IUserRepo userRepo, IPersonRepo personRepo, IStudentRepo studentRepo,
 			IAcademicStaffRepo staffRepo, ICourseRepo courseRepo, IThesisRepo thesisRepo, ICommentRepo commentRepo,
 			IStudyProgramRepo studyRepo, ICalendarSchedule calendarRepo, IOtherApplications otherApplicationRepo,
-			IStudentStudyProgramRepo sspRepo) {
+			IStudentStudyProgramRepo sspRepo, IThesisApplications thesisApplicationsRepo) {
 		return new CommandLineRunner() {
 
 			@Override
@@ -83,8 +86,8 @@ public class VaitsApplication {
 
 				Thesis th1 = new Thesis("Sistēmas izstrāde", "Development of System", "Development", "1...2.3..4", s1,
 						ac1);
-				Thesis th2 = new Thesis("Programmas izstrāde", "Development of Program", "Non Development", "1...2.3..5",
-						s1, ac2);
+				Thesis th2 = new Thesis("Programmas izstrāde", "Development of Program", "Non Development",
+						"1...2.3..5", s1, ac2);
 
 				th1.addReviewer(ac1);
 				th2.addReviewer(ac2);
@@ -147,6 +150,14 @@ public class VaitsApplication {
 				sspRepo.save(listItem1);
 				sspRepo.save(listItem2);
 				sspRepo.save(listItem3);
+
+				ThesisApplications application1 = new ThesisApplications("Sistēmasizstrāde", "Developmentofsystem",
+						"Development................................", "A1...2.3..4.......................", LocalDateTime.now(), th1);
+				ThesisApplications application2 = new ThesisApplications("Sistēmasizstrāde", "Developmentofsystem",
+						"Development...................................", "A1...2.3..4............................", LocalDateTime.now(), th1);
+
+				thesisApplicationsRepo.save(application1);
+				thesisApplicationsRepo.save(application2);
 
 			}
 		};
