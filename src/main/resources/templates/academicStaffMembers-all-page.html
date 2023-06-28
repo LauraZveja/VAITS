@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<h1>All Academic Staff Members</h1>
+	<table>
+		<tr>
+			<th>Staff member ID</th>
+			<th>Name</th>
+			<th>Surname</th>
+			<th>Personcode</th>
+			<th>User e-mail</th>
+			<th>Degree</th>
+		</tr>
+		<th:block th:each="academicStaff : ${allAcademicStaffMembers}">
+			<tr>
+				<td th:text="${academicStaff.getIdp()}"></td>
+				<td th:text="${academicStaff.getName()}"></td>
+				<td th:text="${academicStaff.getSurname()}"></td>
+				<td th:text="${academicStaff.getPersoncode()}"></td>
+				<td th:text="${academicStaff.getUser().getEmail()}"></td>
+				<td th:text="${academicStaff.getDegree()}"></td>
+
+			</tr>
+		</th:block>
+	</table>
+</body>
+</html>
