@@ -3,6 +3,7 @@ package lv.vaits.models;
 import java.util.Collection;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -27,26 +28,33 @@ public class StudyProgram {
 
 	@Column(name = "Faculty")
 	@Enumerated(EnumType.STRING)
-	@NotEmpty(message = "STUDY PROGRAM REQUIRES A FACULTY!")
+	@NotNull(message = "STUDY PROGRAM REQUIRES A FACULTY!")
 	private Faculty faculty;
 
 	@Column(name = "LevelOfStudy")
 	@Enumerated(EnumType.STRING)
-	@NotEmpty(message = "STUDY PROGRAM REQUIRES A LEVEL OF STUDY!")
+	@NotNull(message = "STUDY PROGRAM REQUIRES A LEVEL OF STUDY!")
 	private LevelOfStudy levelOfStudy;
 
 	@OneToMany(mappedBy = "studyProgram")
 	private Collection<StudentStudyProgram> studentStudyProgram;
 
-	// @OneToMany(mappedBy = "studyProgram")
-	// private Collection<CalendarSchedule> calendarSchedule;
+	@OneToMany(mappedBy = "studyProgram")
+	private Collection<CalendarSchedule> calendarSchedule;
 
 	public StudyProgram(@Size(min = 3, max = 30) @NotNull @NotBlank String courseTitleLv,
-			@NotEmpty(message = "STUDY PROGRAM REQUIRES A FACULTY!") Faculty faculty,
-			@NotEmpty(message = "STUDY PROGRAM REQUIRES A LEVEL OF STUDY!") LevelOfStudy levelOfStudy) {
+			@NotNull(message = "STUDY PROGRAM REQUIRES A FACULTY!") Faculty faculty,
+			@NotNull(message = "STUDY PROGRAM REQUIRES A LEVEL OF STUDY!") LevelOfStudy levelOfStudy) {
 		this.courseTitleLv = courseTitleLv;
 		this.faculty = faculty;
 		this.levelOfStudy = levelOfStudy;
+		this.calendarSchedule = new ArrayList<>();
+	}
+	
+	public void addCalendarSchedule(CalendarSchedule schedule) {
+		if(!calendarSchedule.contains(schedule)) {
+			calendarSchedule.add(schedule);
+		}
 	}
 
 }
