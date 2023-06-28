@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<form action="#" th:action="@{/student/thesis/addNew/{id}(id=${id})}" th:object="${thesis}" method="post">
+	<table>
+		<tr>
+			<td>Title LV</td>
+			<td><input type="text" th:field="*{titleLv}" /></td>
+			<td th:if="${#fields.hasErrors('titleLv')}" th:errors="*{titleLv}"></td>
+			<tr />
+		<tr>
+			<td>Title ENG</td>
+			<td><input type="text" th:field="*{titleEn}" /></td>
+			<td th:if="${#fields.hasErrors('titleEn')}" th:errors="*{titleEn}"></td>
+			<tr />
+		<tr>
+			<td>Aim</td>
+			<td><input type="text" th:field="*{aim}" /></td>
+			<td th:if="${#fields.hasErrors('aim')}" th:errors="*{aim}"></td>
+			<tr />
+		<tr>
+			<td>Tasks</td>
+			<td><input type="text" th:field="*{tasks}" /></td>
+			<td th:if="${#fields.hasErrors('tasks')}" th:errors="*{tasks}"></td>
+			<tr />
+		<tr>
+			<td>Supervisor</td>
+			<td>
+				<select th:field="*{supervisor}">
+					<option value="">Select Supervisor</option>
+					<option th:each="supervisor : ${allSupervisors}" th:value="${supervisor.getIdp()}"
+						th:text="${supervisor.getName()} + ' ' + ${supervisor.getSurname()}"></option>
+				</select>
+			</td>
+			<td th:if="${#fields.hasErrors('supervisor')}" th:errors="*{supervisor}"></td>
+		</tr>
+		<tr>
+			<td><button type="submit">Save Thesis</button></td>
+		</tr>
+	</table>
+
+</form>
+
+
+</html>

@@ -95,12 +95,13 @@ public class StudentServicesImplementation implements IStudentServices {
 		if (studentRepo.existsById(idStudent)) {
 			Student student = studentRepo.findById(idStudent).get();
 			for (Long courseId : debtCourses) {
-				if (!courseRepo.findById(courseId).get().getDebtStudents().contains(student)) {
-					courseRepo.findById(courseId).get().addStudent(student);
-					courseRepo.save(courseRepo.findById(courseId).get());
+				Course debtCourse = courseRepo.findById(courseId).get();
+				if (!debtCourse.getDebtStudents().contains(student)) {
+					debtCourse.addStudent(student);
+					courseRepo.save(debtCourse);
 				}
-				if (!student.getDebtCourse().contains(courseRepo.findById(courseId).get())) {
-					student.addDebtCourse(courseRepo.findById(courseId).get());
+				if (!student.getDebtCourse().contains(debtCourse)) {
+					student.addDebtCourse(debtCourse);
 					studentRepo.save(student);
 				}
 			}
@@ -110,23 +111,19 @@ public class StudentServicesImplementation implements IStudentServices {
 	}
 
 	@Override
-	public void removeDebtCourseByStudentIdAndCourseId(Long idStudent, Long idCourse) throws Exception {
+	public void removeDebtCourseByStudentId(Long idStudent, List<Long> debtCourses) throws Exception {
 		if (studentRepo.existsById(idStudent)) {
-			if (courseRepo.existsById(idCourse)) {
-				Course course = courseRepo.findById(idCourse).get();
-				Student student = studentRepo.findById(idStudent).get();
-				if (course.getDebtStudents().contains(student)) {
-					course.getDebtStudents().remove(student);
-				} else {
-					System.out.println("Course does not have this Student as a debtor!");
+			Student student = studentRepo.findById(idStudent).get();
+			for (Long courseId : debtCourses) {
+				Course debtCourse = courseRepo.findById(courseId).get();
+				if (debtCourse.getDebtStudents().contains(student)) {
+					debtCourse.getDebtStudents().remove(student);
+					courseRepo.save(debtCourse);
 				}
-				if (student.getDebtCourse().contains(course)) {
-					student.getDebtCourse().remove(course);
-				} else {
-					System.out.println("Student has no debt in this Course!");
+				if (student.getDebtCourse().contains(debtCourse)) {
+					student.getDebtCourse().remove(debtCourse);
+					studentRepo.save(student);
 				}
-			} else {
-				throw new Exception("Wrong Course id");
 			}
 		} else {
 			throw new Exception("Wrong Student id");
@@ -153,13 +150,5 @@ public class StudentServicesImplementation implements IStudentServices {
 		}
 	}
 
-	@Override
-	public ArrayList<Comment> retrieveAllCommentsByThesisId(Long id) throws Exception {
-		if (thesisRepo.existsById(id)) {
-			return commentsRepo.findByThesisIdt(id);
-		} else {
-			throw new Exception("Wrong id");
-		}
-	}
 
 }
