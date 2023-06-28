@@ -90,6 +90,9 @@ public class Thesis {
 	@OneToMany(mappedBy = "thesis")
 	private Collection<Comment> comments;
 	
+	@OneToMany(mappedBy = "thesis")
+	private Collection<OtherApplications> otherApplications;
+	
 
 	public Thesis(String titleLv, String titleEn, String aim, String tasks, Student student, AcademicStaff supervisor) {
 		
@@ -101,9 +104,14 @@ public class Thesis {
 		this.supervisor = supervisor;
 		this.submitDateTime = LocalDateTime.now();
 		this.accStatus = AcceptanceStatus.SUBMITTED;
+		this.otherApplications = new ArrayList<>();
 	}
 	
 	
-	
+	public void addOtherApplicationToThesis(OtherApplications inputOtherApplication) {
+		if(!otherApplications.contains(inputOtherApplication)) {
+			otherApplications.add(inputOtherApplication);
+		}
+	}
 
 }

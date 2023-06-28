@@ -9,10 +9,12 @@ import org.springframework.context.annotation.Bean;
 
 import lv.vaits.models.Comment;
 import lv.vaits.models.Course;
+import lv.vaits.models.ApplicationType;
 import lv.vaits.models.CalendarSchedule;
 import lv.vaits.models.Faculty;
 import lv.vaits.models.LevelOfStudy;
 import lv.vaits.models.Thesis;
+import lv.vaits.models.OtherApplications;
 import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.models.users.Degree;
 import lv.vaits.models.users.Student;
@@ -21,6 +23,7 @@ import lv.vaits.models.StudyProgram;
 import lv.vaits.repos.ICalendarSchedule;
 import lv.vaits.repos.ICommentRepo;
 import lv.vaits.repos.ICourseRepo;
+import lv.vaits.repos.IOtherApplications;
 import lv.vaits.repos.IStudyProgramRepo;
 import lv.vaits.repos.IThesisRepo;
 import lv.vaits.repos.users.IAcademicStaffRepo;
@@ -36,7 +39,7 @@ public class VaitsApplication {
 	}
 
 	@Bean
-	public CommandLineRunner testModelLayer(IUserRepo userRepo, IPersonRepo personRepo, IStudentRepo studentRepo, IAcademicStaffRepo staffRepo, ICourseRepo courseRepo, IThesisRepo thesisRepo, ICommentRepo commentRepo, IStudyProgramRepo studyRepo, ICalendarSchedule calendarRepo) {
+	public CommandLineRunner testModelLayer(IUserRepo userRepo, IPersonRepo personRepo, IStudentRepo studentRepo, IAcademicStaffRepo staffRepo, ICourseRepo courseRepo, IThesisRepo thesisRepo, ICommentRepo commentRepo, IStudyProgramRepo studyRepo, ICalendarSchedule calendarRepo, IOtherApplications otherApplicationRepo) {
 		return new CommandLineRunner() {
 			
 			
@@ -109,6 +112,19 @@ public class VaitsApplication {
 				
 				studyRepo.save(studyProgram1);
 				studyRepo.save(studyProgram2);
+				
+				OtherApplications changeTopicApplication = new OtherApplications(ApplicationType.CHANGE_THESIS_TOPIC, "Application for changing the topic of thesis.", th1);
+				OtherApplications submissionExtensionApplication = new OtherApplications(ApplicationType.SUBMISSION_EXTENSION, "Application for requuesting extension of submission.", th2);
+				
+				otherApplicationRepo.save(changeTopicApplication);
+				otherApplicationRepo.save(submissionExtensionApplication);
+				
+				th1.addOtherApplicationToThesis(changeTopicApplication);
+				th2.addOtherApplicationToThesis(submissionExtensionApplication);
+				
+				thesisRepo.save(th1);
+				thesisRepo.save(th2);
+
 				
 			}
 		};
