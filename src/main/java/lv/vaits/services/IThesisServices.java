@@ -12,17 +12,17 @@ public interface IThesisServices {
 	
 	Thesis createNewThesis(String titleLv, String titleEn, String aim, String tasks, Student student, AcademicStaff supervisor);
 	
-	Thesis updateThesisById(Long id, String titleLv, String titleEn, String aim, String tasks, Student student, AcademicStaff supervisor);
+	Thesis updateThesisById(Long id, String titleLv, String titleEn, String aim, String tasks, Student student, AcademicStaff supervisor) throws Exception;
 	
 	void deleteThesisById(Long id) throws Exception;
 	
-	Student retrieveThesisById(Long id) throws Exception;
+	Thesis retrieveThesisById(Long id) throws Exception;
 	
 	ArrayList<Thesis> retrieveAllThesis();
 	
 	Thesis changeSupervisorByThesisAndSupervisorId(Long idThesis, Long idAcademicStaff) throws Exception;
 	
-	void addReviewerByThesisId(Long idThesis, Long idReviewer);
+	Thesis addReviewerByThesisId(Long idThesis, Long idReviewer) throws Exception;
 	
     Thesis updateThesisStatus(Long idThesis, AcceptanceStatus status) throws Exception;
     

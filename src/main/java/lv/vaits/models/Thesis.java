@@ -109,6 +109,7 @@ public class Thesis {
 		this.accStatus = AcceptanceStatus.SUBMITTED;
 		this.otherApplications = new ArrayList<>();
 		this.comments = new ArrayList<>();
+		this.reviewers = new ArrayList<>();
 	}
 
 	public void addOtherApplicationToThesis(OtherApplications inputOtherApplication) {
