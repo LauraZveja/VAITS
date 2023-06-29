@@ -41,7 +41,7 @@ public class ThesisController {
 	public String insertThesisGetFunc(Thesis thesis, Model model) {
 		model.addAttribute("allThesis", thesisServices.retrieveAllThesis());
 		model.addAttribute("allStudents", studentServices.retrieveAllStudents());
-		model.addAttribute("allSupervisors", academicStaffServices.retrieveAllAcademicStaff());
+		model.addAttribute("allSupervisors", academicStaffServices.retrieveAllAcademicStaffMembers());
 		return "thesis-add-page";
 	}
 
@@ -78,7 +78,7 @@ public class ThesisController {
 		try {
 			model.addAttribute("thesis", thesisServices.retrieveThesisById(id));
 			model.addAttribute("allStudents", studentServices.retrieveAllStudents());
-			model.addAttribute("allSupervisors", academicStaffServices.retrieveAllAcademicStaff());
+			model.addAttribute("allSupervisors", academicStaffServices.retrieveAllAcademicStaffMembers());
 			return "thesis-update-page";
 		} catch (Exception e) {
 			return "error-page";
