@@ -6,6 +6,8 @@ import java.util.Collection;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -28,6 +30,7 @@ import lv.vaits.models.Thesis;
 public class AcademicStaff extends Person{
 	
 	@Column(name = "Degree")
+	@Enumerated(EnumType.STRING)
 	private Degree degree;
 	
 	@OneToMany(mappedBy = "supervisor")

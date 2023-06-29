@@ -30,7 +30,6 @@ public class CourseController {
 		return "course-add-page";
 	}
 
-	
 	@PostMapping("/course/addNew")
 	public String insertCoursePostFunc(@Valid Course course, BindingResult result) {
 		if (!result.hasErrors()) {
@@ -139,5 +138,10 @@ public class CourseController {
 			@RequestParam("Debtors") List<Long> debtorsId) throws Exception {
 		courseServices.removeStudentDebtByCourseId(courseid, debtorsId);
 		return "redirect:/course/showAllDebtors/" + courseid;
+	}
+
+	@GetMapping("/course/error")
+	public String errorAcademicStaffFunc() {
+		return "error-page";
 	}
 }

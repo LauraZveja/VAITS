@@ -3,6 +3,7 @@ package lv.vaits.services.users.impl;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import lv.vaits.models.Course;
 import lv.vaits.models.Thesis;
@@ -14,13 +15,11 @@ import lv.vaits.repos.IThesisRepo;
 import lv.vaits.repos.users.IAcademicStaffRepo;
 import lv.vaits.services.users.IAcademicStaffServices;
 
+@Service
 public class AcademicStaffServicesImplementation implements IAcademicStaffServices {
 
 	@Autowired
 	private IAcademicStaffRepo academicStaffRepo;
-
-	@Autowired
-	private IThesisRepo thesisRepo;
 
 	@Override
 	public AcademicStaff createNewAcademicStaffMember(String name, String surname, String personcode, User user,
@@ -35,7 +34,7 @@ public class AcademicStaffServicesImplementation implements IAcademicStaffServic
 			AcademicStaff updatedAcademicStaffMember = academicStaffRepo.findById(id).get();
 			updatedAcademicStaffMember.setName(name);
 			updatedAcademicStaffMember.setSurname(surname);
-			updatedAcademicStaffMember.setPersonCode(personcode);
+			updatedAcademicStaffMember.setPersoncode(personcode);
 			updatedAcademicStaffMember.setUser(user);
 			updatedAcademicStaffMember.setDegree(degree);
 			return academicStaffRepo.save(updatedAcademicStaffMember);
@@ -69,8 +68,3 @@ public class AcademicStaffServicesImplementation implements IAcademicStaffServic
 	}
 
 }
-
-
-	
-
-
