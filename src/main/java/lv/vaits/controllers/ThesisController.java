@@ -118,7 +118,7 @@ public class ThesisController {
 			@PathVariable("idSupervisor") Long idSupervisor, Model model) {
 		try {
 			model.addAttribute("allThesis", thesisServices.changeSupervisorByThesisAndSupervisorId(id, idSupervisor));
-			return "thesis-all-page";
+			return "redirect:/thesis/showAll";
 		} catch (Exception e) {
 			return "error-page";
 		}
@@ -129,7 +129,7 @@ public class ThesisController {
 			Model model) {
 		try {
 			model.addAttribute("allThesis", thesisServices.addReviewerByThesisId(id, idReviewer));
-			return "thesis-all-page";
+			return "redirect:/thesis/showAll";
 		} catch (Exception e) {
 			return "error-page";
 		}
