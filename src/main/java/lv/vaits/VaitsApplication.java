@@ -89,8 +89,8 @@ public class VaitsApplication {
 				Thesis th2 = new Thesis("Programmas izstrāde", "Development of Program", "Non Development",
 						"1...2.3..5", s1, ac2);
 
-				th1.addReviewer(ac1);
-				th2.addReviewer(ac2);
+				th1.addReviewer(ac2);
+				th2.addReviewer(ac1);
 				thesisRepo.save(th1);
 				thesisRepo.save(th2);
 				ac1.addThesisForReviews(th1);
