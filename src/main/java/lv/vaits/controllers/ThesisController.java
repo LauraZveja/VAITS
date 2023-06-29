@@ -81,14 +81,50 @@ public class ThesisController {
 	public String updateThesisByIdPostFunc(@PathVariable("id") Long id, @Valid Thesis thesis, BindingResult result) {
 		if (!result.hasErrors()) {
 			try {
-				Thesis temp = thesisServices.updateThesisById(id, thesis.getTitleLv(), thesis.getTitleEn(),
+				Thesis updatedThesis = thesisServices.updateThesisById(id, thesis.getTitleLv(), thesis.getTitleEn(),
 						thesis.getAim(), thesis.getTasks(), thesis.getStudent(), thesis.getSupervisor());
-				return "redirect:/thesis/showAll/" + temp.getIdt();
+				return "redirect:/thesis/showAll/" + updatedThesis.getIdt();
 			} catch (Exception e) {
 				return "redirect:/thesis/error";
 			}
 		} else {
 			return "thesis-update-page";
+		}
+	}
+
+	@GetMapping("/thesis/remove/{id}")
+	public String deleteThesisById(@PathVariable("id") Long id, Model model) {
+		try {
+			// vajag vispirms izdzēst arī komentāru vai mainit constraints datubāzē?
+			thesisServices.deleteThesisById(id);
+			model.addAttribute("allThesis", thesisServices.retrieveAllThesis());
+			return "thesis-one-page";
+		} catch (Exception e) {
+			return "error-page";
+		}
+	}
+
+	@GetMapping("/thesis/changeSupervisor/{idThesis}/{idSupervisor}")
+	public String changeSupervisorByThesisAndSupervisorIdGetFunc(@PathVariable("idThesis") Long id,
+			@PathVariable("idSupervisor") Long idSupervisor, Model model) {
+		try {
+			model.addAttribute("allThesis",
+					thesisServices.changeSupervisorByThesisAndSupervisorId(id, idSupervisor));
+			return "thesis-all-page";
+		} catch (Exception e) {
+			return "error-page";
+		}
+	}
+	
+	@GetMapping("/thesis/addReviewerByThesisId/{idThesis}/{idReviewer}")
+	public String addReviewerByThesisId(@PathVariable("idThesis") Long id,
+			@PathVariable("idReviewer") Long idReviewer, Model model) {
+		try {
+			model.addAttribute("allThesis",
+					thesisServices.addReviewerByThesisId(id, idReviewer));
+			return "thesis-all-page";
+		} catch (Exception e) {
+			return "error-page";
 		}
 	}
 

@@ -82,8 +82,7 @@ public class IThesisServicesImplementation implements IThesisServices {
 	public Thesis changeSupervisorByThesisAndSupervisorId(Long idThesis, Long idAcademicStaff) throws Exception {
 		if (thesisRepo.existsById(idThesis) && academicStaffRepo.existsById(idAcademicStaff)) {
 			Thesis updateThesis = thesisRepo.findById(idThesis).get();
-			AcademicStaff supervisor = academicStaffRepo.findById(idAcademicStaff).get();
-			updateThesis.setSupervisor(supervisor);
+			updateThesis.setSupervisor(academicStaffRepo.findById(idAcademicStaff).get());
 			return thesisRepo.save(updateThesis);
 		} else {
 			throw new Exception("Wrong thesis and / or supervisor id");
@@ -95,8 +94,7 @@ public class IThesisServicesImplementation implements IThesisServices {
 	public Thesis addReviewerByThesisId(Long idThesis, Long idReviewer) throws Exception {
 		if (thesisRepo.existsById(idThesis) && academicStaffRepo.existsById(idReviewer)) {
 			Thesis updateThesis = thesisRepo.findById(idThesis).get();
-			AcademicStaff reviewer = academicStaffRepo.findById(idReviewer).get();
-			updateThesis.addReviewer(reviewer);
+			updateThesis.addReviewer(academicStaffRepo.findById(idReviewer).get());
 			return thesisRepo.save(updateThesis);
 		} else {
 			throw new Exception("Wrong thesis and / or reviewer id");
