@@ -14,6 +14,7 @@ import lv.vaits.models.ApplicationType;
 import lv.vaits.models.CalendarSchedule;
 import lv.vaits.models.Faculty;
 import lv.vaits.models.LevelOfStudy;
+import lv.vaits.models.Message;
 import lv.vaits.models.Thesis;
 import lv.vaits.models.ThesisApplications;
 import lv.vaits.models.OtherApplications;
@@ -26,6 +27,7 @@ import lv.vaits.models.StudyProgram;
 import lv.vaits.repos.ICalendarSchedule;
 import lv.vaits.repos.ICommentRepo;
 import lv.vaits.repos.ICourseRepo;
+import lv.vaits.repos.IMessageRepo;
 import lv.vaits.repos.IOtherApplications;
 import lv.vaits.repos.IStudentStudyProgramRepo;
 import lv.vaits.repos.IStudyProgramRepo;
@@ -47,8 +49,9 @@ public class VaitsApplication {
 	public CommandLineRunner testModelLayer(IUserRepo userRepo, IPersonRepo personRepo, IStudentRepo studentRepo,
 			IAcademicStaffRepo staffRepo, ICourseRepo courseRepo, IThesisRepo thesisRepo, ICommentRepo commentRepo,
 			IStudyProgramRepo studyRepo, ICalendarSchedule calendarRepo, IOtherApplications otherApplicationRepo,
-			IStudentStudyProgramRepo sspRepo, IThesisApplications thesisApplicationsRepo) {
+			IStudentStudyProgramRepo sspRepo, IThesisApplications thesisApplicationsRepo, IMessageRepo messageRepo) {
 		return new CommandLineRunner() {
+
 
 			@Override
 			public void run(String... args) throws Exception {
@@ -141,6 +144,12 @@ public class VaitsApplication {
 
 				thesisRepo.save(th1);
 				thesisRepo.save(th2);
+				
+				Message m1 = new Message("Karina Šķirmante", "Lūdzu atsūtiet darba mērķi", th1);
+				Message m2 = new Message("Janis Berzins", "...", th2);
+				messageRepo.save(m1);
+				messageRepo.save(m2);
+
 
 				StudentStudyProgram listItem1 = new StudentStudyProgram(s1, studyProgram1, LocalDate.of(2021, 1, 31),
 						LocalDate.of(2022, 8, 31));
