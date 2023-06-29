@@ -99,6 +99,9 @@ public class Thesis {
 	@OneToMany(mappedBy = "thesis")
 	private Collection<ThesisApplications> thesisApplications;
 
+	@OneToMany(mappedBy = "thesis")
+	private Collection<Message> messages;
+
 	public Thesis(String titleLv, String titleEn, String aim, String tasks, Student student, AcademicStaff supervisor) {
 
 		this.titleLv = titleLv;
@@ -113,6 +116,7 @@ public class Thesis {
 		this.otherApplications = new ArrayList<>();
 		this.comments = new ArrayList<>();
 		this.thesisApplications = new ArrayList<>();
+		this.messages = new ArrayList<>();
 	}
 
 	public void addOtherApplicationToThesis(OtherApplications inputOtherApplication) {
@@ -130,6 +134,12 @@ public class Thesis {
 	public void addThesisApplicationToThesis(ThesisApplications inputThesisApplications) {
 		if (!thesisApplications.contains(inputThesisApplications)) {
 			thesisApplications.add(inputThesisApplications);
+		}
+	}
+
+	public void addMessageToThesis(Message inputMessage) {
+		if (!messages.contains(inputMessage)) {
+			messages.add(inputMessage);
 		}
 	}
 
