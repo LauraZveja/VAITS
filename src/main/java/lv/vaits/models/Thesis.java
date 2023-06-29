@@ -98,6 +98,8 @@ public class Thesis {
 
 	@OneToMany(mappedBy = "thesis")
 	private Collection<ThesisApplications> thesisApplications;
+	
+	private boolean isDeleted;
 
 	public Thesis(String titleLv, String titleEn, String aim, String tasks, Student student, AcademicStaff supervisor) {
 
@@ -114,6 +116,7 @@ public class Thesis {
 		this.comments = new ArrayList<>();
 		this.reviewers = new ArrayList<>();
 		this.thesisApplications = new ArrayList<>();
+		this.isDeleted = false;
 
 	}
 

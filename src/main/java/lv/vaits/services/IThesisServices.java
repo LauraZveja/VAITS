@@ -20,6 +20,8 @@ public interface IThesisServices {
 	
 	ArrayList<Thesis> retrieveAllThesis();
 	
+	ArrayList<Thesis> retrieveActiveTheses();
+	
 	Thesis changeSupervisorByThesisAndSupervisorId(Long idThesis, Long idAcademicStaff) throws Exception;
 	
 	Thesis addReviewerByThesisId(Long idThesis, Long idReviewer) throws Exception;

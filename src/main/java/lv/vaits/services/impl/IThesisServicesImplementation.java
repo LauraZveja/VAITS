@@ -124,4 +124,9 @@ public class IThesisServicesImplementation implements IThesisServices {
 		}
 	}
 
+	@Override
+	public ArrayList<Thesis> retrieveActiveTheses() {
+		return thesisRepo.findByIsDeletedFalse();
+	}
+
 }

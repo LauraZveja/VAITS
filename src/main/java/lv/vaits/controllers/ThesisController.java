@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 import lv.vaits.models.AcceptanceStatus;
 import lv.vaits.models.Thesis;
+import lv.vaits.repos.IThesisRepo;
 import lv.vaits.services.ICommentsServices;
 import lv.vaits.services.IThesisServices;
 import lv.vaits.services.users.IAcademicStaffServices;
@@ -29,6 +30,9 @@ public class ThesisController {
 
 	@Autowired
 	private IThesisServices thesisServices;
+
+	@Autowired
+	private IThesisRepo thesisRepo;
 
 	// @Autowired
 	// private ICommentsServices commentServices;
@@ -54,9 +58,10 @@ public class ThesisController {
 
 	@GetMapping("/thesis/showAll")
 	public String allThesisGetFunc(Model model) {
-		model.addAttribute("allThesis", thesisServices.retrieveAllThesis());
-		return "thesis-all-page";
+	    model.addAttribute("activeThesisList", thesisServices.retrieveActiveTheses());
+	    return "thesis-all-page";
 	}
+
 
 	@GetMapping("/thesis/showAll/{id}")
 	public String oneThesisByIdGetFunc(@PathVariable("id") Long id, Model model) {
@@ -97,14 +102,15 @@ public class ThesisController {
 
 	@GetMapping("/thesis/remove/{id}")
 	public String deleteThesisById(@PathVariable("id") Long id, Model model) {
-		try {
-			// vajag vispirms izdzēst arī komentāru vai mainit constraints datubāzē?
-			thesisServices.deleteThesisById(id);
-			model.addAttribute("allThesis", thesisServices.retrieveAllThesis());
-			return "thesis-one-page";
-		} catch (Exception e) {
-			return "error-page";
-		}
+	    try {
+	        Thesis updateThesis = thesisServices.retrieveThesisById(id);
+	        updateThesis.setDeleted(true);
+	        thesisRepo.save(updateThesis);
+	        model.addAttribute("allThesis", thesisServices.retrieveActiveTheses());
+	        return "redirect:/thesis/showAll";
+	    } catch (Exception e) {
+	        return "error-page";
+	    }
 	}
 
 	@GetMapping("/thesis/changeSupervisor/{idThesis}/{idSupervisor}")
@@ -140,8 +146,7 @@ public class ThesisController {
 	}
 
 	@PostMapping("/thesis/updateStatus/{id}")
-	public String updateThesisStatusPostFunc(@PathVariable("id") Long id, @Valid Thesis thesis,
-			BindingResult result) {
+	public String updateThesisStatusPostFunc(@PathVariable("id") Long id, @Valid Thesis thesis, BindingResult result) {
 		if (!result.hasErrors()) {
 			try {
 				Thesis updatedThesis = thesisServices.updateThesisStatus(id, thesis.getAccStatus());

@@ -38,7 +38,7 @@
 			<th>Supervisor</th>
 			<th>Reviewers</th>
 		</tr>
-		<tr th:each="thesis : ${allThesis}">
+		<tr th:each="thesis : ${activeThesisList}">
 			<td th:text="${thesis.getIdt()}"></td>
 			<td th:text="${thesis.getTitleLv()}"></td>
 			<td th:text="${thesis.getTitleEn()}"></td>
