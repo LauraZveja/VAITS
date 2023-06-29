@@ -49,4 +49,9 @@ public class CommentsServicesImplementation implements ICommentsServices {
 		return commentRepo.findByThesisIdt(id);
 	}
 
+	@Override
+	public ArrayList<Comment> retrieveAllComments() {
+		return (ArrayList<Comment>) commentRepo.findAll();
+	}
+
 }

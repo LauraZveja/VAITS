@@ -41,5 +41,11 @@ public class CommentController {
 			return "comment-add-page";
 		}
 	}
+	
+	@GetMapping("/comment/showAll")
+	public String allThesisGetFunc(Model model) {
+	    model.addAttribute("allComments", commentServices.retrieveAllComments());
+	    return "comment-all-page";
+	}
 
 }

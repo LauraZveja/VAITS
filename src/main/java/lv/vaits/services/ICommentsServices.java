@@ -15,5 +15,7 @@ public interface ICommentsServices {
 	void deleteCommentById(Long id) throws Exception;
 
 	ArrayList<Comment> selectAllByThesisId(Long id);
+	
+	ArrayList<Comment> retrieveAllComments();
 
 }

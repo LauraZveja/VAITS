@@ -32,10 +32,10 @@
 		</tr>
 		<th:block th:each="comment : ${allComments}">
 			<tr>
-				<td th:text="${comment.getId()}"></td>
+				<td th:text="${comment.getIdco()}"></td>
 				<td th:text="${comment.getDescription()}"></td>
 				<td th:text="${comment.getStaff().getName()} + ' ' + ${comment.getStaff().getSurname()}"></td>
-				<td th:text="${comment.getThesis().getTitle()}"></td>
+				<td th:text="${comment.getThesis().getTitleLv()}"></td>
 			</tr>
 		</th:block>
 	</table>
