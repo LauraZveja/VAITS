@@ -23,7 +23,7 @@
 
 <body>
 	<h1>
-		Student with id: <span th:text="${student.getIdp()}"></span>
+		All Debtors for curses: <span th:text="${course.getTitle()}"></span>
 	</h1>
 	<table>
 		<tr>
@@ -35,16 +35,17 @@
 			<th>Matricula number</th>
 			<th>Student financial debt</th>
 		</tr>
-		<tr>
-			<td th:text="${student.getIdp()}"></td>
-			<td th:text="${student.getName()}"></td>
-			<td th:text="${student.getSurname()}"></td>
-			<td th:text="${student.getPersoncode()}"></td>
-			<td th:text="${student.getUser().getEmail()}"></td>
-			<td th:text="${student.getMatriculaNo()}"></td>
-			<td th:text="${student.isFinancialDebt()}"></td>
-
-		</tr>
+		<th:block th:each="student : ${allDebtors}">
+			<tr>
+				<td th:text="${student.getIdp()}"></td>
+				<td th:text="${student.getName()}"></td>
+				<td th:text="${student.getSurname()}"></td>
+				<td th:text="${student.getPersoncode()}"></td>
+				<td th:text="${student.getUser().getEmail()}"></td>
+				<td th:text="${student.getMatriculaNo()}"></td>
+				<td th:text="${student.isFinancialDebt()}"></td>
+			</tr>
+		</th:block>
 	</table>
 </body>
 

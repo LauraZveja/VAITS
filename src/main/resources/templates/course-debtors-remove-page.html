@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -22,9 +23,7 @@
 </head>
 
 <body>
-	<h1>
-		Student with id: <span th:text="${student.getIdp()}"></span>
-	</h1>
+	<h1>Add Debt Course for Course with id.: <span th:text="${courseid}"></span></h1>
 	<table>
 		<tr>
 			<th>Student ID</th>
@@ -35,7 +34,7 @@
 			<th>Matricula number</th>
 			<th>Student financial debt</th>
 		</tr>
-		<tr>
+		<tr th:each="student : ${allDebtors}">
 			<td th:text="${student.getIdp()}"></td>
 			<td th:text="${student.getName()}"></td>
 			<td th:text="${student.getSurname()}"></td>
@@ -43,9 +42,20 @@
 			<td th:text="${student.getUser().getEmail()}"></td>
 			<td th:text="${student.getMatriculaNo()}"></td>
 			<td th:text="${student.isFinancialDebt()}"></td>
-
 		</tr>
 	</table>
+
+	<form th:action="@{/course/showAllDebtors/remove/{courseid}(courseid=${courseid})}" method="post">
+		<label>Select Debtors to Remove:</label><br>
+		<div th:each="student : ${allDebtors}">
+			<label>
+				<input type="checkbox" name="Debtors" th:value="${student.getIdp()}">
+				<span th:text="${student.getName()}+' '+${student.getSurname()}"></span>
+			</label><br>
+		</div>
+		<input type="submit" value="Remove Debtors">
+	</form>
+
 </body>
 
 </html>

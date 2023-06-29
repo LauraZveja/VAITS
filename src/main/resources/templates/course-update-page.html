@@ -1,0 +1,23 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<form action="#" th:action="@{/course/update/__${id}__}" th:object="${course}" method="post">
+	<table>
+		<tr>
+			<td>Title</td>
+			<td><input type="text" th:field="*{title}" /></td>
+			<td th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></td>
+			<tr />
+		<tr>
+			<td>Credit points</td>
+			<td><input type="text" th:field="*{creditPoints}" /></td>
+			<td th:if="${#fields.hasErrors('creditPoints')}" th:errors="*{creditPoints}"></td>
+			<tr />
+		<tr>
+			<td><button type="submit">Update Course</button></td>
+		</tr>
+	</table>
+
+</form>
+
+
+</html>
