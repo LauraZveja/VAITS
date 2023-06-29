@@ -98,6 +98,8 @@ public class Thesis {
 
 	@OneToMany(mappedBy = "thesis")
 	private Collection<ThesisApplications> thesisApplications;
+	
+	private boolean isDeleted;
 
 	@OneToMany(mappedBy = "thesis")
 	private Collection<Message> messages;
@@ -115,8 +117,11 @@ public class Thesis {
 		this.accStatus = AcceptanceStatus.SUBMITTED;
 		this.otherApplications = new ArrayList<>();
 		this.comments = new ArrayList<>();
+		this.reviewers = new ArrayList<>();
 		this.thesisApplications = new ArrayList<>();
 		this.messages = new ArrayList<>();
+		this.isDeleted = false;
+
 	}
 
 	public void addOtherApplicationToThesis(OtherApplications inputOtherApplication) {

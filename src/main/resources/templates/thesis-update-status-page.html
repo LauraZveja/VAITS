@@ -1,0 +1,99 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<style>
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			border-spacing: 0;
+		}
+
+		th,
+		td {
+			padding: 8px;
+			border: 1px solid #ddd;
+			text-align: left;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>
+		Thesis with ID: <span th:text="${thesis.getIdt()}"></span>
+	</h1>
+	<table>
+		<tr>
+			<th>Thesis ID</th>
+			<th>Title (LV)</th>
+			<th>Title (EN)</th>
+			<th>Aim</th>
+			<th>Tasks</th>
+			<th>Submit Date/Time</th>
+			<th>Status from Supervisor</th>
+			<th>Acceptance Status</th>
+			<th>Acceptance Date/Time</th>
+			<th>Student</th>
+			<th>Supervisor</th>
+			<th>Reviewers</th>
+			<th>Comments</th>
+			<th>Other Applications</th>
+		</tr>
+		<tr>
+			<td th:text="${thesis.getIdt()}"></td>
+			<td th:text="${thesis.getTitleLv()}"></td>
+			<td th:text="${thesis.getTitleEn()}"></td>
+			<td th:text="${thesis.getAim()}"></td>
+			<td th:text="${thesis.getTasks()}"></td>
+			<td
+				th:text="${#temporals.format(thesis.getSubmitDateTime(), 'yyyy-MM-dd') + ' ' + #temporals.format(thesis.getSubmitDateTime(), 'HH:mm:ss')}">
+			</td>
+			<td th:text="${thesis.isStatusFromSupervisor()}"></td>
+			<td th:text="${thesis.getAccStatus()}"></td>
+			<td
+				th:text="${#temporals.format(thesis.getAccDateTime(), 'yyyy-MM-dd') + ' ' + #temporals.format(thesis.getAccDateTime(), 'HH:mm:ss')}">
+			</td>
+			<td th:text="${thesis.getStudent().getName()} + ' ' + ${thesis.getStudent().getSurname()}"></td>
+			<td th:text="${thesis.getSupervisor().getName()} + ' ' + ${thesis.getSupervisor().getSurname()}"></td>
+			<td>
+				<ul>
+					<li th:each="reviewer : ${thesis.getReviewers()}"
+						th:text="${reviewer.getName()} + ' ' + ${reviewer.getSurname()}"></li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li th:each="comment : ${thesis.getComments()}" th:text="${comment.getDescription()}"></li>
+				</ul>
+			</td>
+			<td>
+				<ul>
+					<li th:each="otherapplication : ${thesis.getOtherApplications()}"
+						th:text="${otherapplication.getActivity()}">
+					</li>
+				</ul>
+			</td>
+		</tr>
+	</table>
+
+	<form method="POST" th:action="@{/thesis/updateStatus/{id}(id=${thesis.getIdt()})}" th:object="${thesis}">
+		<label>Acceptance Status:</label>
+		<select th:field="*{accStatus}" id="status" name="status">
+			<option th:each="status : ${T(lv.vaits.models.AcceptanceStatus).values()}" th:value="${status}"
+				th:selected="${status.name() eq thesis.accStatus.name()}">
+				<span th:text="${status.name()}"></span>
+			</option>
+		</select>
+		<button type="submit">Update Status</button>
+	</form>
+
+
+
+
+
+</body>
+
+</html>
