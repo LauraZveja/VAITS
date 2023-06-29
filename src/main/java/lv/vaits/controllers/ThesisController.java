@@ -3,8 +3,11 @@ package lv.vaits.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.validation.Valid;
 import lv.vaits.models.Thesis;
 import lv.vaits.services.ICommentsServices;
 import lv.vaits.services.IThesisServices;
@@ -32,6 +35,22 @@ public class ThesisController {
 		model.addAttribute("allStudents", studentServices.retrieveAllStudents());
 		model.addAttribute("allSupervisors", academicStaffServices.retrieveAllAcademicStaff());
 		return "thesis-add-page";
+	}
+	
+	@PostMapping("/thesis/addNew")
+	public String insertThesisPostFunc(@Valid Thesis thesis, BindingResult result) {
+		if (!result.hasErrors()) {
+			thesisServices.createNewThesis(thesis.getTitleLv(), thesis.getTitleEn(), thesis.getAim(), thesis.getTasks(), thesis.getStudent(), thesis.getSupervisor());
+			return "redirect:/thesis/showAll";
+		} else {
+			return "thesis-add-page";
+		}
+	}
+	
+	@GetMapping("/thesis/showAll")
+	public String allThesisGetFunc(Model model) {
+		model.addAttribute("allThesis", thesisServices.retrieveAllThesis());
+		return "thesis-all-page";
 	}
 
 }
