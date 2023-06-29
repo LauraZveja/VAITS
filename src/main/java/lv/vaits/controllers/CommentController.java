@@ -33,7 +33,7 @@ public class CommentController {
 	}
 
 	@PostMapping("/comment/addNew")
-	public String insertCoursePostFunc(@Valid Comment comment, BindingResult result) {
+	public String insertCommentPostFunc(@Valid Comment comment, BindingResult result) {
 		if (!result.hasErrors()) {
 			commentServices.createNewComment(comment.getDescription(), comment.getStaff(), comment.getThesis());
 			return "redirect:/comment/showAll";
