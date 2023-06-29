@@ -1,26 +1,18 @@
 package lv.vaits.controllers.users;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
-import lv.vaits.models.Course;
 import lv.vaits.models.Thesis;
 import lv.vaits.models.users.Student;
 import lv.vaits.services.ICourseServices;
-import lv.vaits.services.users.IAcademicStaffServices;
-import lv.vaits.services.users.IStudentServices;
-import lv.vaits.services.users.IUserServices;
+import lv.vaits.services.users.*;
 
 @Controller
 public class StudentController {

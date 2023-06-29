@@ -31,9 +31,6 @@ public class StudentServicesImplementation implements IStudentServices {
 	@Autowired
 	private IThesisRepo thesisRepo;
 
-	@Autowired
-	private ICommentRepo commentsRepo;
-
 	@Override
 	public Student createNewStudent(String name, String surname, String personcode, User user, String matriculaNo,
 			boolean financialDebt) {
@@ -149,6 +146,5 @@ public class StudentServicesImplementation implements IStudentServices {
 			throw new Exception("Wrong id");
 		}
 	}
-
 
 }

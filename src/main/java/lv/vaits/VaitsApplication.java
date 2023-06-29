@@ -56,10 +56,12 @@ public class VaitsApplication {
 				User us2 = new User("123", "s23zvejlaur@venta.lv"); // pasniedzejs
 				User us3 = new User("123", "s24zvejlaur@venta.lv"); // students
 				User us4 = new User("123", "s25zvejlaur@venta.lv"); // students
+				User us5 = new User("555", "venta@venta.lv"); // students
 				userRepo.save(us1);
 				userRepo.save(us2);
 				userRepo.save(us3);
 				userRepo.save(us4);
+				userRepo.save(us5);
 
 				Course c1 = new Course("Javaa", 4);
 				Course c2 = new Course("Datastr", 4);
@@ -76,7 +78,7 @@ public class VaitsApplication {
 				Student s2 = new Student("Baiba", "Kalnina", "222121-222121", us4, "12245678", true);
 
 				s2.addDebtCourse(c1);
-				s2.addDebtCourse(c2);
+				s1.addDebtCourse(c2);
 				studentRepo.save(s1);
 				studentRepo.save(s2);
 				c1.addStudent(s2);
@@ -152,9 +154,11 @@ public class VaitsApplication {
 				sspRepo.save(listItem3);
 
 				ThesisApplications application1 = new ThesisApplications("Sistēmasizstrāde", "Developmentofsystem",
-						"Development................................", "A1...2.3..4.......................", LocalDateTime.now(), th1);
+						"Development................................", "A1...2.3..4.......................",
+						LocalDateTime.now(), th1);
 				ThesisApplications application2 = new ThesisApplications("Sistēmasizstrāde", "Developmentofsystem",
-						"Development...................................", "A1...2.3..4............................", LocalDateTime.now(), th1);
+						"Development...................................", "A1...2.3..4............................",
+						LocalDateTime.now(), th1);
 
 				thesisApplicationsRepo.save(application1);
 				thesisApplicationsRepo.save(application2);
