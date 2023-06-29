@@ -3,6 +3,7 @@ package lv.vaits.services.impl;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import lv.vaits.models.Comment;
 import lv.vaits.models.Thesis;
@@ -10,6 +11,7 @@ import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.repos.ICommentRepo;
 import lv.vaits.services.ICommentsServices;
 
+@Service
 public class CommentsServicesImplementation implements ICommentsServices {
 
 	@Autowired
