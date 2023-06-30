@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.validation.Valid;
 import lv.vaits.models.Comment;
+import lv.vaits.models.Thesis;
+import lv.vaits.repos.IThesisRepo;
 import lv.vaits.services.ICommentsServices;
 import lv.vaits.services.IThesisServices;
 import lv.vaits.services.users.IAcademicStaffServices;
@@ -26,22 +28,30 @@ public class CommentController {
 	@Autowired
 	private IAcademicStaffServices academicStaffServices;
 
-//	@GetMapping("/comment/addNew")
-//	public String insertCommentGetFunc(Comment comment, Model model) {
-//		model.addAttribute("allThesis", thesisServices.retrieveAllThesis());
-//		model.addAttribute("allStaff", academicStaffServices.retrieveAllAcademicStaffMembers());
-//		return "comment-add-page";
-//	}
-//
-//	@PostMapping("/comment/addNew")
-//	public String insertCommentPostFunc(@Valid Comment comment, BindingResult result) {
-//		if (!result.hasErrors()) {
-//			commentServices.createNewComment(comment.getDescription(), comment.getStaff(), comment.getThesis());
-//			return "redirect:/comment/showAll";
-//		} else {
-//			return "comment-add-page";
-//		}
-//	}
+	@Autowired
+	private IThesisRepo thesisRepo;
+
+	@GetMapping("/comment/addNew")
+	public String insertCommentGetFunc(Comment comment, Model model) {
+		model.addAttribute("allThesis", thesisServices.retrieveAllThesis());
+		model.addAttribute("allStaff", academicStaffServices.retrieveAllAcademicStaffMembers());
+		model.addAttribute("allComments", commentServices.retrieveAllComments());
+		return "comment-add-page";
+	}
+
+	@PostMapping("/comment/addNew")
+	public String insertCommentPostFunc(@Valid Comment comment, BindingResult result) {
+		if (!result.hasErrors()) {
+			Comment newComment = commentServices.createNewComment(comment.getDescription(), comment.getStaff(),
+					comment.getThesis());
+			Thesis thesis = newComment.getThesis();
+			thesis.addCommentToThesis(newComment);
+			thesisRepo.save(thesis);
+			return "redirect:/comment/showAll";
+		} else {
+			return "comment-add-page";
+		}
+	}
 
 	@GetMapping("/comment/showAll")
 	public String allThesisGetFunc(Model model) {
