@@ -8,7 +8,7 @@ import lv.vaits.models.users.AcademicStaff;
 
 public interface ICommentsServices {
 
-	Comment createNewComment(String description, AcademicStaff staff, Thesis thesis);
+	void createNewComment(String description, AcademicStaff staff, Thesis thesis);
 
 	Comment updateCommentById(Long id, String description, AcademicStaff staff, Thesis thesis) throws Exception;
 

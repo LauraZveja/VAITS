@@ -9,6 +9,7 @@ import lv.vaits.models.Comment;
 import lv.vaits.models.Thesis;
 import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.repos.ICommentRepo;
+import lv.vaits.repos.IThesisRepo;
 import lv.vaits.services.ICommentsServices;
 
 @Service
@@ -17,9 +18,15 @@ public class CommentsServicesImplementation implements ICommentsServices {
 	@Autowired
 	private ICommentRepo commentRepo;
 
+	@Autowired
+	private IThesisRepo thesisRepo;
+
 	@Override
-	public Comment createNewComment(String description, AcademicStaff staff, Thesis thesis) {
-		return commentRepo.save(new Comment(description, staff, thesis));
+	public void createNewComment(String description, AcademicStaff staff, Thesis thesis) {
+		Comment newComment = commentRepo.save(new Comment(description, staff, thesis));
+		Thesis temp = newComment.getThesis();
+		thesis.addCommentToThesis(newComment);
+		thesisRepo.save(temp);
 	}
 
 	@Override

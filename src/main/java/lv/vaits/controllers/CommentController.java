@@ -1,5 +1,7 @@
 package lv.vaits.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import lv.vaits.models.Comment;
@@ -28,9 +31,6 @@ public class CommentController {
 	@Autowired
 	private IAcademicStaffServices academicStaffServices;
 
-	@Autowired
-	private IThesisRepo thesisRepo;
-
 	@GetMapping("/comment/addNew")
 	public String insertCommentGetFunc(Comment comment, Model model) {
 		model.addAttribute("allThesis", thesisServices.retrieveAllThesis());
@@ -40,13 +40,10 @@ public class CommentController {
 	}
 
 	@PostMapping("/comment/addNew")
-	public String insertCommentPostFunc(@Valid Comment comment, BindingResult result) {
+	public String insertCommentPostFunc(@Valid Comment comment, @RequestParam("thesis") Thesis thesis,
+			BindingResult result) {
 		if (!result.hasErrors()) {
-			Comment newComment = commentServices.createNewComment(comment.getDescription(), comment.getStaff(),
-					comment.getThesis());
-			Thesis thesis = newComment.getThesis();
-			thesis.addCommentToThesis(newComment);
-			thesisRepo.save(thesis);
+			commentServices.createNewComment(comment.getDescription(), comment.getStaff(), comment.getThesis());
 			return "redirect:/comment/showAll";
 		} else {
 			return "comment-add-page";
