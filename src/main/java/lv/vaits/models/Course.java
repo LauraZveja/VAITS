@@ -39,7 +39,7 @@ public class Course {
 	@Column(name = "Title")
 	@Size(min = 3, max = 25)
 	@NotNull
-	@Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam")
+	@Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "Pirmajam burtam jābūt lielajam")
 	private String title;
 
 	@Column(name = "CreditPoints")
@@ -52,7 +52,7 @@ public class Course {
 	private Collection<Student> debtStudents = new ArrayList<>();
 
 	public Course(
-			@Size(min = 3, max = 25) @NotNull @Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam") String title,
+			@Size(min = 3, max = 25) @NotNull @Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "Pirmajam burtam jābūt lielajam") String title,
 			@NotNull @Min(1) @Max(20) int creditPoints) {
 		super();
 		this.title = title;
