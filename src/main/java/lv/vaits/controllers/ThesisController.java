@@ -5,16 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
-import lv.vaits.models.AcceptanceStatus;
 import lv.vaits.models.Thesis;
 import lv.vaits.repos.IThesisRepo;
-import lv.vaits.services.ICommentsServices;
 import lv.vaits.services.IThesisServices;
 import lv.vaits.services.users.IAcademicStaffServices;
 import lv.vaits.services.users.IStudentServices;
@@ -33,9 +29,6 @@ public class ThesisController {
 
 	@Autowired
 	private IThesisRepo thesisRepo;
-
-	// @Autowired
-	// private ICommentsServices commentServices;
 
 	@GetMapping("/thesis/addNew")
 	public String insertThesisGetFunc(Thesis thesis, Model model) {
@@ -58,10 +51,9 @@ public class ThesisController {
 
 	@GetMapping("/thesis/showAll")
 	public String allThesisGetFunc(Model model) {
-	    model.addAttribute("activeThesisList", thesisServices.retrieveActiveTheses());
-	    return "thesis-all-page";
+		model.addAttribute("activeThesisList", thesisServices.retrieveActiveTheses());
+		return "thesis-all-page";
 	}
-
 
 	@GetMapping("/thesis/showAll/{id}")
 	public String oneThesisByIdGetFunc(@PathVariable("id") Long id, Model model) {
@@ -102,15 +94,15 @@ public class ThesisController {
 
 	@GetMapping("/thesis/remove/{id}")
 	public String deleteThesisById(@PathVariable("id") Long id, Model model) {
-	    try {
-	        Thesis updateThesis = thesisServices.retrieveThesisById(id);
-	        updateThesis.setDeleted(true);
-	        thesisRepo.save(updateThesis);
-	        model.addAttribute("allThesis", thesisServices.retrieveActiveTheses());
-	        return "redirect:/thesis/showAll";
-	    } catch (Exception e) {
-	        return "error-page";
-	    }
+		try {
+			Thesis updateThesis = thesisServices.retrieveThesisById(id);
+			updateThesis.setDeleted(true);
+			thesisRepo.save(updateThesis);
+			model.addAttribute("allThesis", thesisServices.retrieveActiveTheses());
+			return "redirect:/thesis/showAll";
+		} catch (Exception e) {
+			return "error-page";
+		}
 	}
 
 	@GetMapping("/thesis/changeSupervisor/{idThesis}/{idSupervisor}")

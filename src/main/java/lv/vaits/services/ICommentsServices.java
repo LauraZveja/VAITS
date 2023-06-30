@@ -18,4 +18,6 @@ public interface ICommentsServices {
 	
 	ArrayList<Comment> retrieveAllComments();
 
+	Comment retrieveCommentById(Long id) throws Exception;
+
 }

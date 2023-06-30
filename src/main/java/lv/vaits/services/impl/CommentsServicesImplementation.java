@@ -54,4 +54,13 @@ public class CommentsServicesImplementation implements ICommentsServices {
 		return (ArrayList<Comment>) commentRepo.findAll();
 	}
 
+	@Override
+	public Comment retrieveCommentById(Long id) throws Exception {
+		if (commentRepo.existsById(id)) {
+			return commentRepo.findById(id).get();
+		} else {
+			throw new Exception("Wrong id");
+		}
+	}
+
 }

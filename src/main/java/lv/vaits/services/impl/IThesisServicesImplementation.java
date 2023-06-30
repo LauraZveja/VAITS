@@ -114,17 +114,6 @@ public class IThesisServicesImplementation implements IThesisServices {
 	}
 
 	@Override
-	public Thesis addCommentToThesis(Long idThesis, Comment comment) throws Exception {
-		if (thesisRepo.existsById(idThesis) && comment != null) {
-			Thesis updateThesis = thesisRepo.findById(idThesis).get();
-			updateThesis.addCommentToThesis(comment);
-			return thesisRepo.save(updateThesis);
-		} else {
-			throw new Exception("Wrong id and / or invalid Acceptance status");
-		}
-	}
-
-	@Override
 	public ArrayList<Thesis> retrieveActiveTheses() {
 		return thesisRepo.findByIsDeletedFalse();
 	}
