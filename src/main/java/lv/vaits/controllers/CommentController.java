@@ -86,4 +86,15 @@ public class CommentController {
 		}
 	}
 
+	@GetMapping("/comment/remove/{id}")
+	public String deleteCommentById(@PathVariable("id") Long id, Model model) {
+		try {
+			commentServices.deleteCommentById(id);
+			model.addAttribute("allComments", commentServices.retrieveAllComments());
+			return "comment-all-page";
+		} catch (Exception e) {
+			return "error-page";
+		}
+	}
+
 }
