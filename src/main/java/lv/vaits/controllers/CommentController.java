@@ -1,7 +1,5 @@
 package lv.vaits.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.validation.Valid;
 import lv.vaits.models.Comment;
 import lv.vaits.models.Thesis;
-import lv.vaits.repos.IThesisRepo;
 import lv.vaits.services.ICommentsServices;
 import lv.vaits.services.IThesisServices;
 import lv.vaits.services.users.IAcademicStaffServices;
