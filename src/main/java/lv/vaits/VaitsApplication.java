@@ -71,14 +71,14 @@ public class VaitsApplication {
 				courseRepo.save(c1);
 				courseRepo.save(c2);
 
-				AcademicStaff ac1 = new AcademicStaff("Karina", "Skirmante", "121212-121212", us1, Degree.MG);
-				AcademicStaff ac2 = new AcademicStaff("Karlis", "Immers", "131212-131212", us2, Degree.MG);
+				AcademicStaff ac1 = new AcademicStaff("Karina", "Skirmante", "270792-11111", us1, Degree.MG);
+				AcademicStaff ac2 = new AcademicStaff("Karlis", "Immers", "270792-11112", us2, Degree.MG);
 
 				staffRepo.save(ac1);
 				staffRepo.save(ac2);
 
-				Student s1 = new Student("Janis", "Berzins", "212121-212121", us3, "12345678", false);
-				Student s2 = new Student("Baiba", "Kalnina", "222121-222121", us4, "12245678", true);
+				Student s1 = new Student("Janis", "Berzins", "270792-11113", us3, "12345678", false);
+				Student s2 = new Student("Baiba", "Kalnina", "270792-11114", us4, "12245679", true);
 
 				s2.addDebtCourse(c1);
 				s1.addDebtCourse(c2);
