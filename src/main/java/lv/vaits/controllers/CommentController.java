@@ -97,4 +97,16 @@ public class CommentController {
 		}
 	}
 
+	@GetMapping("/thesis/showAllComments/{id}")
+	public String allCommentsByThesisIdGetFunc(@PathVariable("id") Long id, Model model) {
+		try {
+			model.addAttribute("thesis", thesisServices.retrieveThesisById(id));
+			model.addAttribute("allComments", commentServices.selectAllByThesisId(id));
+			return "thesis-comments-page";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error-page";
+		}
+	}
+
 }

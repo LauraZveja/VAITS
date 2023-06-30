@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<style>
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			border-spacing: 0;
+		}
+
+		th,
+		td {
+			padding: 8px;
+			border: 1px solid #ddd;
+			text-align: left;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>
+		Thesis Comments - Thesis ID: <span th:text="${thesis.getIdt()}"></span>
+	</h1>
+	<table>
+		<tr>
+			<th>Comment ID</th>
+			<th>Description</th>
+			<th>Staff</th>
+		</tr>
+		<th:block th:each="comment : ${allComments}">
+			<tr>
+				<td th:text="${comment.getIdco()}"></td>
+				<td th:text="${comment.getDescription()}"></td>
+				<td th:text="${comment.getStaff().getName()} + ' ' + ${comment.getStaff().getSurname()}"></td>
+			</tr>
+		</th:block>
+	</table>
+</body>
+
+</html>
