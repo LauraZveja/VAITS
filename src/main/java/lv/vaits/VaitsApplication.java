@@ -45,7 +45,7 @@ public class VaitsApplication {
 		SpringApplication.run(VaitsApplication.class, args);
 	}
 
-	@Bean
+	//@Bean
 	public CommandLineRunner testModelLayer(IUserRepo userRepo, IPersonRepo personRepo, IStudentRepo studentRepo,
 			IAcademicStaffRepo staffRepo, ICourseRepo courseRepo, IThesisRepo thesisRepo, ICommentRepo commentRepo,
 			IStudyProgramRepo studyRepo, ICalendarSchedule calendarRepo, IOtherApplications otherApplicationRepo,

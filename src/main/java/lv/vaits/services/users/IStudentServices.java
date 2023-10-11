@@ -13,6 +13,7 @@ import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.models.users.Student;
 import lv.vaits.models.users.User;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 public interface IStudentServices {
 
@@ -44,5 +45,9 @@ public interface IStudentServices {
 	Student retrieveStudentByMatriculaNo(String matriculaNo) throws Exception;
 
 	void importStudentsFromExcel(InputStream excelFile) throws IOException;
+
+	XWPFDocument exportStudentsToWord();
+
+	void importStudentsFromWord(InputStream docxFile) throws IOException;
 
 }

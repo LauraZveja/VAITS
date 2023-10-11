@@ -2,6 +2,7 @@ package lv.vaits.services.users.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +12,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTTblWidth;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STTblWidth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -191,7 +195,7 @@ public class StudentServicesImplementation implements IStudentServices {
 
     @Override
     public Student retrieveStudentByMatriculaNo(String matriculaNo) throws Exception {
-        if (studentRepo.existsByMatriculaNo(matriculaNo)){
+        if (studentRepo.existsByMatriculaNo(matriculaNo)) {
             return studentRepo.findByMatriculaNo(matriculaNo);
         } else {
             throw new Exception("Wrong Matricula No");
@@ -210,7 +214,6 @@ public class StudentServicesImplementation implements IStudentServices {
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();
 
-            // Skip the header row
             if (row.getRowNum() == 0) {
                 continue;
             }
@@ -226,9 +229,78 @@ public class StudentServicesImplementation implements IStudentServices {
                 createNewStudent(name, surname, personcode, currentUser, matriculaNo, financialDebt);
                 currentUserIndex++;
 
-
             }
         }
     }
 
+    @Override
+    public XWPFDocument exportStudentsToWord() {
+        List<Student> students = retrieveAllStudents();
+
+        XWPFDocument document = new XWPFDocument();
+        XWPFParagraph paragraph = document.createParagraph();
+
+        XWPFRun run = paragraph.createRun();
+        run.setBold(true);
+        run.setText("Students");
+
+        XWPFTable table = document.createTable(students.size() + 1, 6);
+
+        String[] headers = {"Name", "Surname", "Personcode", "User e-mail", "Matricula number", "Student financial debt"};
+        XWPFTableRow headerRow = table.getRow(0);
+        for (int i = 0; i < headers.length; i++) {
+            XWPFTableCell headerCell = headerRow.getCell(i);
+            headerCell.setText(headers[i]);
+        }
+
+        int rowNum = 1;
+        for (Student student : students) {
+            XWPFTableRow dataRow = table.getRow(rowNum++);
+            dataRow.getCell(0).setText(student.getName());
+            dataRow.getCell(1).setText(student.getSurname());
+            dataRow.getCell(2).setText(student.getPersoncode());
+            dataRow.getCell(3).setText(student.getUser().getEmail());
+            dataRow.getCell(4).setText(student.getMatriculaNo());
+            dataRow.getCell(5).setText(String.valueOf(student.isFinancialDebt()));
+        }
+
+        for (int i = 0; i < 6; i++) {
+            CTTblWidth cellWidth = table.getRow(0).getCell(i).getCTTc().addNewTcPr().addNewTcW();
+            cellWidth.setType(STTblWidth.DXA);
+            cellWidth.setW(BigInteger.valueOf(3000));
+        }
+
+        return document;
+    }
+
+    @Override
+    public void importStudentsFromWord(InputStream docxFile) throws IOException {
+        XWPFDocument document = new XWPFDocument(docxFile);
+        List<User> users = (List<User>) userRepo.findAll();
+        int currentUserIndex = 5;
+
+        for (XWPFTable table : document.getTables()) {
+            // Iterate through the rows, starting from the second row
+            for (int rowIndex = 1; rowIndex < table.getRows().size(); rowIndex++) {
+                XWPFTableRow row = table.getRows().get(rowIndex);
+
+                List<XWPFTableCell> cells = row.getTableCells();
+
+                if (cells.size() >= 6) {
+                    String name = cells.get(0).getText();
+                    String surname = cells.get(1).getText();
+                    String personcode = cells.get(2).getText();
+                    String matriculaNo = cells.get(4).getText();
+                    boolean financialDebt = Boolean.parseBoolean(cells.get(5).getText());
+
+                    if (!studentRepo.existsByMatriculaNo(matriculaNo)) {
+                        User currentUser = users.get(currentUserIndex);
+                        createNewStudent(name, surname, personcode, currentUser, matriculaNo, financialDebt);
+                        currentUserIndex++;
+                    }
+                }
+            }
+        }
+
+    }
 }
