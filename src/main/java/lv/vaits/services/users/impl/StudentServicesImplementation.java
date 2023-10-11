@@ -1,9 +1,12 @@
 package lv.vaits.services.users.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
+import lv.vaits.repos.users.IUserRepo;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -11,13 +14,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lv.vaits.models.Comment;
 import lv.vaits.models.Course;
 import lv.vaits.models.Thesis;
 import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.models.users.Student;
 import lv.vaits.models.users.User;
-import lv.vaits.repos.ICommentRepo;
 import lv.vaits.repos.ICourseRepo;
 import lv.vaits.repos.IThesisRepo;
 import lv.vaits.repos.users.IStudentRepo;
@@ -34,6 +35,9 @@ public class StudentServicesImplementation implements IStudentServices {
 
     @Autowired
     private IThesisRepo thesisRepo;
+
+    @Autowired
+    private IUserRepo userRepo;
 
     @Override
     public Student createNewStudent(String name, String surname, String personcode, User user, String matriculaNo,
@@ -161,7 +165,7 @@ public class StudentServicesImplementation implements IStudentServices {
 
         Row headRow = sheet.createRow(0);
 
-        String[] headers = {"Name", "Surname", "Personcode", "E-mail", "Matricula number", "Financial debt"};
+        String[] headers = {"Name", "Surname", "Personcode", "User e-mail", "Matricula number", "Student financial debt"};
         int rowNum = 1;
 
         for (int i = 0; i < headers.length; i++) {
@@ -173,8 +177,9 @@ public class StudentServicesImplementation implements IStudentServices {
             dataRow.createCell(0).setCellValue(student.getName());
             dataRow.createCell(1).setCellValue(student.getSurname());
             dataRow.createCell(2).setCellValue(student.getPersoncode());
-            dataRow.createCell(3).setCellValue(student.getMatriculaNo());
-            dataRow.createCell(4).setCellValue(student.isFinancialDebt());
+            dataRow.createCell(3).setCellValue(student.getUser().getEmail());
+            dataRow.createCell(4).setCellValue(student.getMatriculaNo());
+            dataRow.createCell(5).setCellValue(student.isFinancialDebt());
         }
 
         for (int i = 0; i < 6; i++) {
@@ -184,5 +189,46 @@ public class StudentServicesImplementation implements IStudentServices {
         return workbook;
     }
 
+    @Override
+    public Student retrieveStudentByMatriculaNo(String matriculaNo) throws Exception {
+        if (studentRepo.existsByMatriculaNo(matriculaNo)){
+            return studentRepo.findByMatriculaNo(matriculaNo);
+        } else {
+            throw new Exception("Wrong Matricula No");
+        }
+    }
+
+    @Override
+    public void importStudentsFromExcel(InputStream excelFile) throws IOException {
+        Workbook workbook = new XSSFWorkbook(excelFile);
+        Sheet sheet = workbook.getSheetAt(0);
+        Iterator<Row> rowIterator = sheet.iterator();
+        int currentUserIndex = 5;
+
+        List<User> users = (List<User>) userRepo.findAll();
+
+        while (rowIterator.hasNext()) {
+            Row row = rowIterator.next();
+
+            // Skip the header row
+            if (row.getRowNum() == 0) {
+                continue;
+            }
+
+            String name = row.getCell(0).getStringCellValue();
+            String surname = row.getCell(1).getStringCellValue();
+            String personcode = row.getCell(2).getStringCellValue();
+            String matriculaNo = row.getCell(4).getStringCellValue();
+            boolean financialDebt = row.getCell(5).getBooleanCellValue();
+
+            if (!studentRepo.existsByMatriculaNo(matriculaNo)) {
+                User currentUser = users.get(currentUserIndex);
+                createNewStudent(name, surname, personcode, currentUser, matriculaNo, financialDebt);
+                currentUserIndex++;
+
+
+            }
+        }
+    }
 
 }

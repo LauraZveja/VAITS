@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import lv.vaits.models.Thesis;
 import lv.vaits.models.users.Student;
 import lv.vaits.services.ICourseServices;
 import lv.vaits.services.users.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class StudentController {
@@ -212,5 +214,23 @@ public class StudentController {
 				.contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
 				.body(new InputStreamResource(new FileInputStream(tempFile)));
 	}
+
+	@PostMapping("/student/import")
+	public ResponseEntity<String> importStudents(@RequestParam("file") MultipartFile file) throws IOException {
+		if (file.isEmpty()) {
+			return ResponseEntity.badRequest().body("Please select an Excel file to upload.");
+		}
+
+		try {
+			studentServices.importStudentsFromExcel(file.getInputStream());
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Location", "/student/showAll");
+
+			return new ResponseEntity<>(headers, HttpStatus.FOUND);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during import.");
+		}
+	}
+
 
 }

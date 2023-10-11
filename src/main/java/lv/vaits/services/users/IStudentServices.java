@@ -1,5 +1,7 @@
 package lv.vaits.services.users;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -39,5 +41,8 @@ public interface IStudentServices {
 
 	Workbook exportStudentsToExcel();
 
+	Student retrieveStudentByMatriculaNo(String matriculaNo) throws Exception;
+
+	void importStudentsFromExcel(InputStream excelFile) throws IOException;
 
 }
