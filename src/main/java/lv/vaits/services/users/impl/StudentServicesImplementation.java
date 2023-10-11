@@ -161,14 +161,12 @@ public class StudentServicesImplementation implements IStudentServices {
 
         Row headRow = sheet.createRow(0);
 
-        headRow.createCell(0).setCellValue("Name");
-        headRow.createCell(0).setCellValue("Surname");
-        headRow.createCell(0).setCellValue("Personcode");
-        headRow.createCell(0).setCellValue("E-mail");
-        headRow.createCell(0).setCellValue("Matricula number");
-        headRow.createCell(0).setCellValue("Financial debt");
-
+        String[] headers = {"Name", "Surname", "Personcode", "E-mail", "Matricula number", "Financial debt"};
         int rowNum = 1;
+
+        for (int i = 0; i < headers.length; i++) {
+            headRow.createCell(i).setCellValue(headers[i]);
+        }
 
         for (Student student : students) {
             Row dataRow = sheet.createRow(rowNum++);

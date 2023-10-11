@@ -132,13 +132,12 @@ public class IThesisServicesImplementation implements IThesisServices {
         Sheet sheet = workbook.createSheet("Theses");
 
         // Tiek izveidoti rindu nosaukumi
+        String[] headers = {"Title (LV)", "Title (EN)", "Aim", "Tasks", "Student", "Supervisor"};
+
         Row headerRow = sheet.createRow(0);
-        headerRow.createCell(0).setCellValue("Title (LV)");
-        headerRow.createCell(1).setCellValue("Title (EN)");
-        headerRow.createCell(2).setCellValue("Aim");
-        headerRow.createCell(3).setCellValue("Tasks");
-        headerRow.createCell(4).setCellValue("Student");
-        headerRow.createCell(5).setCellValue("Supervisor");
+        for (int i = 0; i < headers.length; i++) {
+            headerRow.createCell(i).setCellValue(headers[i]);
+        }
 
         // Tiek inicializēts rindas numurs
         int rowNum = 1;
@@ -178,12 +177,11 @@ public class IThesisServicesImplementation implements IThesisServices {
 
         // Set column names
         XWPFTableRow headerRow = table.getRow(0);
-        headerRow.getCell(0).setText("Title (LV)");
-        headerRow.getCell(1).setText("Title (EN)");
-        headerRow.getCell(2).setText("Aim");
-        headerRow.getCell(3).setText("Tasks");
-        headerRow.getCell(4).setText("Student");
-        headerRow.getCell(5).setText("Supervisor");
+        String[] headers = {"Title (LV)", "Title (EN)", "Aim", "Tasks", "Student", "Supervisor"};
+
+        for (int i = 0; i < headers.length; i++) {
+            headerRow.getCell(i).setText(headers[i]);
+        }
 
         // Fill the table with data
         for (int i = 0; i < theses.size(); i++) {
