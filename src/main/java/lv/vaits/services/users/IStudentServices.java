@@ -10,6 +10,7 @@ import lv.vaits.models.Thesis;
 import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.models.users.Student;
 import lv.vaits.models.users.User;
+import org.apache.poi.ss.usermodel.Workbook;
 
 public interface IStudentServices {
 
@@ -35,6 +36,8 @@ public interface IStudentServices {
 
 	Thesis submitThesisByStudentId(String titleLv, String titleEn, String aim, String tasks, Long idStudent,
 			AcademicStaff supervisor) throws Exception;
+
+	Workbook exportStudentsToExcel();
 
 
 }

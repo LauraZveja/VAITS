@@ -45,7 +45,7 @@ public class VaitsApplication {
 		SpringApplication.run(VaitsApplication.class, args);
 	}
 
-	//@Bean
+	@Bean
 	public CommandLineRunner testModelLayer(IUserRepo userRepo, IPersonRepo personRepo, IStudentRepo studentRepo,
 			IAcademicStaffRepo staffRepo, ICourseRepo courseRepo, IThesisRepo thesisRepo, ICommentRepo commentRepo,
 			IStudyProgramRepo studyRepo, ICalendarSchedule calendarRepo, IOtherApplications otherApplicationRepo,
@@ -59,12 +59,24 @@ public class VaitsApplication {
 				User us2 = new User("123", "s23zvejlaur@venta.lv"); // pasniedzejs
 				User us3 = new User("123", "s24zvejlaur@venta.lv"); // students
 				User us4 = new User("123", "s25zvejlaur@venta.lv"); // students
-				User us5 = new User("555", "venta@venta.lv"); // students
+				User us5 = new User("555", "venta1@venta.lv"); // students
+				User us6 = new User("555", "venta2@venta.lv"); // students
+				User us7 = new User("555", "venta3@venta.lv"); // students
+				User us8 = new User("555", "venta4@venta.lv"); // students
+				User us9 = new User("555", "venta5@venta.lv"); // students
+				User us10 = new User("555", "venta6@venta.lv"); // students
+				User us11 = new User("555", "venta7@venta.lv"); // students
 				userRepo.save(us1);
 				userRepo.save(us2);
 				userRepo.save(us3);
 				userRepo.save(us4);
 				userRepo.save(us5);
+				userRepo.save(us6);
+				userRepo.save(us7);
+				userRepo.save(us8);
+				userRepo.save(us9);
+				userRepo.save(us10);
+				userRepo.save(us11);
 
 				Course c1 = new Course("Javaa", 4);
 				Course c2 = new Course("Datastr", 4);

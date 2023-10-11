@@ -1,8 +1,17 @@
 package lv.vaits.controllers.users;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -180,6 +189,28 @@ public class StudentController {
 	@GetMapping("/student/error")
 	public String errorStudentFunc() {
 		return "error-page";
+	}
+
+	@GetMapping("student/export")
+	public ResponseEntity<InputStreamResource> exportStudentToExcel() throws IOException {
+		Workbook workbook = studentServices.exportStudentsToExcel();
+
+		File tempFile = File.createTempFile("students", ".xlsx");
+
+		FileOutputStream fos = new FileOutputStream(tempFile);
+
+		workbook.write(fos);
+		fos.close();
+
+		HttpHeaders headers = new HttpHeaders();
+
+		headers.add("Content-Disposition", "attachment; filename=students.xlsx");
+
+		return ResponseEntity
+				.ok()
+				.headers(headers)
+				.contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+				.body(new InputStreamResource(new FileInputStream(tempFile)));
 	}
 
 }
