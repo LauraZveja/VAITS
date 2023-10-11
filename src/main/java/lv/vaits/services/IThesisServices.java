@@ -1,5 +1,6 @@
 package lv.vaits.services;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import lv.vaits.models.AcceptanceStatus;
@@ -7,6 +8,8 @@ import lv.vaits.models.Comment;
 import lv.vaits.models.Thesis;
 import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.models.users.Student;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 public interface IThesisServices {
 
@@ -29,5 +32,9 @@ public interface IThesisServices {
 	Thesis addReviewerByThesisId(Long idThesis, Long idReviewer) throws Exception;
 
 	Thesis updateThesisStatus(Long idThesis, AcceptanceStatus status) throws Exception;
+
+	Workbook exportThesisToExcel();
+
+	XWPFDocument exportThesisToWord();
 
 }
