@@ -31,6 +31,8 @@ import lv.vaits.services.users.IStudentServices;
 @Service
 public class StudentServicesImplementation implements IStudentServices {
 
+    int currentUserIndex = 5;
+
     @Autowired
     private IStudentRepo studentRepo;
 
@@ -207,7 +209,6 @@ public class StudentServicesImplementation implements IStudentServices {
         Workbook workbook = new XSSFWorkbook(excelFile);
         Sheet sheet = workbook.getSheetAt(0);
         Iterator<Row> rowIterator = sheet.iterator();
-        int currentUserIndex = 5;
 
         List<User> users = (List<User>) userRepo.findAll();
 
@@ -277,7 +278,6 @@ public class StudentServicesImplementation implements IStudentServices {
     public void importStudentsFromWord(InputStream docxFile) throws IOException {
         XWPFDocument document = new XWPFDocument(docxFile);
         List<User> users = (List<User>) userRepo.findAll();
-        int currentUserIndex = 5;
 
         for (XWPFTable table : document.getTables()) {
             // Iterate through the rows, starting from the second row
