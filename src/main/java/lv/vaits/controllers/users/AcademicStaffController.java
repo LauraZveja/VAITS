@@ -3,6 +3,7 @@ package lv.vaits.controllers.users;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import lv.vaits.repos.IThesisRepo;
 import lv.vaits.services.users.IAcademicStaffServices;
 import lv.vaits.services.users.IUserServices;
 
+@Controller
 public class AcademicStaffController {
 
 	@Autowired
@@ -35,7 +37,7 @@ public class AcademicStaffController {
 	public String createAcademicStaffPostFunc(@Valid AcademicStaff academicStaff, BindingResult result) {
 		if (!result.hasErrors()) {
 			academicStaffServices.createNewAcademicStaffMember(academicStaff.getName(), academicStaff.getSurname(),
-					academicStaff.getPersonCode(), academicStaff.getUser(), academicStaff.getDegree());
+					academicStaff.getPersoncode(), academicStaff.getUser(), academicStaff.getDegree());
 			return "redirect:/academicStaff/showAll";
 		} else {
 			return "academicStaff-create-page";
@@ -59,7 +61,7 @@ public class AcademicStaffController {
 		if (!result.hasErrors()) {
 			try {
 				AcademicStaff temp = academicStaffServices.updateAcademicStaffMemberById(id, academicStaff.getName(),
-						academicStaff.getSurname(), academicStaff.getPersonCode(), academicStaff.getUser());
+						academicStaff.getSurname(), academicStaff.getPersoncode(), academicStaff.getUser(), null);
 				return "redirect:/academicStaff/showAll/" + temp.getIdp();
 			} catch (Exception e) {
 				return "redirect:/academicStaff-error";

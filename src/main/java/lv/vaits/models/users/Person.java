@@ -51,7 +51,7 @@ public class Person {
 	@NotNull
 	//@Size(min = 12, max = 12)
 	//TODO apdomāt un pievienot risinājumu ārzemju studentiem un jaunajiem LV personas kodiem
-	@Column(name = "Personcode")
+	@Column(name = "PersonCode")
 	private String personcode;
 	
 	//TODO uztaisīt one to one saiti

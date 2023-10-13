@@ -169,7 +169,7 @@ public class StudentController {
 
 	@GetMapping("/student/thesis/addNew/{id}")
 	public String insertStudentThesisGetFunc(@PathVariable("id") Long id, Thesis thesis, Model model) {
-		model.addAttribute("allSupervisors", academicStaffServices.retrieveAllAcademicStaff());
+		model.addAttribute("allSupervisors", academicStaffServices.retrieveAllAcademicStaffMembers());
 		return "student-thesis-add-page";
 	}
 

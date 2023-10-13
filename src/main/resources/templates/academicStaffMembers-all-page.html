@@ -7,7 +7,7 @@
 			<th>Name</th>
 			<th>Surname</th>
 			<th>Personcode</th>
-			<th>User e-mail</th>
+			<!--<th>User e-mail</th>-->
 			<th>Degree</th>
 		</tr>
 		<th:block th:each="academicStaff : ${allAcademicStaffMembers}">
@@ -16,7 +16,7 @@
 				<td th:text="${academicStaff.getName()}"></td>
 				<td th:text="${academicStaff.getSurname()}"></td>
 				<td th:text="${academicStaff.getPersoncode()}"></td>
-				<td th:text="${academicStaff.getUser().getEmail()}"></td>
+				<!--<td th:text="${academicStaff.getUser().getEmail()}"></td>-->
 				<td th:text="${academicStaff.getDegree()}"></td>
 
 			</tr>
