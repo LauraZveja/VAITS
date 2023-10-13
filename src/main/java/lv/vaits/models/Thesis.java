@@ -98,6 +98,11 @@ public class Thesis {
 
 	@OneToMany(mappedBy = "thesis")
 	private Collection<ThesisApplications> thesisApplications;
+	
+	private boolean isDeleted;
+
+	@OneToMany(mappedBy = "thesis")
+	private Collection<Message> messages;
 
 	public Thesis(String titleLv, String titleEn, String aim, String tasks, Student student, AcademicStaff supervisor) {
 
@@ -112,7 +117,11 @@ public class Thesis {
 		this.accStatus = AcceptanceStatus.SUBMITTED;
 		this.otherApplications = new ArrayList<>();
 		this.comments = new ArrayList<>();
+		this.reviewers = new ArrayList<>();
 		this.thesisApplications = new ArrayList<>();
+		this.messages = new ArrayList<>();
+		this.isDeleted = false;
+
 	}
 
 	public void addOtherApplicationToThesis(OtherApplications inputOtherApplication) {
@@ -130,6 +139,12 @@ public class Thesis {
 	public void addThesisApplicationToThesis(ThesisApplications inputThesisApplications) {
 		if (!thesisApplications.contains(inputThesisApplications)) {
 			thesisApplications.add(inputThesisApplications);
+		}
+	}
+
+	public void addMessageToThesis(Message inputMessage) {
+		if (!messages.contains(inputMessage)) {
+			messages.add(inputMessage);
 		}
 	}
 

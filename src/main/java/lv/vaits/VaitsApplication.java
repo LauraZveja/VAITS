@@ -45,7 +45,7 @@ public class VaitsApplication {
 		SpringApplication.run(VaitsApplication.class, args);
 	}
 
-	@Bean
+	//@Bean
 	public CommandLineRunner testModelLayer(IUserRepo userRepo, IPersonRepo personRepo, IStudentRepo studentRepo,
 			IAcademicStaffRepo staffRepo, ICourseRepo courseRepo, IThesisRepo thesisRepo, ICommentRepo commentRepo,
 			IStudyProgramRepo studyRepo, ICalendarSchedule calendarRepo, IOtherApplications otherApplicationRepo,
@@ -59,27 +59,29 @@ public class VaitsApplication {
 				User us2 = new User("123", "s23zvejlaur@venta.lv"); // pasniedzejs
 				User us3 = new User("123", "s24zvejlaur@venta.lv"); // students
 				User us4 = new User("123", "s25zvejlaur@venta.lv"); // students
+				User us5 = new User("555", "venta@venta.lv"); // students
 				userRepo.save(us1);
 				userRepo.save(us2);
 				userRepo.save(us3);
 				userRepo.save(us4);
+				userRepo.save(us5);
 
 				Course c1 = new Course("Javaa", 4);
 				Course c2 = new Course("Datastr", 4);
 				courseRepo.save(c1);
 				courseRepo.save(c2);
 
-				AcademicStaff ac1 = new AcademicStaff("Karina", "Skirmante", "121212-121212", us1, Degree.MG);
-				AcademicStaff ac2 = new AcademicStaff("Karlis", "Immers", "131212-131212", us2, Degree.MG);
+				AcademicStaff ac1 = new AcademicStaff("Karina", "Skirmante", "270792-11111", us1, Degree.MG);
+				AcademicStaff ac2 = new AcademicStaff("Karlis", "Immers", "270792-11112", us2, Degree.MG);
 
 				staffRepo.save(ac1);
 				staffRepo.save(ac2);
 
-				Student s1 = new Student("Janis", "Berzins", "212121-212121", us3, "12345678", false);
-				Student s2 = new Student("Baiba", "Kalnina", "222121-222121", us4, "12245678", true);
+				Student s1 = new Student("Janis", "Berzins", "270792-11113", us3, "12345678", false);
+				Student s2 = new Student("Baiba", "Kalnina", "270792-11114", us4, "12245679", true);
 
 				s2.addDebtCourse(c1);
-				s2.addDebtCourse(c2);
+				s1.addDebtCourse(c2);
 				studentRepo.save(s1);
 				studentRepo.save(s2);
 				c1.addStudent(s2);
@@ -92,8 +94,8 @@ public class VaitsApplication {
 				Thesis th2 = new Thesis("Programmas izstrāde", "Development of Program", "Non Development",
 						"1...2.3..5", s1, ac2);
 
-				th1.addReviewer(ac1);
-				th2.addReviewer(ac2);
+				th1.addReviewer(ac2);
+				th2.addReviewer(ac1);
 				thesisRepo.save(th1);
 				thesisRepo.save(th2);
 				ac1.addThesisForReviews(th1);
@@ -161,9 +163,11 @@ public class VaitsApplication {
 				sspRepo.save(listItem3);
 
 				ThesisApplications application1 = new ThesisApplications("Sistēmasizstrāde", "Developmentofsystem",
-						"Development................................", "A1...2.3..4.......................", LocalDateTime.now(), th1);
+						"Development................................", "A1...2.3..4.......................",
+						LocalDateTime.now(), th1);
 				ThesisApplications application2 = new ThesisApplications("Sistēmasizstrāde", "Developmentofsystem",
-						"Development...................................", "A1...2.3..4............................", LocalDateTime.now(), th1);
+						"Development...................................", "A1...2.3..4............................",
+						LocalDateTime.now(), th1);
 
 				thesisApplicationsRepo.save(application1);
 				thesisApplicationsRepo.save(application2);

@@ -1,0 +1,49 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<form action="#" th:action="@{/thesis/update/__${id}__}" th:object="${thesis}" method="post">
+    <table>
+        <tr>
+            <td>Title (LV)</td>
+            <td><input type="text" th:field="*{titleLv}" /></td>
+            <td th:if="${#fields.hasErrors('titleLv')}" th:errors="*{titleLv}"></td>
+        </tr>
+        <tr>
+            <td>Title (EN)</td>
+            <td><input type="text" th:field="*{titleEn}" /></td>
+            <td th:if="${#fields.hasErrors('titleEn')}" th:errors="*{titleEn}"></td>
+        </tr>
+        <tr>
+            <td>Aim</td>
+            <td><input type="text" th:field="*{aim}" /></td>
+            <td th:if="${#fields.hasErrors('aim')}" th:errors="*{aim}"></td>
+        </tr>
+        <tr>
+            <td>Tasks</td>
+            <td><input type="text" th:field="*{tasks}" /></td>
+            <td th:if="${#fields.hasErrors('tasks')}" th:errors="*{tasks}"></td>
+        </tr>
+        <tr>
+            <td>Student</td>
+            <td>
+                <select th:field="*{student}">
+                    <option th:each="student : ${allStudents}" th:value="${student.idp}" th:text="${student.name + ' ' + student.surname}"></option>
+                </select>
+            </td>
+            <td th:if="${#fields.hasErrors('student')}" th:errors="*{student}"></td>
+        </tr>
+        <tr>
+            <td>Supervisor</td>
+            <td>
+                <select th:field="*{supervisor}">
+                    <option th:each="supervisor : ${allSupervisors}" th:value="${supervisor.idp}" th:text="${supervisor.name + ' ' + supervisor.surname}"></option>
+                </select>
+            </td>
+            <td th:if="${#fields.hasErrors('supervisor')}" th:errors="*{supervisor}"></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Update Thesis</button></td>
+        </tr>
+    </table>
+</form>
+
+</html>

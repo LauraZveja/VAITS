@@ -12,6 +12,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,13 +29,10 @@ import lv.vaits.models.Thesis;
 @AttributeOverride(name = "Idp", column = @Column(name = "Ids"))
 public class Student extends Person {
 
-	// TODO izveidot Data JPA anotācijas
-	// TODO izveidot validāciju anotācijas
-	// TODO izveidot sasaisti ar Course klasi, ManyToMany
 	@Column(name = "MatriculaNo")
 	@NotNull
-	/// @Size(min = 8, max = 20)
-	// @Pattern(regexp = "[0-9] {8,20}")
+	@Size(min = 8, max = 20)
+	@Pattern(regexp = "[0-9]{8,20}")
 	private String matriculaNo;
 
 	@Column(name = "FinancialDebt")
@@ -49,21 +48,12 @@ public class Student extends Person {
 	@OneToMany(mappedBy = "student")
 	private Collection<StudentStudyProgram> studentStudyProgram;
 
-	public Student(@NotNull
-	// @Size(min = 3, max = 15)
-	// @Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt
-	// lielajam")
-	String name,
-			// @Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt
-			// lielajam")
-			@NotNull String surname,
-			// @Pattern(regexp = "[0-9] {6} - [0-9] {5}", message = "Neatbilstošs personas
-			// kods")
-			@NotNull
-			// @Size(min = 12, max = 12)
-			String personcode, User user,
-			// @NotNull @Size(min = 8, max = 20) @Pattern(regexp = "[0-9] {8,20}")
-			String matriculaNo, boolean financialDebt) {
+	public Student(
+			@NotNull @Size(min = 3, max = 15) @NotNull @Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "NAME MUST START WITH A CAPITAL LETTER!") String name,
+			@Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "SURNAME MUST START WITH A CAPITAL LETTER!") @NotNull String surname,
+			@Pattern(regexp = "[0-9]{6}-[0-9]{5}", message = "Neatbilstošs personas kods") @NotNull @Size(min = 12, max = 12) String personcode,
+			User user, @NotNull @Size(min = 8, max = 20) @Pattern(regexp = "[0-9]{8,20}") String matriculaNo,
+			boolean financialDebt) {
 		super(name, surname, personcode, user);
 		this.matriculaNo = matriculaNo;
 		this.financialDebt = financialDebt;

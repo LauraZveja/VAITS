@@ -21,9 +21,6 @@ public class AcademicStaffServicesImplementation implements IAcademicStaffServic
 	@Autowired
 	private IAcademicStaffRepo academicStaffRepo;
 
-	@Autowired
-	private IThesisRepo thesisRepo;
-
 	@Override
 	public AcademicStaff createNewAcademicStaffMember(String name, String surname, String personcode, User user,
 			Degree degree) {
@@ -71,8 +68,3 @@ public class AcademicStaffServicesImplementation implements IAcademicStaffServic
 	}
 
 }
-
-
-	
-
-

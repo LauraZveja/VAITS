@@ -29,44 +29,41 @@ import lv.vaits.models.users.Student;
 @NoArgsConstructor
 @ToString
 public class Course {
-	
+
 	@Setter(value = AccessLevel.NONE)
 	@Column(name = "Idc")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idc;
-	
+
 	@Column(name = "Title")
-	@Size(min = 3, max =25)
+	@Size(min = 3, max = 25)
 	@NotNull
-	@Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam")
+	@Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "Pirmajam burtam jābūt lielajam")
 	private String title;
-	
+
 	@Column(name = "CreditPoints")
 	@NotNull
 	@Min(value = 1)
 	@Max(value = 20)
 	private int creditPoints;
-	
-	
+
 	@ManyToMany(mappedBy = "debtCourse")
 	private Collection<Student> debtStudents = new ArrayList<>();
 
 	public Course(
-			@Size(min = 3, max = 25) @NotNull @Pattern(regexp = "[A-ZĒŪĻĶ]{1}[a-zēūļķ]+", message = "Pirmajam burtam jābūt lielajam") String title,
+			@Size(min = 3, max = 25) @NotNull @Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "Pirmajam burtam jābūt lielajam") String title,
 			@NotNull @Min(1) @Max(20) int creditPoints) {
 		super();
 		this.title = title;
 		this.creditPoints = creditPoints;
-		
+		this.debtStudents = new ArrayList<>();
 	}
-	
-	
+
 	public void addStudent(Student student) {
-		if(!debtStudents.contains(student)) {
+		if (!debtStudents.contains(student)) {
 			debtStudents.add(student);
-			}
+		}
 	}
 
 }
-

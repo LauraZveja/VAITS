@@ -1,0 +1,64 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<style>
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			border-spacing: 0;
+		}
+
+		th,
+		td {
+			padding: 8px;
+			border: 1px solid #ddd;
+			text-align: left;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+	</style>
+</head>
+
+<body>
+	<a href="/thesis/export">Export Theses to Excel</a>
+	<h1>All Theses</h1>
+	<table>
+		<tr>
+			<th>Thesis ID</th>
+			<th>Title (LV)</th>
+			<th>Title (EN)</th>
+			<th>Aim</th>
+			<th>Tasks</th>
+			<th>Submit Date/Time</th>
+			<th>Status from Supervisor</th>
+			<th>Acceptance Status</th>
+			<th>Acceptance Date/Time</th>
+			<th>Student</th>
+			<th>Supervisor</th>
+			<th>Reviewers</th>
+		</tr>
+		<tr th:each="thesis : ${activeThesisList}">
+			<td th:text="${thesis.getIdt()}"></td>
+			<td th:text="${thesis.getTitleLv()}"></td>
+			<td th:text="${thesis.getTitleEn()}"></td>
+			<td th:text="${thesis.getAim()}"></td>
+			<td th:text="${thesis.getTasks()}"></td>
+			<td th:text="${#temporals.format(thesis.getSubmitDateTime(), 'yyyy-MM-dd HH:mm:ss')}"></td>
+			<td th:text="${thesis.isStatusFromSupervisor()}"></td>
+			<td th:text="${thesis.getAccStatus()}"></td>
+			<td th:text="${#temporals.format(thesis.getAccDateTime(), 'yyyy-MM-dd HH:mm:ss')}"></td>
+			<td th:text="${thesis.getStudent().getName()} + ' ' + ${thesis.getStudent().getSurname()}"></td>
+			<td th:text="${thesis.getSupervisor().getName()} + ' ' + ${thesis.getSupervisor().getSurname()}"></td>
+			<td>
+				<ul>
+					<li th:each="reviewer : ${thesis.getReviewers()}"
+						th:text="${reviewer.getName()} + ' ' + ${reviewer.getSurname()}"></li>
+				</ul>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>
