@@ -166,7 +166,7 @@ public class StudentServicesImplementation implements IStudentServices {
 
 		Row headRow = sheet.createRow(0);
 
-		String[] headers = { "Name", "Surname", "Personcode", "User e-mail", "Matricula number",
+		String[] headers = { "Name", "Surname", "Personcode", "Matricula number",
 				"Student financial debt" };
 		int rowNum = 1;
 
@@ -243,7 +243,7 @@ public class StudentServicesImplementation implements IStudentServices {
 
 		XWPFTable table = document.createTable(students.size() + 1, 6);
 
-		String[] headers = { "Name", "Surname", "Personcode", "User e-mail", "Matricula number",
+		String[] headers = { "Name", "Surname", "Personcode", "Matricula number",
 				"Student financial debt" };
 		XWPFTableRow headerRow = table.getRow(0);
 		for (int i = 0; i < headers.length; i++) {
