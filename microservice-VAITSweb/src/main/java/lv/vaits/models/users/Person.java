@@ -48,6 +48,9 @@ public class Person {
 
 	@Pattern(regexp = "[0-9]{6}-[0-9]{5}", message = "Neatbilstošs personas kods")
 	@NotNull
+	//@Size(min = 12, max = 12)
+	//TODO apdomāt un pievienot risinājumu ārzemju studentiem un jaunajiem LV personas kodiem
+
 	@Size(min = 12, max = 12)
 	@Column(name = "Personcode")
 	private String personcode;
