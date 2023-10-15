@@ -7,10 +7,10 @@ import lv.vaits.models.users.Degree;
 
 public interface IAcademicStaffServices {
 
-	AcademicStaff createNewAcademicStaffMember(String name, String surname, String personcode, long id_user,
+	AcademicStaff createNewAcademicStaffMember(String name, String surname, String personcode, Long id_user,
 			Degree degree);
 
-	AcademicStaff updateAcademicStaffMemberById(Long id, String name, String surname, String personcode, long id_user,
+	AcademicStaff updateAcademicStaffMemberById(Long id, String name, String surname, String personcode, Long id_user,
 			Degree degree) throws Exception;
 
 	void deleteAcademicStaffMemberById(Long id) throws Exception;

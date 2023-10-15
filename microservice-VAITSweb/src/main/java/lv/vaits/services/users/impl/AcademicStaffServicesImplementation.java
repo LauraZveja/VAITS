@@ -17,14 +17,14 @@ public class AcademicStaffServicesImplementation implements IAcademicStaffServic
 	private IAcademicStaffRepo academicStaffRepo;
 
 	@Override
-	public AcademicStaff createNewAcademicStaffMember(String name, String surname, String personcode, long id_user,
+	public AcademicStaff createNewAcademicStaffMember(String name, String surname, String personcode, Long id_user,
 			Degree degree) {
 		return academicStaffRepo.save(new AcademicStaff(name, surname, personcode, id_user, degree));
 	}
 
 	@Override
 	public AcademicStaff updateAcademicStaffMemberById(Long id, String name, String surname, String personcode,
-			long id_user, Degree degree) throws Exception {
+			Long id_user, Degree degree) throws Exception {
 		if (academicStaffRepo.existsById(id)) {
 			AcademicStaff updatedAcademicStaffMember = academicStaffRepo.findById(id).get();
 			updatedAcademicStaffMember.setName(name);

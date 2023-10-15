@@ -1,8 +1,19 @@
 package lv.vaits.controllers.users;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +24,7 @@ import lv.vaits.models.Thesis;
 import lv.vaits.models.users.Student;
 import lv.vaits.services.ICourseServices;
 import lv.vaits.services.users.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class StudentController {
@@ -180,6 +192,82 @@ public class StudentController {
 	@GetMapping("/student/error")
 	public String errorStudentFunc() {
 		return "error-page";
+	}
+
+	@GetMapping("student/export")
+	public ResponseEntity<InputStreamResource> exportStudentToExcel() throws IOException {
+		Workbook workbook = studentServices.exportStudentsToExcel();
+
+		File tempFile = File.createTempFile("students", ".xlsx");
+
+		FileOutputStream fos = new FileOutputStream(tempFile);
+
+		workbook.write(fos);
+		fos.close();
+
+		HttpHeaders headers = new HttpHeaders();
+
+		headers.add("Content-Disposition", "attachment; filename=students.xlsx");
+
+		return ResponseEntity.ok().headers(headers)
+				.contentType(
+						MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+				.body(new InputStreamResource(new FileInputStream(tempFile)));
+	}
+
+	@PostMapping("/student/import")
+	public ResponseEntity<String> importStudents(@RequestParam("file") MultipartFile file) throws IOException {
+		if (file.isEmpty()) {
+			return ResponseEntity.badRequest().body("Please select an Excel file to upload.");
+		}
+
+		try {
+			studentServices.importStudentsFromExcel(file.getInputStream());
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Location", "/student/showAll");
+
+			return new ResponseEntity<>(headers, HttpStatus.FOUND);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during import.");
+		}
+	}
+
+	@GetMapping("student/export/word")
+	public ResponseEntity<InputStreamResource> exportStudentToWord() throws IOException {
+		XWPFDocument document = studentServices.exportStudentsToWord();
+
+		File tempFile = File.createTempFile("students", ".docx");
+
+		FileOutputStream fos = new FileOutputStream(tempFile);
+		document.write(fos);
+		fos.close();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "attachment; filename=students.docx");
+
+		return ResponseEntity.ok().headers(headers)
+				.contentType(MediaType
+						.parseMediaType("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
+				.body(new InputStreamResource(new FileInputStream(tempFile)));
+	}
+
+	@PostMapping("/student/import/docx")
+	public ResponseEntity<String> importStudentsFromDocx(@RequestParam("file") MultipartFile file) throws IOException {
+		if (file.isEmpty()) {
+			return ResponseEntity.badRequest().body("Please select a DOCX file to upload.");
+		}
+
+		try {
+			studentServices.importStudentsFromWord(file.getInputStream());
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Location", "/student/showAll");
+
+			return new ResponseEntity<>(headers, HttpStatus.FOUND);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred during import.");
+		}
 	}
 
 }
