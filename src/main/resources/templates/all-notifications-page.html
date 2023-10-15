@@ -31,8 +31,8 @@
 		</tr>
 		<th:block th:each="notification : ${allNotifications}">
 			<tr>
-				<td th:text="${notification.getIdp()}"></td>
-				<td th:text="${notification.getNotification()}"></td>
+				<td th:text="${notification.getIdn()}"></td>
+				<td th:text="${notification.getNotificationText()}"></td>
 				<td th:text="${notification.getTopic()}"></td>
 			</tr>
 		</th:block>
