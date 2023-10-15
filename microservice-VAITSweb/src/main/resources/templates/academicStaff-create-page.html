@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<form action="#" th:action="@{/academicStaff/create}" th:object="${academicStaff}" method="post">
+	<table>
+		<tr>
+			<td>Name</td>
+			<td><input type="text" th:field="*{name}" /></td>
+			<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+			<tr />
+		<tr>
+			<td>Surname</td>
+			<td><input type="text" th:field="*{surname}" /></td>
+			<td th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></td>
+			<tr />
+		<tr>
+			<td>Personcode</td>
+			<td><input type="text" th:field="*{personcode}" /></td>
+			<td th:if="${#fields.hasErrors('personcode')}" th:errors="*{personcode}"></td>
+			<tr />
+		<tr>
+			<td>User_id</td>
+			<td><input type="text" th:field="*{id_user}" /></td>
+			<td th:if="${#fields.hasErrors('id_user')}" th:errors="*{id_user}"></td>
+		</tr>
+
+		<td>Degree</td>
+		<td>
+			<select th:field="*{degree}">
+				<option th:each="degree : ${T(lv.vaits.models.users.Degree).values()}" th:value="${degree}"
+					th:text="${degree.name()}">
+				</option>
+			</select>
+		</td>
+		<td th:if="${#fields.hasErrors('degree')}" th:errors="*{degree}"></td>
+		<tr />
+
+		<tr>
+
+		<tr>
+			<td><button type="submit">Save Academic Staff Member</button></td>
+		</tr>
+	</table>
+
+</form>
+
+
+</html>
