@@ -11,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import lv.vaits.user.confs.SecurityConfig;
 import lv.vaits.user.models.users.Authorities;
 import lv.vaits.user.models.users.User;
-import lv.vaits.user.repos.users.IAuthorityRepo;
-import lv.vaits.user.repos.users.IUserRepo;
+import lv.vaits.user.repos.users.IAuthorityRepository;
+import lv.vaits.user.repos.users.IUserRepository;
 
 @SpringBootApplication(scanBasePackages = { "lv.vaits.user", "lv.vaits", "lv.vaits.main" })
 @Import({ SecurityConfig.class })
@@ -28,7 +28,7 @@ public class UserApplication {
 	}
 
 	@Bean
-	public CommandLineRunner testDB(final IUserRepo userRepo, final IAuthorityRepo authorityRepo) {
+	public CommandLineRunner testDB(final IUserRepository userRepository, final IAuthorityRepository authorityRepository) {
 		return new CommandLineRunner() {
 
 			@Override
@@ -39,11 +39,11 @@ public class UserApplication {
 				User us4 = new User(passwordEncoderSimple().encode("123"), "s22zvejlaur@venta.lv", "laura3");
 				User us5 = new User(passwordEncoderSimple().encode("123"), "s22zvejlaur@venta.lv", "laura4");
 
-				userRepo.save(us1);
-				userRepo.save(us2);
-				userRepo.save(us3);
-				userRepo.save(us4);
-				userRepo.save(us5);
+				userRepository.save(us1);
+				userRepository.save(us2);
+				userRepository.save(us3);
+				userRepository.save(us4);
+				userRepository.save(us5);
 
 				Authorities auth1 = new Authorities("ADMIN");
 				Authorities auth2 = new Authorities("USER");
@@ -55,8 +55,8 @@ public class UserApplication {
 				auth2.addUser(us4);
 				auth2.addUser(us5);
 
-				authorityRepo.save(auth1);
-				authorityRepo.save(auth2);
+				authorityRepository.save(auth1);
+				authorityRepository.save(auth2);
 
 				us1.addAuthority(auth1);
 				us1.addAuthority(auth2);
@@ -65,11 +65,11 @@ public class UserApplication {
 				us4.addAuthority(auth2);
 				us5.addAuthority(auth2);
 
-				userRepo.save(us1);
-				userRepo.save(us2);
-				userRepo.save(us3);
-				userRepo.save(us4);
-				userRepo.save(us5);
+				userRepository.save(us1);
+				userRepository.save(us2);
+				userRepository.save(us3);
+				userRepository.save(us4);
+				userRepository.save(us5);
 
 			}
 		};

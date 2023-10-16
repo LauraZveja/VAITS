@@ -11,8 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import lv.vaits.user.confs.SecurityConfig;
 import lv.vaits.user.models.users.Authorities;
 import lv.vaits.user.models.users.User;
-import lv.vaits.user.repos.users.IAuthorityRepo;
-import lv.vaits.user.repos.users.IUserRepo;
+import lv.vaits.user.repos.users.IAuthorityRepository;
+import lv.vaits.user.repos.users.IUserRepository;
 
 @SpringBootApplication(scanBasePackages = { "lv.vaits.user", "lv.vaits", "lv.vaits.main" })
 @Import({ SecurityConfig.class })

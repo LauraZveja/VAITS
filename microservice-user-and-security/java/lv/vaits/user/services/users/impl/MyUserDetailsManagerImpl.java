@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
 
 import lv.vaits.user.models.users.User;
-import lv.vaits.user.repos.users.IUserRepo;
+import lv.vaits.user.repos.users.IUserRepository;
 import lv.vaits.user.utils.MyUserDetails;
 
 public class MyUserDetailsManagerImpl implements UserDetailsManager {

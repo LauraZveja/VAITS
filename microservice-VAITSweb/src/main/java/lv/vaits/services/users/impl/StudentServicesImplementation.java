@@ -206,7 +206,7 @@ public class StudentServicesImplementation implements IStudentServices {
 		Sheet sheet = workbook.getSheetAt(0);
 		Iterator<Row> rowIterator = sheet.iterator();
 
-		// List<User> users = (List<User>) userRepo.findAll();
+		// List<User> users = (List<User>) userRepository.findAll();
 
 		while (rowIterator.hasNext()) {
 			Row row = rowIterator.next();
@@ -274,7 +274,7 @@ public class StudentServicesImplementation implements IStudentServices {
 	@Override
 	public void importStudentsFromWord(InputStream docxFile) throws IOException {
 		XWPFDocument document = new XWPFDocument(docxFile);
-		// List<User> users = (List<User>) userRepo.findAll();
+		// List<User> users = (List<User>) userRepository.findAll();
 
 		for (XWPFTable table : document.getTables()) {
 			// Iterate through the rows, starting from the second row

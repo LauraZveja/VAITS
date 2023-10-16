@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lv.vaits.user.models.users.User;
-import lv.vaits.user.repos.users.IUserRepo;
+import lv.vaits.user.repos.users.IUserRepository;
 import lv.vaits.user.services.users.IUserServices;
 
 @Service
