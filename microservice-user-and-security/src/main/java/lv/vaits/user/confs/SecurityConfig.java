@@ -90,6 +90,11 @@ public class SecurityConfig {
 		.requestMatchers("/thesis/showAllComments/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/notifications/showAll").hasAnyAuthority("ADMIN")
 		.requestMatchers("/api/v1/kafka/publish").hasAnyAuthority("ADMIN")
+		.requestMatchers("/student/import").hasAnyAuthority("ADMIN")
+		.requestMatchers("/student/export").hasAnyAuthority("ADMIN")
+		.requestMatchers("/student/import/**").hasAnyAuthority("ADMIN")
+		.requestMatchers("/student/export/**").hasAnyAuthority("ADMIN")
+		.requestMatchers("/thesis/export/**").hasAnyAuthority("ADMIN")
 		.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll().and().formLogin()
 		.permitAll().and().logout().permitAll().and().exceptionHandling().accessDeniedPage("/my-access-denied");
 

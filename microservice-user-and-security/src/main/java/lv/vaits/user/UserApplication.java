@@ -27,7 +27,7 @@ public class UserApplication {
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 
-	@Bean
+	//@Bean
 	public CommandLineRunner testDB(final IUserRepository userRepository, final IAuthorityRepository authorityRepository) {
 		return new CommandLineRunner() {
 
