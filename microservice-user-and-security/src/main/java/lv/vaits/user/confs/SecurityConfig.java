@@ -88,6 +88,8 @@ public class SecurityConfig {
 		.requestMatchers("/comment/showAll/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/comment/remove/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/thesis/showAllComments/**").hasAnyAuthority("ADMIN")
+		.requestMatchers("/notifications/showAll").hasAnyAuthority("ADMIN")
+		.requestMatchers("/api/v1/kafka/publish").hasAnyAuthority("ADMIN")
 		.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll().and().formLogin()
 		.permitAll().and().logout().permitAll().and().exceptionHandling().accessDeniedPage("/my-access-denied");
 
