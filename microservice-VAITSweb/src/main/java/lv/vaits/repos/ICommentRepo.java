@@ -10,4 +10,5 @@ public interface ICommentRepo extends CrudRepository<Comment, Long> {
 
 	ArrayList<Comment> findByThesisIdt(Long id);
 
+    Comment findByDescription(String description);
 }

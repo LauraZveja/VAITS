@@ -2,6 +2,8 @@ package lv.vaits.services.impl;
 
 import java.util.ArrayList;
 
+import lv.vaits.dto.CommentDTO;
+import lv.vaits.repos.users.IAcademicStaffRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,9 @@ public class CommentsServicesImplementation implements ICommentsServices {
 
 	@Autowired
 	private IThesisRepo thesisRepo;
+
+	@Autowired
+	private IAcademicStaffRepo staffRepo;
 
 	@Override
 	public void createNewComment(String description, AcademicStaff staff, Thesis thesis) {
@@ -67,6 +72,32 @@ public class CommentsServicesImplementation implements ICommentsServices {
 			return commentRepo.findById(id).get();
 		} else {
 			throw new Exception("Wrong id");
+		}
+	}
+
+	@Override
+	public ArrayList<CommentDTO> retrieveAllDataForComments() {
+		ArrayList<CommentDTO> result = new ArrayList<>();
+		ArrayList<Comment> allComments = (ArrayList<Comment>) commentRepo.findAll();
+
+		for (Comment temp : allComments){
+			result.add(new CommentDTO(temp.getDescription(),
+					temp.getStaff().getName(), temp.getStaff().getSurname(),
+					temp.getThesis().getTitleLv()));
+		}
+		return result;
+	}
+
+	@Override
+	public void insertCommentByCommentDTO(CommentDTO commentDTO) throws Exception {
+		ArrayList<AcademicStaff> staffMembers = staffRepo.findByNameAndSurname(commentDTO.getStaffName(), commentDTO.getStaffSurname());
+		Thesis thesis = thesisRepo.findByTitleLv(commentDTO.getThesisTitle());
+
+		if (staffMembers != null && thesis != null){
+			Comment comment = new Comment(commentDTO.getDescription(), staffMembers.get(0) ,thesis);
+			commentRepo.save(comment);
+		} else {
+			throw new Exception("Thesis or academic staff by such name and surname does not exist.");
 		}
 	}
 

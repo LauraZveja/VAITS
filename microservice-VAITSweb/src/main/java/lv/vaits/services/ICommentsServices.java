@@ -2,6 +2,7 @@ package lv.vaits.services;
 
 import java.util.ArrayList;
 
+import lv.vaits.dto.CommentDTO;
 import lv.vaits.models.Comment;
 import lv.vaits.models.Thesis;
 import lv.vaits.models.users.AcademicStaff;
@@ -19,5 +20,10 @@ public interface ICommentsServices {
 	ArrayList<Comment> retrieveAllComments();
 
 	Comment retrieveCommentById(Long id) throws Exception;
+
+	ArrayList<CommentDTO> retrieveAllDataForComments();
+
+	void insertCommentByCommentDTO(CommentDTO commentDTO) throws Exception;
+
 
 }

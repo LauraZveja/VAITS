@@ -1,13 +1,13 @@
 package lv.vaits.controllers;
 
+import lv.vaits.dto.CommentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import lv.vaits.models.Comment;
@@ -16,7 +16,9 @@ import lv.vaits.services.ICommentsServices;
 import lv.vaits.services.IThesisServices;
 import lv.vaits.services.users.IAcademicStaffServices;
 
-@Controller
+import java.util.ArrayList;
+
+@RestController
 public class CommentController {
 
 	@Autowired
@@ -47,11 +49,11 @@ public class CommentController {
 		}
 	}
 
-	@GetMapping("/comment/showAll")
+	/*@GetMapping("/comment/showAll")
 	public String allThesisGetFunc(Model model) {
 		model.addAttribute("allComments", commentServices.retrieveAllComments());
 		return "comment-all-page";
-	}
+	}*/
 
 	@GetMapping("/comment/update/{id}")
 	public String updateCommentByIdGetFunc(@PathVariable("id") Long id, Model model) {
@@ -111,6 +113,25 @@ public class CommentController {
 			e.printStackTrace();
 			return "error-page";
 		}
+	}
+
+	@GetMapping("/comment/dto/showAll")
+	public ResponseEntity<ArrayList<CommentDTO>> getAllComments(){
+		return new ResponseEntity<>(commentServices.retrieveAllDataForComments(), HttpStatusCode.valueOf(200));
+	}
+
+	@PostMapping("/comment/dto/addNew")
+	public ResponseEntity addNewComment(@RequestBody @Valid CommentDTO commentDTO){
+		try{
+			commentServices.insertCommentByCommentDTO(commentDTO);
+			return new ResponseEntity<>(commentServices.retrieveAllDataForComments(), HttpStatusCode.valueOf(200));
+
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+
+		return new ResponseEntity<>(HttpStatusCode.valueOf(404));
+
 	}
 
 }

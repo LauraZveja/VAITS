@@ -12,4 +12,5 @@ public interface IThesisRepo extends CrudRepository<Thesis, Long> {
 
 	ArrayList<Thesis> findByIsDeletedFalse();
 
+    Thesis findByTitleLv(String thesisTitle);
 }
