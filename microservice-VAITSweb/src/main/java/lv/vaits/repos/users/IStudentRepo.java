@@ -10,6 +10,5 @@ public interface IStudentRepo extends CrudRepository<Student, Long> {
 
 	Student findByMatriculaNo(String matriculaNo);
 
-	// ArrayList<Student> findByStudentIdp(Long id);
 
 }

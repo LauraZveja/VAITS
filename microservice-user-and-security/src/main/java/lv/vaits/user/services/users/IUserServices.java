@@ -8,4 +8,12 @@ public interface IUserServices {
 
 	ArrayList<User> retrieveAllUsers();
 
+	User createNewUser(String password, String email, String username) throws Exception;
+
+	User retrieveUserById(Long id) throws Exception;
+
+	User updateUserById(Long id, String password, String email, String username) throws Exception;
+
+	void deleteUserById(Long id) throws Exception;
+
 }
