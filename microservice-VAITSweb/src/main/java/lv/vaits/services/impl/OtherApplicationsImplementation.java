@@ -24,7 +24,7 @@ public class OtherApplicationsImplementation implements IOtherApplicationsServic
     @Override
     public ArrayList<OtherApplicationsDTO> retrieveAllOtherApplications() {
         ArrayList<OtherApplicationsDTO> result = new ArrayList<>();
-        ArrayList<OtherApplications> allOtherApplications = new ArrayList<>();
+        ArrayList<OtherApplications> allOtherApplications = (ArrayList<OtherApplications>) otherApplicationRepo.findAll();
 
         for (OtherApplications temp : allOtherApplications){
             result.add(new OtherApplicationsDTO(temp.getApplicationType(), temp.getActivity(), temp.getThesis().getTitleLv()));
