@@ -95,6 +95,7 @@ public class SecurityConfig {
 		.requestMatchers("/student/import/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/student/export/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/thesis/export/**").hasAnyAuthority("ADMIN")
+		.requestMatchers("/thesis/removeReviewerByThesisId/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/comment/dto/**").permitAll()
 		.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll().and().formLogin()
 		.permitAll().and().logout().permitAll().and().exceptionHandling().accessDeniedPage("/my-access-denied").and().csrf().disable();

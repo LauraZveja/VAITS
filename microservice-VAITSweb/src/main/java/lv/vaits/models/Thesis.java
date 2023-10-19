@@ -89,6 +89,10 @@ public class Thesis {
 		}
 	}
 
+	public void removeReviewer(AcademicStaff reviewer){
+		reviewers.remove(reviewer);
+	}
+
 	@OneToMany(mappedBy = "thesis")
 	private Collection<Comment> comments;
 

@@ -217,4 +217,17 @@ public class ThesisController {
                 .body(new InputStreamResource(new FileInputStream(tempFile)));
     }
 
+    @GetMapping("/thesis/removeReviewerByThesisId/{idThesis}/{idReviewer}")
+    public String removeReviewerByThesisId(@PathVariable("idThesis") Long idThesis,
+                                           @PathVariable("idReviewer") Long idReviewer,
+                                           Model model) {
+        try {
+            thesisServices.deleteThesisReviewerById(idThesis, idReviewer);
+            model.addAttribute("allThesis", thesisServices.retrieveAllThesis());
+            return "redirect:/thesis/showAll";
+        } catch (Exception e) {
+            return "error-page";
+        }
+    }
+
 }

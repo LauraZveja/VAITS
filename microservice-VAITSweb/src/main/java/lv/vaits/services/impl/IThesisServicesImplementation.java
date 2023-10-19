@@ -2,6 +2,7 @@ package lv.vaits.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -95,6 +96,10 @@ public class IThesisServicesImplementation implements IThesisServices {
 	public Thesis addReviewerByThesisId(Long idThesis, Long idReviewer) throws Exception {
 		if (thesisRepo.existsById(idThesis) && academicStaffRepo.existsById(idReviewer)) {
 			Thesis updateThesis = thesisRepo.findById(idThesis).get();
+			Optional<AcademicStaff> reviewer = academicStaffRepo.findById(idReviewer);
+			if (updateThesis.getReviewers().contains(reviewer)) {
+				throw new Exception("Reviewer with ID " + idReviewer + " is already associated with the thesis.");
+			}
 			updateThesis.addReviewer(academicStaffRepo.findById(idReviewer).get());
 			return thesisRepo.save(updateThesis);
 		} else {
@@ -190,6 +195,22 @@ public class IThesisServicesImplementation implements IThesisServices {
 		}
 
 		return document;
+	}
+
+	@Override
+	public Thesis deleteThesisReviewerById(Long idThesis, Long idReviewer) throws Exception {
+		if (thesisRepo.existsById(idThesis) && academicStaffRepo.existsById(idReviewer)){
+			Thesis thesis = thesisRepo.findById(idThesis).get();
+			Optional<AcademicStaff> reviewer = academicStaffRepo.findById(idReviewer);
+			if (!thesis.getReviewers().contains(reviewer.get())) {
+				throw new Exception("Reviewer with ID " + idReviewer + " is not associated with this thesis.");
+			}
+			thesis.removeReviewer(reviewer.get());
+			return thesisRepo.save(thesis);
+		} else {
+			throw new Exception("Wrong thesis and / or reviewer id.");
+		}
+
 	}
 
 	@Override

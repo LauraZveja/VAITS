@@ -36,4 +36,6 @@ public interface IThesisServices {
 
 	XWPFDocument exportThesisToWord();
 
+	Thesis deleteThesisReviewerById(Long idThesis, Long idReviewer) throws Exception;
+
 }
