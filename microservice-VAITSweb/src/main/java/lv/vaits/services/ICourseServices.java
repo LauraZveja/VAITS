@@ -6,22 +6,23 @@ import java.util.List;
 
 import lv.vaits.models.Course;
 import lv.vaits.models.users.Student;
+import lv.vaits.utils.MyException;
 
 public interface ICourseServices {
 
-	Course retrieveCourseById(Long id) throws Exception;
+	Course retrieveCourseById(Long id) throws MyException;
 
 	ArrayList<Course> selectAllCourse();
 
 	Course createNewCourse(String title, int creditPoints);
 
-	Course updateCourseById(Long id, String title, int creditPoints) throws Exception;
+	Course updateCourseById(Long id, String title, int creditPoints) throws MyException;
 
-	void deleteCourseById(Long id) throws Exception;
+	void deleteCourseById(Long id) throws MyException;
 
-	void addStudentDebtByCourseId(Long idCourse, List<Long> debtStudents) throws Exception;
+	void addStudentDebtByCourseId(Long idCourse, List<Long> debtStudents) throws MyException;
 
-	void removeStudentDebtByCourseId(Long idCourse, List<Long> debtStudents) throws Exception;
+	void removeStudentDebtByCourseId(Long idCourse, List<Long> debtStudents) throws MyException;
 
-	Collection<Student> retrieveAllStudentDebtsByCourseId(Long id) throws Exception;
+	Collection<Student> retrieveAllStudentDebtsByCourseId(Long id) throws MyException;
 }

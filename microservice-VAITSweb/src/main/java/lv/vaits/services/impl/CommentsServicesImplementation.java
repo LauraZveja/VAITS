@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import lv.vaits.dto.CommentDTO;
 import lv.vaits.repos.users.IAcademicStaffRepo;
+import lv.vaits.utils.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,7 @@ public class CommentsServicesImplementation implements ICommentsServices {
 	}
 
 	@Override
-	public Comment updateCommentById(Long id, String description, AcademicStaff staff, Thesis thesis) throws Exception {
+	public Comment updateCommentById(Long id, String description, AcademicStaff staff, Thesis thesis) throws MyException {
 		if (commentRepo.existsById(id)) {
 			Comment updateComment = commentRepo.findById(id).get();
 			updateComment.setDescription(description);
@@ -43,16 +44,16 @@ public class CommentsServicesImplementation implements ICommentsServices {
 			updateComment.setThesis(thesis);
 			return commentRepo.save(updateComment);
 		} else {
-			throw new Exception("Wrong id");
+			throw new MyException("Wrong id");
 		}
 	}
 
 	@Override
-	public void deleteCommentById(Long id) throws Exception {
+	public void deleteCommentById(Long id) throws MyException {
 		if (commentRepo.existsById(id)) {
 			commentRepo.deleteById(id);
 		} else {
-			throw new Exception("Wrong id");
+			throw new MyException("Wrong id");
 		}
 	}
 
@@ -67,11 +68,11 @@ public class CommentsServicesImplementation implements ICommentsServices {
 	}
 
 	@Override
-	public Comment retrieveCommentById(Long id) throws Exception {
+	public Comment retrieveCommentById(Long id) throws MyException {
 		if (commentRepo.existsById(id)) {
 			return commentRepo.findById(id).get();
 		} else {
-			throw new Exception("Wrong id");
+			throw new MyException("Wrong id");
 		}
 	}
 
@@ -89,7 +90,7 @@ public class CommentsServicesImplementation implements ICommentsServices {
 	}
 
 	@Override
-	public void insertCommentByCommentDTO(CommentDTO commentDTO) throws Exception {
+	public void insertCommentByCommentDTO(CommentDTO commentDTO) throws MyException {
 		ArrayList<AcademicStaff> staffMembers = staffRepo.findByNameAndSurname(commentDTO.getStaffName(), commentDTO.getStaffSurname());
 		Thesis thesis = thesisRepo.findByTitleLv(commentDTO.getThesisTitle());
 
@@ -97,7 +98,7 @@ public class CommentsServicesImplementation implements ICommentsServices {
 			Comment comment = new Comment(commentDTO.getDescription(), staffMembers.get(0) ,thesis);
 			commentRepo.save(comment);
 		} else {
-			throw new Exception("Thesis or academic staff by such name and surname does not exist.");
+			throw new MyException("Thesis or academic staff by such name and surname does not exist.");
 		}
 	}
 

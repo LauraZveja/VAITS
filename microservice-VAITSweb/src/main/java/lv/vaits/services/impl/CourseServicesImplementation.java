@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import lv.vaits.utils.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +29,11 @@ public class CourseServicesImplementation implements ICourseServices {
 	}
 
 	@Override
-	public Course retrieveCourseById(Long id) throws Exception {
+	public Course retrieveCourseById(Long id) throws MyException {
 		if (courseRepo.existsById(id)) {
 			return courseRepo.findById(id).get();
 		} else {
-			throw new Exception("Wrong id");
+			throw new MyException("Wrong id");
 		}
 	}
 
@@ -42,28 +43,28 @@ public class CourseServicesImplementation implements ICourseServices {
 	}
 
 	@Override
-	public Course updateCourseById(Long id, String title, int creditPoints) throws Exception {
+	public Course updateCourseById(Long id, String title, int creditPoints) throws MyException {
 		if (courseRepo.existsById(id)) {
 			Course updatedCourse = courseRepo.findById(id).get();
 			updatedCourse.setTitle(title);
 			updatedCourse.setCreditPoints(creditPoints);
 			return courseRepo.save(updatedCourse);
 		} else {
-			throw new Exception("Wrong id");
+			throw new MyException("Wrong id");
 		}
 	}
 
 	@Override
-	public void deleteCourseById(Long id) throws Exception {
+	public void deleteCourseById(Long id) throws MyException {
 		if (courseRepo.existsById(id)) {
 			courseRepo.deleteById(id);
 		} else {
-			throw new Exception("Wrong id");
+			throw new MyException("Wrong id");
 		}
 	}
 
 	@Override
-	public void addStudentDebtByCourseId(Long idCourse, List<Long> debtStudents) throws Exception {
+	public void addStudentDebtByCourseId(Long idCourse, List<Long> debtStudents) throws MyException {
 		if (courseRepo.existsById(idCourse)) {
 			Course course = courseRepo.findById(idCourse).get();
 			for (Long studentId : debtStudents) {
@@ -78,12 +79,12 @@ public class CourseServicesImplementation implements ICourseServices {
 				}
 			}
 		} else {
-			throw new Exception("Wrong Student id");
+			throw new MyException("Wrong Student id");
 		}
 	}
 
 	@Override
-	public void removeStudentDebtByCourseId(Long idCourse, List<Long> debtStudents) throws Exception {
+	public void removeStudentDebtByCourseId(Long idCourse, List<Long> debtStudents) throws MyException {
 		if (courseRepo.existsById(idCourse)) {
 			Course course = courseRepo.findById(idCourse).get();
 			for (Long studentId : debtStudents) {
@@ -98,16 +99,16 @@ public class CourseServicesImplementation implements ICourseServices {
 				}
 			}
 		} else {
-			throw new Exception("Wrong Student id");
+			throw new MyException("Wrong Student id");
 		}
 	}
 
 	@Override
-	public Collection<Student> retrieveAllStudentDebtsByCourseId(Long id) throws Exception {
+	public Collection<Student> retrieveAllStudentDebtsByCourseId(Long id) throws MyException {
 		if (courseRepo.existsById(id)) {
 			return courseRepo.findById(id).get().getDebtStudents();
 		} else {
-			throw new Exception("Wrong id");
+			throw new MyException("Wrong id");
 		}
 	}
 

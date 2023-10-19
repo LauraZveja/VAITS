@@ -6,6 +6,7 @@ import lv.vaits.models.Thesis;
 import lv.vaits.repos.IOtherApplicationsRepo;
 import lv.vaits.repos.IThesisRepo;
 import lv.vaits.services.IOtherApplicationsServices;
+import lv.vaits.utils.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class OtherApplicationsImplementation implements IOtherApplicationsServic
     }
 
     @Override
-    public OtherApplicationsDTO insertOtherApplications(OtherApplicationsDTO otherAppDTO) throws Exception {
+    public OtherApplicationsDTO insertOtherApplications(OtherApplicationsDTO otherAppDTO) throws MyException {
         Thesis thesis = thesisRepo.findByTitleLv(otherAppDTO.getThesisTitle());
 
         if (thesis != null){
@@ -41,7 +42,7 @@ public class OtherApplicationsImplementation implements IOtherApplicationsServic
             otherApplicationRepo.save(otherApplication);
             return new OtherApplicationsDTO(otherAppDTO.getApplicationType(), otherAppDTO.getActivity(), otherAppDTO.getThesisTitle());
         } else {
-            throw new Exception("Thesis does not exist");
+            throw new MyException("Thesis does not exist");
         }
 
     }
