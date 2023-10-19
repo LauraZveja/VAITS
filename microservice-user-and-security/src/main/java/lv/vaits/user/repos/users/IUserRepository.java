@@ -6,9 +6,9 @@ import lv.vaits.user.models.users.User;
 
 public interface IUserRepository extends CrudRepository<User, Long> {
 
-	User findByEmail(String var);
+	User findByEmail(String email);
 
-	User findByUsername(String var);
+	User findByUsername(String username);
 
-	User findByIdu(long var);
+	User findByIdu(long idu);
 }

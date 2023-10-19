@@ -8,11 +8,11 @@ import lv.vaits.utils.MyException;
 
 public interface IAcademicStaffServices {
 
-	AcademicStaff createNewAcademicStaffMember(String name, String surname, String personcode, Long id_user,
+	AcademicStaff createNewAcademicStaffMember(String name, String surname, String personcode, Long idUser,
 			Degree degree);
 
-	AcademicStaff updateAcademicStaffMemberById(Long id, String name, String surname, String personcode, Long id_user,
-			Degree degree) throws Exception;
+	AcademicStaff updateAcademicStaffMemberById(Long id, String name, String surname, String personcode, Long idUser,
+			Degree degree) throws MyException;
 
 	void deleteAcademicStaffMemberById(Long id) throws MyException;
 
