@@ -10,8 +10,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.validation.Valid;
+import lv.vaits.user.dto.StudentDTO;
 import lv.vaits.user.models.users.User;
 import lv.vaits.user.services.users.IUserServices;
 
@@ -26,22 +28,28 @@ public class UserCRUDController {
 	@Autowired
 	private IUserServices userServices;
 
-	@GetMapping("/user/addNew")
-	public String insertUserGetFunc(User user, Model model) {
-		model.addAttribute("allUsers", userServices.retrieveAllUsers());
-		return "user-add-page";
+	@GetMapping("/user/addNewStudent")
+	public String insertStudentUserGetFunc(StudentDTO studentDTO) {
+		return "student-create-page";
 	}
 
-	@PostMapping("/user/addNew")
-	public String insertUserPostFunc(@Valid User user, BindingResult result) {
+	@PostMapping("/user/addNewStudent")
+	public String insertStudentUserPostFunc(@Valid StudentDTO studentDTO, BindingResult result) {
 		if (!result.hasErrors()) {
 			try {
-				userServices.createNewUser(user.getPassword(), user.getEmail(), user.getUsername());
+				User newUser = userServices.createNewUser(studentDTO.getPassword(), studentDTO.getEmail(),
+						studentDTO.getUsername());
+				return "redirect:http://localhost:8081/student/addNew/" 
+						+ newUser.getIdu() + "/" 
+						+ studentDTO.getName()+ "/"
+						+ studentDTO.getSurname() + "/"
+						+ studentDTO.getMatriculaNo() + "/"
+						+ studentDTO.getPersoncode();
 			} catch (Exception e) {
+				return "redirect:/user/error";
 			}
-			return "redirect:/user/showAll";
 		} else {
-			return "user-add-page";
+			return "student-create-page";
 		}
 	}
 

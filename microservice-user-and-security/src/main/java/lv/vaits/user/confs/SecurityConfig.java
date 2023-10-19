@@ -44,13 +44,17 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		http.authorizeHttpRequests()
+		http
+		.csrf()
+        .disable()
+        .authorizeHttpRequests()
 		.requestMatchers("/academicStaff/create").hasAnyAuthority("ADMIN")
 		.requestMatchers("/academicStaff/showAll").permitAll()
 		.requestMatchers("/academicStaff/update/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/academicStaff/error").permitAll()
 		.requestMatchers("/academicStaff/delete/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/student/addNew").hasAnyAuthority("ADMIN")
+		.requestMatchers("/student/addNew/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/student/showAll").permitAll()
 		.requestMatchers("/student/showAll/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/student/update/**").hasAnyAuthority("ADMIN")
@@ -88,6 +92,7 @@ public class SecurityConfig {
 		.requestMatchers("/comment/showAll/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/comment/remove/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/user/addNew").hasAnyAuthority("ADMIN")
+		.requestMatchers("/user/addNewStudent").hasAnyAuthority("ADMIN")
 		.requestMatchers("/user/showAll").hasAnyAuthority("ADMIN")
 		.requestMatchers("/user/showAll/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/user/update/**").hasAnyAuthority("ADMIN")

@@ -38,6 +38,7 @@ import lv.vaits.repos.users.IPersonRepo;
 import lv.vaits.repos.users.IStudentRepo;
 import lv.vaits.user.confs.SecurityConfig;
 
+
 @SpringBootApplication(scanBasePackages = { "lv.vaits.user", "lv.vaits", "lv.vaits.main" })
 @Import({ SecurityConfig.class })
 public class VaitsWeb {

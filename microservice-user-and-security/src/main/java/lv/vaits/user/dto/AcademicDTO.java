@@ -2,8 +2,6 @@ package lv.vaits.user.dto;
 
 import java.util.Collection;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,14 +14,12 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lv.vaits.models.users.Degree;
-import lv.vaits.user.models.users.Authorities;
 
 @Getter
 @Setter
 @AllArgsConstructor
 public class AcademicDTO {
-	
+
 	@Setter(value = AccessLevel.NONE)
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,7 +35,7 @@ public class AcademicDTO {
 	@NotNull
 	private String username;
 
-	private Collection<Authorities> myAuthorities;
+	// private Collection<Authorities> myAuthorities;
 
 	@NotNull
 	@NotBlank
@@ -56,8 +52,8 @@ public class AcademicDTO {
 	@Pattern(regexp = "[0-9]{6}-[0-9]{5}", message = "Neatbilstošs personas kods")
 	@Size(min = 12, max = 12)
 	private String personcode;
-	
-	@Enumerated(EnumType.STRING)
-	private Degree degree;
+
+	// @Enumerated(EnumType.STRING)
+	// private Degree degree;
 
 }
