@@ -94,9 +94,14 @@ public class IThesisServicesImplementation implements IThesisServices {
 	@Override
 	public Thesis addReviewerByThesisId(Long idThesis, Long idReviewer) throws Exception {
 		if (thesisRepo.existsById(idThesis) && academicStaffRepo.existsById(idReviewer)) {
-			Thesis updateThesis = thesisRepo.findById(idThesis).get();
-			updateThesis.addReviewer(academicStaffRepo.findById(idReviewer).get());
-			return thesisRepo.save(updateThesis);
+			if (!thesisRepo.findById(idThesis).get().getReviewers()
+					.contains(academicStaffRepo.findById(idReviewer).get())) {
+				Thesis updateThesis = thesisRepo.findById(idThesis).get();
+				updateThesis.addReviewer(academicStaffRepo.findById(idReviewer).get());
+				return thesisRepo.save(updateThesis);
+			}
+			throw new Exception("Supervisor can't also be reviewer!");
+
 		} else {
 			throw new Exception("Wrong thesis and / or reviewer id");
 		}
