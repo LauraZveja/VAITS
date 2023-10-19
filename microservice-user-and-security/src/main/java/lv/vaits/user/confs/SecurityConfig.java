@@ -21,9 +21,9 @@ public class SecurityConfig {
 
 	@Bean
 	public MyUserDetailsManagerImpl userDetailsManager() {
-		MyUserDetailsManagerImpl manager = new MyUserDetailsManagerImpl();
-		return manager;
+		return new MyUserDetailsManagerImpl();
 	}
+
 
 	@Bean
 	PasswordEncoder passwordEncoderSimple2() {

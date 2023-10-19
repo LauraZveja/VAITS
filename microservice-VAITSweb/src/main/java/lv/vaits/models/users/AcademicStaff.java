@@ -18,7 +18,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lv.vaits.models.Comment;
-import lv.vaits.models.Course;
 import lv.vaits.models.Thesis;
 
 @Table(name = "academic_table")

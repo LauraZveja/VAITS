@@ -1,6 +1,5 @@
 package lv.vaits.services;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import lv.vaits.models.AcceptanceStatus;

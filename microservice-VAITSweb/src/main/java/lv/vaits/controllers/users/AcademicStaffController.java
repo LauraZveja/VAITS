@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.validation.Valid;
 import lv.vaits.models.users.AcademicStaff;
-import lv.vaits.repos.users.IPersonRepo;
 import lv.vaits.services.users.IAcademicStaffServices;
 import lv.vaits.services.users.IPersonServices;
 
