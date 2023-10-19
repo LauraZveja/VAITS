@@ -71,6 +71,7 @@ public class SecurityConfig {
 		.requestMatchers("/thesis/addReviewerByThesisId/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/thesis/updateStatus/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/thesis/export").permitAll()
+		.requestMatchers("/thesis/showAllComments/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/course/addNew").hasAnyAuthority("ADMIN")
 		.requestMatchers("/course/showAll").permitAll()
 		.requestMatchers("/course/showAll/**").permitAll()
@@ -84,10 +85,13 @@ public class SecurityConfig {
 		.requestMatchers("/comment/showAll").permitAll()
 		.requestMatchers("/comment/update/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/comment/error").permitAll()
-		.requestMatchers("/testing").permitAll()
 		.requestMatchers("/comment/showAll/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/comment/remove/**").hasAnyAuthority("ADMIN")
-		.requestMatchers("/thesis/showAllComments/**").hasAnyAuthority("ADMIN")
+		.requestMatchers("/user/addNew").hasAnyAuthority("ADMIN")
+		.requestMatchers("/user/showAll").hasAnyAuthority("ADMIN")
+		.requestMatchers("/user/showAll/**").hasAnyAuthority("ADMIN")
+		.requestMatchers("/user/update/**").hasAnyAuthority("ADMIN")
+		.requestMatchers("/user/error").permitAll()
 		.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll().and().formLogin()
 		.permitAll().and().logout().permitAll().and().exceptionHandling().accessDeniedPage("/my-access-denied");
 

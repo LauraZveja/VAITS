@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<style>
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			border-spacing: 0;
+		}
+
+		th,
+		td {
+			padding: 8px;
+			border: 1px solid #ddd;
+			text-align: left;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>All Students</h1>
+	<table>
+		<tr>
+			<th>User ID</th>
+			<th>Username</th>
+			<th>E-mail</th>
+			<th>Password</th>
+		</tr>
+		<th:block th:each="user : ${allUsers}">
+			<tr>
+				<td th:text="${user.getIdu()}"></td>
+				<td th:text="${user.getUsername()}"></td>
+				<td th:text="${user.getEmail()}"></td>
+				<td th:text="${user.getPassword()}"></td>
+			</tr>
+		</th:block>
+	</table>
+</body>
+
+</html>
