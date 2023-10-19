@@ -2,6 +2,7 @@ package lv.vaits.services.users.impl;
 
 import java.util.ArrayList;
 
+import lv.vaits.utils.MyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class AcademicStaffServicesImplementation implements IAcademicStaffServic
 
 	@Override
 	public AcademicStaff updateAcademicStaffMemberById(Long id, String name, String surname, String personcode,
-			Long id_user, Degree degree) throws Exception {
+			Long id_user, Degree degree) throws MyException {
 		if (academicStaffRepo.existsById(id)) {
 			AcademicStaff updatedAcademicStaffMember = academicStaffRepo.findById(id).get();
 			updatedAcademicStaffMember.setName(name);
@@ -34,26 +35,26 @@ public class AcademicStaffServicesImplementation implements IAcademicStaffServic
 			updatedAcademicStaffMember.setDegree(degree);
 			return academicStaffRepo.save(updatedAcademicStaffMember);
 		} else {
-			throw new Exception("ID not found");
+			throw new MyException("ID not found");
 
 		}
 	}
 
 	@Override
-	public void deleteAcademicStaffMemberById(Long id) throws Exception {
+	public void deleteAcademicStaffMemberById(Long id) throws MyException {
 		if (academicStaffRepo.existsById(id)) {
 			academicStaffRepo.deleteById(id);
 		} else {
-			throw new Exception("ID not found");
+			throw new MyException("ID not found");
 		}
 	}
 
 	@Override
-	public AcademicStaff retrieveAcademicStaffMemberById(Long id) throws Exception {
+	public AcademicStaff retrieveAcademicStaffMemberById(Long id) throws MyException {
 		if (academicStaffRepo.existsById(id)) {
 			return academicStaffRepo.findById(id).get();
 		} else {
-			throw new Exception("ID not found");
+			throw new MyException("ID not found");
 		}
 	}
 

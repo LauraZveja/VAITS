@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import lv.vaits.utils.MyException;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -48,7 +49,7 @@ public class StudentServicesImplementation implements IStudentServices {
 
 	@Override
 	public Student updateStudentById(Long id, String name, String surname, String personcode, Long id_user,
-			String matriculaNo, boolean financialDebt) throws Exception {
+			String matriculaNo, boolean financialDebt) throws MyException {
 		if (studentRepo.existsById(id)) {
 			Student updatedStudent = studentRepo.findById(id).get();
 			updatedStudent.setName(name);
@@ -59,16 +60,16 @@ public class StudentServicesImplementation implements IStudentServices {
 			updatedStudent.setFinancialDebt(financialDebt);
 			return studentRepo.save(updatedStudent);
 		} else {
-			throw new Exception("Wrong id");
+			throw new MyException("Wrong id");
 		}
 	}
 
 	@Override
-	public Student retrieveStudentById(Long id) throws Exception {
+	public Student retrieveStudentById(Long id) throws MyException {
 		if (studentRepo.existsById(id)) {
 			return studentRepo.findById(id).get();
 		} else {
-			throw new Exception("Wrong id");
+			throw new MyException("Wrong id");
 		}
 	}
 
@@ -78,26 +79,26 @@ public class StudentServicesImplementation implements IStudentServices {
 	}
 
 	@Override
-	public void deleteStudentById(Long id) throws Exception {
+	public void deleteStudentById(Long id) throws MyException {
 		if (studentRepo.existsById(id)) {
 			studentRepo.deleteById(id);
 		} else {
-			throw new Exception("Wrong id");
+			throw new MyException("Wrong id");
 		}
 
 	}
 
 	@Override
-	public ArrayList<Course> retrieveAllDebtCoursesByStudentId(Long id) throws Exception {
+	public ArrayList<Course> retrieveAllDebtCoursesByStudentId(Long id) throws MyException {
 		if (studentRepo.existsById(id)) {
 			return courseRepo.findByDebtStudentsIdp(id);
 		} else {
-			throw new Exception("Wrong id");
+			throw new MyException("Wrong id");
 		}
 	}
 
 	@Override
-	public void addDebtCourseByStudentId(Long idStudent, List<Long> debtCourses) throws Exception {
+	public void addDebtCourseByStudentId(Long idStudent, List<Long> debtCourses) throws MyException {
 		if (studentRepo.existsById(idStudent)) {
 			Student student = studentRepo.findById(idStudent).get();
 			for (Long courseId : debtCourses) {
@@ -112,12 +113,12 @@ public class StudentServicesImplementation implements IStudentServices {
 				}
 			}
 		} else {
-			throw new Exception("Wrong Student id");
+			throw new MyException("Wrong Student id");
 		}
 	}
 
 	@Override
-	public void removeDebtCourseByStudentId(Long idStudent, List<Long> debtCourses) throws Exception {
+	public void removeDebtCourseByStudentId(Long idStudent, List<Long> debtCourses) throws MyException {
 		if (studentRepo.existsById(idStudent)) {
 			Student student = studentRepo.findById(idStudent).get();
 			for (Long courseId : debtCourses) {
@@ -132,27 +133,27 @@ public class StudentServicesImplementation implements IStudentServices {
 				}
 			}
 		} else {
-			throw new Exception("Wrong Student id");
+			throw new MyException("Wrong Student id");
 		}
 	}
 
 	@Override
-	public ArrayList<Thesis> retrieveStudentThesisByStudentId(Long id) throws Exception {
+	public ArrayList<Thesis> retrieveStudentThesisByStudentId(Long id) throws MyException {
 		if (studentRepo.existsById(id)) {
 			return thesisRepo.findByStudentIdp(id);
 		} else {
-			throw new Exception("Wrong id");
+			throw new MyException("Wrong id");
 		}
 	}
 
 	@Override
 	public Thesis submitThesisByStudentId(String titleLv, String titleEn, String aim, String tasks, Long idStudent,
-			AcademicStaff supervisor) throws Exception {
+			AcademicStaff supervisor) throws MyException {
 		if (studentRepo.existsById(idStudent)) {
 			return thesisRepo
 					.save(new Thesis(titleLv, titleEn, aim, tasks, studentRepo.findById(idStudent).get(), supervisor));
 		} else {
-			throw new Exception("Wrong id");
+			throw new MyException("Wrong id");
 		}
 	}
 
@@ -192,11 +193,11 @@ public class StudentServicesImplementation implements IStudentServices {
 	}
 
 	@Override
-	public Student retrieveStudentByMatriculaNo(String matriculaNo) throws Exception {
+	public Student retrieveStudentByMatriculaNo(String matriculaNo) throws MyException {
 		if (studentRepo.existsByMatriculaNo(matriculaNo)) {
 			return studentRepo.findByMatriculaNo(matriculaNo);
 		} else {
-			throw new Exception("Wrong Matricula No");
+			throw new MyException("Wrong Matricula No");
 		}
 	}
 
