@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 import lv.vaits.models.Comment;
@@ -28,7 +27,7 @@ import lv.vaits.repos.ICalendarSchedule;
 import lv.vaits.repos.ICommentRepo;
 import lv.vaits.repos.ICourseRepo;
 import lv.vaits.repos.IMessageRepo;
-import lv.vaits.repos.IOtherApplications;
+import lv.vaits.repos.IOtherApplicationsRepo;
 import lv.vaits.repos.IStudentStudyProgramRepo;
 import lv.vaits.repos.IStudyProgramRepo;
 import lv.vaits.repos.IThesisApplications;
@@ -56,7 +55,7 @@ public class VaitsWeb {
 			final ICommentRepo commentRepo, 
 			final IStudyProgramRepo studyRepo, 
 			final ICalendarSchedule calendarRepo,
-			final IOtherApplications otherApplicationRepo, 
+			final IOtherApplicationsRepo otherApplicationRepo,
 			final IStudentStudyProgramRepo sspRepo,
 			final IThesisApplications thesisApplicationsRepo, 
 			final IMessageRepo messageRepo) {

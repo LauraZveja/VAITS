@@ -11,6 +11,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.http.HttpMethod;
 
 import jakarta.servlet.DispatcherType;
 import lv.vaits.user.services.users.impl.MyUserDetailsManagerImpl;
@@ -94,9 +95,14 @@ public class SecurityConfig {
 		.requestMatchers("/student/export").hasAnyAuthority("ADMIN")
 		.requestMatchers("/student/import/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/student/export/**").hasAnyAuthority("ADMIN")
-		.requestMatchers("/thesis/export/**").hasAnyAuthority("ADMIN")
+		.requestMatchers(HttpMethod.GET,"/thesis/export/**").hasAnyAuthority("ADMIN")
+		.requestMatchers(HttpMethod.POST,"/thesis/export/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/thesis/removeReviewerByThesisId/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/comment/dto/**").permitAll()
+		.requestMatchers(HttpMethod.POST,"/comment/dto/**").hasAnyAuthority("ADMIN")
+		.requestMatchers(HttpMethod.GET,"/comment/dto/**").hasAnyAuthority("ADMIN")
+		.requestMatchers(HttpMethod.GET,"/otherApps/**").permitAll()
+		.requestMatchers(HttpMethod.POST,"/otherApps/**").permitAll()
 		.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll().and().formLogin()
 		.permitAll().and().logout().permitAll().and().exceptionHandling().accessDeniedPage("/my-access-denied").and().csrf().disable();
 

@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import lv.vaits.models.OtherApplications;
 
-public interface IOtherApplications extends CrudRepository<OtherApplications, Long>{
+public interface IOtherApplicationsRepo extends CrudRepository<OtherApplications, Long>{
 
 }

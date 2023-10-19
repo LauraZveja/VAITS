@@ -217,7 +217,7 @@ public class ThesisController {
                 .body(new InputStreamResource(new FileInputStream(tempFile)));
     }
 
-    @GetMapping("/thesis/removeReviewerByThesisId/{idThesis}/{idReviewer}")
+    @PostMapping("/thesis/removeReviewerByThesisId/{idThesis}/{idReviewer}")
     public String removeReviewerByThesisId(@PathVariable("idThesis") Long idThesis,
                                            @PathVariable("idReviewer") Long idReviewer,
                                            Model model) {
