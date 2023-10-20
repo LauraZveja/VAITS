@@ -134,7 +134,7 @@ public class ThesisController {
         }
     }
 
-    @GetMapping("/thesis/addReviewerByThesisId/{idThesis}/{idReviewer}")
+   /* @GetMapping("/thesis/addReviewerByThesisId/{idThesis}/{idReviewer}")
     public String addReviewerByThesisId(@PathVariable("idThesis") Long id, @PathVariable("idReviewer") Long idReviewer,
                                         Model model) {
         try {
@@ -143,7 +143,7 @@ public class ThesisController {
         } catch (Exception e) {
             return "error-page";
         }
-    }
+    }*/
 
     @GetMapping("/thesis/updateStatus/{id}")
     public String updateThesisStatusGetFunc(@PathVariable("id") Long id, Model model) {

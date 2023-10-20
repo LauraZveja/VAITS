@@ -79,15 +79,15 @@ public class Thesis {
 	private AcademicStaff supervisor;
 
 	// TODO izveidot saiti, ja nepieciešams, ar konsultantu, vērtētāju utt/
-	@ManyToMany
-	@JoinTable(name = "thesis_reviewers", joinColumns = @JoinColumn(name = "Idt"), inverseJoinColumns = @JoinColumn(name = "Ida"))
-	private Collection<AcademicStaff> reviewers = new ArrayList<>();
+	//@ManyToMany
+	//@JoinTable(name = "thesis_reviewers", joinColumns = @JoinColumn(name = "Idt"), inverseJoinColumns = @JoinColumn(name = "Ida"))
+	//private Collection<AcademicStaff> reviewers = new ArrayList<>();
 
-	public void addReviewer(AcademicStaff reviewer) {
-		if (!reviewers.contains(reviewer)) {
-			reviewers.add(reviewer);
-		}
-	}
+	//public void addReviewer(AcademicStaff reviewer) {
+		//if (!reviewers.contains(reviewer)) {
+			//reviewers.add(reviewer);
+		//}
+	//}
 
 	@OneToMany(mappedBy = "thesis")
 	private Collection<Comment> comments;
@@ -116,7 +116,7 @@ public class Thesis {
 		this.accStatus = AcceptanceStatus.SUBMITTED;
 		this.otherApplications = new ArrayList<>();
 		this.comments = new ArrayList<>();
-		this.reviewers = new ArrayList<>();
+		//this.reviewers = new ArrayList<>();
 		this.thesisApplications = new ArrayList<>();
 		this.messages = new ArrayList<>();
 		this.isDeleted = false;

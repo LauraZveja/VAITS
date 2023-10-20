@@ -36,14 +36,14 @@ public class AcademicStaff extends Person {
 	@OneToMany(mappedBy = "supervisor")
 	private Collection<Thesis> thesis;
 
-	@ManyToMany(mappedBy = "reviewers")
+	/*@ManyToMany(mappedBy = "reviewers")
 	private Collection<Thesis> thesisForReviews = new ArrayList<>();
 
 	public void addThesisForReviews(Thesis inputThesis) {
 		if (!thesisForReviews.contains(inputThesis)) {
 			thesisForReviews.add(inputThesis);
 		}
-	}
+	}*/
 
 	public AcademicStaff(
 			@NotNull @Size(min = 3, max = 15) @NotNull @Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "NAME MUST START WITH A CAPITAL LETTER!") String name,

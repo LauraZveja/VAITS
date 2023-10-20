@@ -1,5 +1,8 @@
 package lv.vaits.controllers.users;
 
+import java.util.List;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,9 +10,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.LocaleResolver;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lv.vaits.models.Thesis;
 import lv.vaits.models.users.AcademicStaff;
+import lv.vaits.repos.IThesisApplications;
+import lv.vaits.repos.IThesisRepo;
 import lv.vaits.repos.users.IPersonRepo;
 import lv.vaits.services.users.IAcademicStaffServices;
 import lv.vaits.services.users.IPersonServices;
@@ -68,17 +78,22 @@ public class AcademicStaffController {
 		}
 	}
 
+	@Autowired
+	private IAcademicStaffServices iAcademicStaffServices; 
+
 	@GetMapping("/academicStaff/delete/{id}")
-	public String deleteAcademicStaffMemberById(@PathVariable("id") Long id, Model model) {
-		try {
-			academicStaffServices.deleteAcademicStaffMemberById(id);
-			model.addAttribute("allAcademicStaffMembers", academicStaffServices.retrieveAllAcademicStaffMembers());
-			return "academicStaffMembers-all-page";
-		} catch (Exception e) {
-			return "error-page";
-		}
+	public String deleteAcademicStaffMember(@PathVariable("id") Long id, Model model) {
+	    try {
+	        iAcademicStaffServices.deleteAcademicStaffMemberById(id);
+	        return "redirect:/academicStaff/showAll";
+	    } catch (Exception e) {
+	        return "error-page";
+	    }
 	}
 
+	@Autowired
+    private LocaleResolver localeResolver;
+	
 	@GetMapping("/academicStaff/showAll/{id}")
 	public String academicStaffByIdFunc(@PathVariable("id") Long id, Model model) {
 		try {
@@ -90,7 +105,15 @@ public class AcademicStaffController {
 	}
 
 	@GetMapping("/academicStaff/showAll")
-	public String allAcademicStaffMembersGetFunc(Model model) {
+	public String allAcademicStaffMembersGetFunc(Model model,
+        @RequestParam(value = "lang", required = false) String lang,
+        HttpServletRequest request,
+        HttpServletResponse response
+) {
+    if (lang != null) {
+        Locale newLocale = new Locale(lang);
+        localeResolver.setLocale(request, response, newLocale);
+    }
 		model.addAttribute("allAcademicStaffMembers", academicStaffServices.retrieveAllAcademicStaffMembers());
 		return "academicStaffMembers-all-page";
 	}

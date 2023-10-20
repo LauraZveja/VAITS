@@ -2,12 +2,17 @@ package lv.vaits;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import lv.vaits.models.Comment;
 import lv.vaits.models.Course;
@@ -40,7 +45,17 @@ import lv.vaits.user.confs.SecurityConfig;
 
 @SpringBootApplication(scanBasePackages = { "lv.vaits.user", "lv.vaits", "lv.vaits.main" })
 @Import({ SecurityConfig.class })
-public class VaitsWeb {
+public class VaitsWeb implements WebMvcConfigurer{
+	
+	//private final LocaleChangeInterceptor localeChangeInterceptor;
+	//public VaitsWeb(LocaleChangeInterceptor localeChangeInterceptor){
+	 //this.localeChangeInterceptor = localeChangeInterceptor;
+	//}
+
+	//@Override
+	//public void addInterceptors(InterceptorRegistry interceptorRegistry){
+	 //interceptorRegistry.addInterceptor(localeChangeInterceptor);
+	//}
 
 	public static void main(String[] args) {
 		SpringApplication.run(VaitsWeb.class, args);
@@ -93,12 +108,12 @@ public class VaitsWeb {
 				Thesis th2 = new Thesis("Programmas izstrāde", "Development of Program", "Non Development",
 						"1...2.3..5", s1, ac2);
 
-				th1.addReviewer(ac2);
-				th2.addReviewer(ac1);
+				//th1.addReviewer(ac2);
+				//th2.addReviewer(ac1);
 				thesisRepo.save(th1);
 				thesisRepo.save(th2);
-				ac1.addThesisForReviews(th1);
-				ac2.addThesisForReviews(th2);
+				//ac1.addThesisForReviews(th1);
+				//ac2.addThesisForReviews(th2);
 				personRepo.save(ac1);
 				personRepo.save(ac2);
 

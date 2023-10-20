@@ -28,7 +28,7 @@ public interface IThesisServices {
 
 	Thesis changeSupervisorByThesisAndSupervisorId(Long idThesis, Long idAcademicStaff) throws Exception;
 
-	Thesis addReviewerByThesisId(Long idThesis, Long idReviewer) throws Exception;
+	//Thesis addReviewerByThesisId(Long idThesis, Long idReviewer) throws Exception;
 
 	Thesis updateThesisStatus(Long idThesis, AcceptanceStatus status) throws Exception;
 

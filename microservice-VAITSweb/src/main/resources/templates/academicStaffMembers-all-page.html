@@ -20,26 +20,42 @@
 		}
 	</style>
 </head>
+<span th:text="#{lang.change}"></span>:
+<select id="locales">
+	<option value=""></option>
+	<option value="en" th:text="#{lang.eng}"></option>
+	<option value="fr" th:text="#{lang.fr}"></option>
+</select>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+</script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#locales").change(function () {
+			var selectedOption = $('#locales').val();
+			if (selectedOption != '') {
+				window.location.replace('/academicStaff/showAll?lang=' + selectedOption);
+			}
+		});
+	});
+</script>
 
 <body>
-	<h1>All Academic Staff Members</h1>
+	<h1 th:text="#{academicStaff.allMembers}">All Academic Staff Members</h1>
 	<table>
 		<tr>
-			<th>Staff member ID</th>
-			<th>Name</th>
-			<th>Surname</th>
-			<th>Personcode</th>
-			<th>Degree</th>
+			<th th:text="#{academicStaff.staffId}">Staff member ID</th>
+			<th th:text="#{academicStaff.name}">Name</th>
+			<th th:text="#{academicStaff.surname}">Surname</th>
+			<th th:text="#{academicStaff.personcode}">Personcode</th>
+			<th th:text="#{academicStaff.degree}">Degree</th>
 		</tr>
-		<th:block th:each="academicStaff : ${allAcademicStaffMembers}">
-			<tr>
-				<td th:text="${academicStaff.getIdp()}"></td>
-				<td th:text="${academicStaff.getName()}"></td>
-				<td th:text="${academicStaff.getSurname()}"></td>
-				<td th:text="${academicStaff.getPersoncode()}"></td>
-				<td th:text="${academicStaff.getDegree()}"></td>
-			</tr>
-		</th:block>
+		<tr th:each="academicStaff : ${allAcademicStaffMembers}">
+			<td th:text="${academicStaff.getIdp()}"></td>
+			<td th:text="${academicStaff.getName()}"></td>
+			<td th:text="${academicStaff.getSurname()}"></td>
+			<td th:text="${academicStaff.getPersoncode()}"></td>
+			<td th:text="${academicStaff.getDegree()}"></td>
+		</tr>
 	</table>
 </body>
 

@@ -18,7 +18,7 @@ public class KafkaMessageController {
         this.kafkaProducer = kafkaProducer;
     }
 
-    // localhost:8080/api/v1/kafka/publish?notification=hello world
+    // localhost:8081/api/v1/kafka/publish?notification=hello world
     @GetMapping("/publish")
     public ResponseEntity<String> publish(@RequestParam("notification") String notification) {
         kafkaProducer.sendNotification(notification);
