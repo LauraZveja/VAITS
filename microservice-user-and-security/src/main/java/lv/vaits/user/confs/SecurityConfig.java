@@ -87,9 +87,12 @@ public class SecurityConfig {
 		.requestMatchers("/thesis/showAllComments/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/notifications/showAll").hasAnyAuthority("ADMIN")
 		.requestMatchers("/api/v1/kafka/publish").hasAnyAuthority("ADMIN")
+
 		.requestMatchers("/international").permitAll()
 		.requestMatchers("/academicStaff/showAll?lang=eng").permitAll()
 		.requestMatchers("/academicStaff/showAll?lang=fr").permitAll()
+
+
 		.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll().and().formLogin()
 		.permitAll().and().logout().permitAll().and().exceptionHandling().accessDeniedPage("/my-access-denied");
 
