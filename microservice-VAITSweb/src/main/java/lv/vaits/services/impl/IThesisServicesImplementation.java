@@ -85,7 +85,7 @@ public class IThesisServicesImplementation implements IThesisServices {
 		if (thesisRepo.existsById(idThesis) && academicStaffRepo.existsById(idAcademicStaff)) {
 			Thesis updateThesis = thesisRepo.findById(idThesis).get();
 			AcademicStaff staff = academicStaffRepo.findById(idAcademicStaff).get();
-			if (updateThesis.getSupervisor() == staff) {
+			if (updateThesis.getSupervisor().getIdp() == staff.getIdp()) {
 				throw new Exception("Supervisor with ID " + idAcademicStaff + " is already associated with the thesis.");
 			}
 			updateThesis.setSupervisor(academicStaffRepo.findById(idAcademicStaff).get());
