@@ -63,21 +63,6 @@
 			<scope>test</scope>
 			<version>3.1.4</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka -->
-		<!--
-		<dependency>
-			<groupId>org.apache.kafka</groupId>
-			<artifactId>kafka_2.12</artifactId>
-			<version>3.5.1</version><!-$NO-MVN-MAN-VER$-->
-		<!-- </dependency>-->
-		<!--
-		https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka -->
-		<!-- <dependency>
-			<groupId>org.springframework.kafka</groupId>
-			<artifactId>spring-kafka</artifactId>
-			<version>3.0.10</version>
-		</dependency>
-	-->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>

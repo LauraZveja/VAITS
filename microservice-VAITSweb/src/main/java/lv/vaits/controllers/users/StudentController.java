@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import lv.vaits.models.Thesis;
+import lv.vaits.models.users.Person;
 import lv.vaits.models.users.Student;
 import lv.vaits.services.ICourseServices;
 import lv.vaits.services.users.*;
@@ -41,20 +42,35 @@ public class StudentController {
 	@Autowired
 	private IPersonServices personServices;
 
-	@GetMapping("/student/addNew")
-	public String insertStudentGetFunc(Student student, Model model) {
-		model.addAttribute("allUsers", personServices.retrieveAllPersons());
+	@GetMapping("/student/addNew/{id_user}/{name}/{surname}/{matriculaNo}/{personcode}")
+	public String insertStudentGetFunc(
+			@PathVariable("id_user") Long id_user, 
+			@PathVariable("name") String name,
+			@PathVariable("surname") String surname, 
+			@PathVariable("matriculaNo") String matriculaNo,
+			@PathVariable("personcode") String personcode, 
+			Student student
+			) {
 		return "student-add-page";
 	}
 
-	@PostMapping("/student/addNew")
-	public String insertStudentPostFunc(@Valid Student student, BindingResult result) {
+	@PostMapping("/student/addNew/{id_user}/{name}/{surname}/{matriculaNo}/{personcode}")
+	public String insertStudentPostFunc(
+			@PathVariable("id_user") Long id_user, 
+			@PathVariable("name") String name,
+			@PathVariable("surname") String surname, 
+			@PathVariable("matriculaNo") String matriculaNo,
+			@PathVariable("personcode") String personcode, 
+			@Valid Student student, 
+			BindingResult result
+			) 
+	{
 		if (!result.hasErrors()) {
 			studentServices.createNewStudent(student.getName(), student.getSurname(), student.getPersoncode(),
 					student.getId_user(), student.getMatriculaNo(), student.isFinancialDebt());
 			return "redirect:/student/showAll";
 		} else {
-			return "student-add-page";
+			return "error-page";
 		}
 	}
 

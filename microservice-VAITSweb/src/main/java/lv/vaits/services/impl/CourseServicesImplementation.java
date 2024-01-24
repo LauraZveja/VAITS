@@ -106,7 +106,7 @@ public class CourseServicesImplementation implements ICourseServices {
 	@Override
 	public Collection<Student> retrieveAllStudentDebtsByCourseId(Long id) throws MyException {
 		if (courseRepo.existsById(id)) {
-			return courseRepo.findById(id).get().getDebtStudents();
+			return courseRepo.findAllDebtorsByCourseId(id);
 		} else {
 			throw new MyException("Wrong id");
 		}

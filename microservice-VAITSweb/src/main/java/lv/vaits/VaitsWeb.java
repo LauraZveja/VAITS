@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 import lv.vaits.models.Comment;
@@ -36,6 +37,7 @@ import lv.vaits.repos.users.IAcademicStaffRepo;
 import lv.vaits.repos.users.IPersonRepo;
 import lv.vaits.repos.users.IStudentRepo;
 import lv.vaits.user.confs.SecurityConfig;
+
 
 @SpringBootApplication(scanBasePackages = { "lv.vaits.user", "lv.vaits", "lv.vaits.main" })
 @Import({ SecurityConfig.class })
