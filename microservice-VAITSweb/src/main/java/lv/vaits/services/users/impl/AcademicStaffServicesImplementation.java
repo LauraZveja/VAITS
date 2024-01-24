@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.models.users.Degree;
+import lv.vaits.repos.IThesisRepo;
 import lv.vaits.repos.users.IAcademicStaffRepo;
 import lv.vaits.services.users.IAcademicStaffServices;
 
@@ -15,6 +16,9 @@ public class AcademicStaffServicesImplementation implements IAcademicStaffServic
 
 	@Autowired
 	private IAcademicStaffRepo academicStaffRepo;
+
+	@Autowired
+	private IThesisRepo thesisRepo;
 
 	@Override
 	public AcademicStaff createNewAcademicStaffMember(String name, String surname, String personcode, Long id_user,
@@ -42,7 +46,15 @@ public class AcademicStaffServicesImplementation implements IAcademicStaffServic
 	@Override
 	public void deleteAcademicStaffMemberById(Long id) throws Exception {
 		if (academicStaffRepo.existsById(id)) {
-			academicStaffRepo.deleteById(id);
+			if (academicStaffRepo.findById(id).get().getThesis().isEmpty()) {
+				if (academicStaffRepo.findById(id).get().getThesisForReviews().isEmpty()) {
+					academicStaffRepo.deleteById(id);
+				} else {
+					throw new Exception("ID assigned to a thesis as a reviewer ID");
+				}
+			} else {
+				throw new Exception("ID assigned to a thesis as a supervisor ID");
+			}
 		} else {
 			throw new Exception("ID not found");
 		}

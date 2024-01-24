@@ -11,9 +11,4 @@ public class UtilsController {
 		return "access-denied.html";
 	}
 	
-	@GetMapping("/testing")
-	public String testing() {
-		return "access-denied.html";
-	}
-
 }

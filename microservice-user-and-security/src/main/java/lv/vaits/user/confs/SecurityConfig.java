@@ -45,13 +45,17 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-		http.authorizeHttpRequests()
+		http
+		.csrf()
+        .disable()
+        .authorizeHttpRequests()
 		.requestMatchers("/academicStaff/create").hasAnyAuthority("ADMIN")
 		.requestMatchers("/academicStaff/showAll").permitAll()
 		.requestMatchers("/academicStaff/update/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/academicStaff/error").permitAll()
 		.requestMatchers("/academicStaff/delete/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/student/addNew").hasAnyAuthority("ADMIN")
+		.requestMatchers("/student/addNew/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/student/showAll").permitAll()
 		.requestMatchers("/student/showAll/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/student/update/**").hasAnyAuthority("ADMIN")
@@ -73,6 +77,7 @@ public class SecurityConfig {
 		.requestMatchers("/thesis/removeReviewerByThesisId/**").permitAll()
 		.requestMatchers("/thesis/updateStatus/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/thesis/export").permitAll()
+		.requestMatchers("/thesis/showAllComments/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/course/addNew").hasAnyAuthority("ADMIN")
 		.requestMatchers("/course/showAll").permitAll()
 		.requestMatchers("/course/showAll/**").permitAll()
@@ -86,7 +91,6 @@ public class SecurityConfig {
 		.requestMatchers("/comment/showAll").permitAll()
 		.requestMatchers("/comment/update/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/comment/error").permitAll()
-		.requestMatchers("/testing").permitAll()
 		.requestMatchers("/comment/showAll/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/comment/remove/**").hasAnyAuthority("ADMIN")
 		.requestMatchers("/thesis/showAllComments/**").hasAnyAuthority("ADMIN")
@@ -103,6 +107,12 @@ public class SecurityConfig {
 		.requestMatchers(HttpMethod.GET,"/comment/dto/**").hasAnyAuthority("ADMIN")
 		.requestMatchers(HttpMethod.GET,"/otherApps/**").permitAll()
 		.requestMatchers(HttpMethod.POST,"/otherApps/**").permitAll()
+		.requestMatchers("/user/addNew").hasAnyAuthority("ADMIN")
+		.requestMatchers("/user/addNewStudent").hasAnyAuthority("ADMIN")
+		.requestMatchers("/user/showAll").hasAnyAuthority("ADMIN")
+		.requestMatchers("/user/showAll/**").hasAnyAuthority("ADMIN")
+		.requestMatchers("/user/update/**").hasAnyAuthority("ADMIN")
+		.requestMatchers("/user/error").permitAll()
 		.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll().and().formLogin()
 		.permitAll().and().logout().permitAll().and().exceptionHandling().accessDeniedPage("/my-access-denied").and().csrf().disable();
 

@@ -10,5 +10,4 @@ public interface IUserRepository extends CrudRepository<User, Long> {
 
 	User findByUsername(String var);
 
-	User findByIdu(long var);
 }
