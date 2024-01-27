@@ -36,7 +36,7 @@ class CommentDTOTest {
         Set<ConstraintViolation<CommentDTO>> violations = validator.validate(badStaffName);
         assertEquals(1, violations.size());
         ConstraintViolation<CommentDTO> violation = violations.iterator().next();
-        assertEquals("Pirmajam burtam jābūt lielajam!", violation.getMessage());
+        assertEquals("Pirmajam burtam jÄ�bÅ«t lielajam!", violation.getMessage());
         assertEquals("staffName", violation.getPropertyPath().toString());
     }
 
@@ -45,7 +45,7 @@ class CommentDTOTest {
         Set<ConstraintViolation<CommentDTO>> violations = validator.validate(badStaffSurname);
         assertEquals(1, violations.size());
         ConstraintViolation<CommentDTO> violation = violations.iterator().next();
-        assertEquals("Pirmajam burtam jābūt lielajam!", violation.getMessage());
+        assertEquals("Pirmajam burtam jÄ�bÅ«t lielajam!", violation.getMessage());
         assertEquals("staffSurname", violation.getPropertyPath().toString());
     }
 
@@ -54,7 +54,7 @@ class CommentDTOTest {
         Set<ConstraintViolation<CommentDTO>> violations = validator.validate(badThesisTitle);
         assertEquals(1, violations.size());
         ConstraintViolation<CommentDTO> violation = violations.iterator().next();
-        assertEquals("Pirmajam burtam jābūt lielajam!", violation.getMessage());
+        assertEquals("Pirmajam burtam jÄ�bÅ«t lielajam!", violation.getMessage());
         assertEquals("thesisTitle", violation.getPropertyPath().toString());
     }
 
@@ -63,7 +63,7 @@ class CommentDTOTest {
         Set<ConstraintViolation<CommentDTO>> violations = validator.validate(badDescription);
         assertEquals(1, violations.size());
         ConstraintViolation<CommentDTO> violation = violations.iterator().next();
-        assertEquals("Garumam jābūt vismaz 3 rakstzīmju garam!", violation.getMessage());
+        assertEquals("Garumam jÄ�bÅ«t vismaz 3 rakstzÄ«mju garam!", violation.getMessage());
         assertEquals("description", violation.getPropertyPath().toString());
     }
 
@@ -72,7 +72,7 @@ class CommentDTOTest {
         Set<ConstraintViolation<CommentDTO>> violations = validator.validate(badThesisLength);
         assertEquals(1, violations.size());
         ConstraintViolation<CommentDTO> violation = violations.iterator().next();
-        assertEquals("Garumam jābūt no 3 līdz 25 rakstzīmju garam!", violation.getMessage());
+        assertEquals("Garumam jÄ�bÅ«t no 3 lÄ«dz 25 rakstzÄ«mju garam!", violation.getMessage());
         assertEquals("thesisTitle", violation.getPropertyPath().toString());
     }
 
