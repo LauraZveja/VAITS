@@ -14,7 +14,7 @@ import lombok.*;
 public class CommentDTO {
 
     @NotNull
-    @Size(min = 3)
+    @Size(min = 3, message = "Garumam jābūt vismaz 3 rakstzīmju garam!")
     private String description;
 
     @NotBlank
@@ -27,7 +27,7 @@ public class CommentDTO {
     @Size(min = 3, max = 30)
     private String staffSurname;
 
-    @Size(min = 3, max = 25)
+    @Size(min = 3, max = 25, message = "Garumam jābūt no 3 līdz 25 rakstzīmju garam!")
     @NotNull
     @Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "Pirmajam burtam jābūt lielajam!")
     private String thesisTitle;
