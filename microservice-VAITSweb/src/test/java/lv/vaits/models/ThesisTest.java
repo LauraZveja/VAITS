@@ -65,7 +65,7 @@ class ThesisTest {
         assertNotNull(testThesis.getSubmitDateTime());
     }
 
-   @Test
+    @Test
     void setTitleLv() {
         testThesis.setTitleLv("New Title LV");
         assertEquals("New Title LV", testThesis.getTitleLv());
@@ -122,30 +122,38 @@ class ThesisTest {
     void testAddAndRemoveReviewer() {
         AcademicStaff reviewer = new AcademicStaff();
         thesis.addReviewer(reviewer);
-        assertTrue(thesis.getReviewers().contains(reviewer), "Reviewer should be added");
-
+        assertTrue(thesis.getReviewers().contains(reviewer), "Reviewer should be added initially");
+        thesis.addReviewer(reviewer);
+        assertEquals(1, thesis.getReviewers().size(), "Reviewer should not be added again");
         thesis.removeReviewer(reviewer);
         assertFalse(thesis.getReviewers().contains(reviewer), "Reviewer should be removed");
     }
 
     @Test
     void testAddCommentToThesis() {
-        thesis.addCommentToThesis(goodComment);
-        assertTrue(thesis.getComments().contains(goodComment), "Comment should be added");
+        Comment comment = new Comment();
+        thesis.addCommentToThesis(comment);
+        assertTrue(thesis.getComments().contains(comment), "Comment should be added initially");
+        thesis.addCommentToThesis(comment);
+        assertEquals(1, thesis.getComments().size(), "Comment should not be added again");
     }
 
     @Test
     void testAddThesisApplicationToThesis() {
         ThesisApplications thesisApplication = new ThesisApplications();
         thesis.addThesisApplicationToThesis(thesisApplication);
-        assertTrue(thesis.getThesisApplications().contains(thesisApplication), "Thesis application should be added");
+        assertTrue(thesis.getThesisApplications().contains(thesisApplication), "Thesis application should be added initially");
+        thesis.addThesisApplicationToThesis(thesisApplication);
+        assertEquals(1, thesis.getThesisApplications().size(), "Thesis application should not be added again");
     }
 
     @Test
     void testAddMessageToThesis() {
         Message message = new Message();
         thesis.addMessageToThesis(message);
-        assertTrue(thesis.getMessages().contains(message), "Message should be added");
+        assertTrue(thesis.getMessages().contains(message), "Message should be added initially");
+        thesis.addMessageToThesis(message);
+        assertEquals(1, thesis.getMessages().size(), "Message should not be added again");
     }
 
     @Test
