@@ -146,6 +146,7 @@
 
 	<properties>
 	<sonar.coverage.jacoco.xmlReportPaths>C:\Users\laura\SpringBootIntellij\VAITS\report-aggregate\target\site\jacoco-aggregate\jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
 	</properties>
 
 
