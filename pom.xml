@@ -157,6 +157,14 @@
 							</execution>
 						</executions>
 					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>2.22.2</version> <!-- Use the latest version available -->
+						<configuration>
+							<!-- Optional configurations go here -->
+						</configuration>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>

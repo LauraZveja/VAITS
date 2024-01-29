@@ -2,12 +2,14 @@ package lv.vaits.models;
 
 import lv.vaits.models.users.AcademicStaff;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class CommentTest {
 
     // declaring objects

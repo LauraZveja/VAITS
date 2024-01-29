@@ -5,11 +5,13 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class CommentDTOTest {
 
     CommentDTO goodCommentDTO = new CommentDTO("Good comment", "John", "Doe", "Thesis title");
