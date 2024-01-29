@@ -20,8 +20,6 @@ class ThesisTest {
 
     AcademicStaff staff = new AcademicStaff();
 
-    Comment goodComment = new Comment("Good comment", staff, thesis);
-
     private Collection<OtherApplications> otherApplications = new ArrayList<>();
     private Collection<Comment> comments = new ArrayList<>();
 
@@ -31,6 +29,7 @@ class ThesisTest {
         thesis.setComments(new ArrayList<>()); // Initialize comments
         thesis.setThesisApplications(new ArrayList<>()); // Initialize thesisApplications
         thesis.setMessages(new ArrayList<>()); // Initialize messages
+        thesis.setOtherApplications(new ArrayList<>()); // Initialize otherApplications
 
     }
 
@@ -180,5 +179,16 @@ class ThesisTest {
         thesis.setAccStatus(AcceptanceStatus.ACCEPTED);
         assertEquals(AcceptanceStatus.ACCEPTED, thesis.getAccStatus(), "accStatus should be set correctly");
     }
+
+    @Test
+    void testAddOtherApplicationToThesis() {
+        OtherApplications application = new OtherApplications();
+        thesis.addOtherApplicationToThesis(application);
+        assertTrue(thesis.getOtherApplications().contains(application), "Application should be added initially");
+
+        thesis.addOtherApplicationToThesis(application);
+        assertEquals(1, thesis.getOtherApplications().size(), "Application should not be added again");
+    }
+
 
 }
