@@ -16,6 +16,7 @@
 	<modules>
 		<module>microservice-user-and-security</module>
 		<module>microservice-VAITSweb</module>
+		<module>report-aggregate</module>
 	</modules>
 
 	<dependencies>
