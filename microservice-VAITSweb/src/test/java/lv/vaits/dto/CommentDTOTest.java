@@ -4,15 +4,14 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-class CommentDTOTest {
+public class CommentDTOTest {
 
     CommentDTO goodCommentDTO = new CommentDTO("Good comment", "John", "Doe", "Thesis title");
     CommentDTO badStaffName = new CommentDTO("Good comment", "john", "Doe", "Thesis title");
@@ -26,7 +25,7 @@ class CommentDTOTest {
     Validator validator = factory.getValidator();
 
     @Test
-    void testGoodComment() {
+    public void testGoodComment() {
         assertEquals("Good comment", goodCommentDTO.getDescription());
         assertEquals("John", goodCommentDTO.getStaffName());
         assertEquals("Doe", goodCommentDTO.getStaffSurname());
@@ -34,7 +33,7 @@ class CommentDTOTest {
     }
 
     @Test
-    void testBadStaffName() {
+    public void testBadStaffName() {
         Set<ConstraintViolation<CommentDTO>> violations = validator.validate(badStaffName);
         assertEquals(1, violations.size());
         ConstraintViolation<CommentDTO> violation = violations.iterator().next();
@@ -43,7 +42,7 @@ class CommentDTOTest {
     }
 
     @Test
-    void testBadStaffSurname() {
+    public void testBadStaffSurname() {
         Set<ConstraintViolation<CommentDTO>> violations = validator.validate(badStaffSurname);
         assertEquals(1, violations.size());
         ConstraintViolation<CommentDTO> violation = violations.iterator().next();
@@ -52,7 +51,7 @@ class CommentDTOTest {
     }
 
     @Test
-    void testBadThesisTitle() {
+    public void testBadThesisTitle() {
         Set<ConstraintViolation<CommentDTO>> violations = validator.validate(badThesisTitle);
         assertEquals(1, violations.size());
         ConstraintViolation<CommentDTO> violation = violations.iterator().next();
@@ -61,7 +60,7 @@ class CommentDTOTest {
     }
 
     @Test
-    void testBadDescription() {
+    public void testBadDescription() {
         Set<ConstraintViolation<CommentDTO>> violations = validator.validate(badDescription);
         assertEquals(1, violations.size());
         ConstraintViolation<CommentDTO> violation = violations.iterator().next();
@@ -70,7 +69,7 @@ class CommentDTOTest {
     }
 
     @Test
-    void testBadThesisLength() {
+    public void testBadThesisLength() {
         Set<ConstraintViolation<CommentDTO>> violations = validator.validate(badThesisLength);
         assertEquals(1, violations.size());
         ConstraintViolation<CommentDTO> violation = violations.iterator().next();
