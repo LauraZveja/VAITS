@@ -12,7 +12,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
-		<sonar.coverage.jacoco.xmlReportPaths>C:\Users\laura\SpringBootIntellij\VAITS\report-aggregate\target\site\jacoco-aggregate\jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.coverage.jacoco.xmlReportPaths>C:/Users/laura/SpringBootIntellij/VAITS/report-aggregate/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	<dependencies>
 		<!--
