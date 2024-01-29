@@ -1,19 +1,15 @@
 package lv.vaits.models;
 
 import lv.vaits.models.users.AcademicStaff;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-class CommentTest {
-
-    // declaring objects
-
+public class CommentTest {
     AcademicStaff staff = new AcademicStaff();
     Thesis thesis = new Thesis();
     LocalDateTime commentDate = LocalDateTime.now();
@@ -21,7 +17,7 @@ class CommentTest {
     Comment goodComment = new Comment("Good comment", staff, thesis);
 
     @Test
-    void testConstructor() {
+    public void testConstructor() {
         assertEquals("Good comment", goodComment.getDescription());
         assertEquals(staff, goodComment.getStaff());
         assertEquals(thesis, goodComment.getThesis());
@@ -31,54 +27,55 @@ class CommentTest {
 
 
     @Test
-    void getIdco() {
+    public void getIdco() {
         assertEquals(0, goodComment.getIdco());
     }
 
     @Test
-    void getDescription() {
+    public void getDescription() {
         assertEquals("Good comment", goodComment.getDescription());
     }
 
     @Test
-    void getCommentDate() {
+    public void getCommentDate() {
         assertEquals(commentDate.truncatedTo(ChronoUnit.SECONDS), goodComment.getCommentDate().truncatedTo(ChronoUnit.SECONDS));
     }
 
     @Test
-    void getStaff() {
+    public void getStaff() {
         assertEquals(staff, goodComment.getStaff());
     }
 
     @Test
-    void getThesis() {
+    public void getThesis() {
         assertEquals(thesis, goodComment.getThesis());
     }
 
     @Test
-    void setDescription() {
+    public void setDescription() {
         goodComment.setDescription("Test description");
         assertEquals("Test description", goodComment.getDescription());
     }
 
     @Test
-    void setCommentDate() {
+    public void setCommentDate() {
         LocalDateTime newDate = LocalDateTime.now().plusDays(1);
         goodComment.setCommentDate(newDate);
         assertEquals(newDate.truncatedTo(ChronoUnit.SECONDS), goodComment.getCommentDate().truncatedTo(ChronoUnit.SECONDS));
     }
 
     @Test
-    void setStaff() {
+    public void setStaff() {
         AcademicStaff newStaff = new AcademicStaff();
         goodComment.setStaff(newStaff);
         assertEquals(newStaff, goodComment.getStaff());
     }
 
     @Test
-    void setThesis() {
+    public void setThesis() {
         Thesis newThesis = new Thesis();
         goodComment.setThesis(newThesis);
         assertEquals(newThesis, goodComment.getThesis());
     }
+
 }
