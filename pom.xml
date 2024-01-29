@@ -145,7 +145,7 @@
 	</profiles>
 
 	<properties>
-		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}\report-aggregate\target\site\jacoco-aggregate\jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+	<sonar.coverage.jacoco.xmlReportPaths>C:\Users\laura\SpringBootIntellij\VAITS\report-aggregate\target\site\jacoco-aggregate\jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 
 
