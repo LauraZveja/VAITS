@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CommentTest {
 
+    // declaring objects
+
     AcademicStaff staff = new AcademicStaff();
     Thesis thesis = new Thesis();
     LocalDateTime commentDate = LocalDateTime.now();
