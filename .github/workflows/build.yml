@@ -5,7 +5,6 @@ on:
     branches:
       - laura-development
 
-
 jobs:
   build:
     name: Build
@@ -16,9 +15,10 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up JDK 17
-        uses: actions/setup-java@v3 # Updated to v3
+        uses: actions/setup-java@v3
         with:
           java-version: 17
+          distribution: 'temurin'
       - name: Cache SonarQube packages
         uses: actions/cache@v3
         with:
