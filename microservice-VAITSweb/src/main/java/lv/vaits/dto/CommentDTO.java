@@ -14,21 +14,21 @@ import lombok.*;
 public class CommentDTO {
 
     @NotNull
-    @Size(min = 3, message = "Garumam jābūt vismaz 3 rakstzīmju garam!")
+    @Size(min = 3, message = "Garumam jabut vismaz 3 rakstzimju garam!")
     private String description;
 
     @NotBlank
-    @Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "Pirmajam burtam jābūt lielajam!")
+    @Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "Pirmajam burtam jabut lielajam!")
     @Size(min = 3, max = 30)
     private String staffName;
 
     @NotBlank
-    @Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "Pirmajam burtam jābūt lielajam!")
+    @Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "Pirmajam burtam jabut lielajam!")
     @Size(min = 3, max = 30)
     private String staffSurname;
 
-    @Size(min = 3, max = 25, message = "Garumam jābūt no 3 līdz 25 rakstzīmju garam!")
+    @Size(min = 3, max = 25, message = "Garumam jabut no 3 lidz 25 rakstzimju garam!")
     @NotNull
-    @Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "Pirmajam burtam jābūt lielajam!")
+    @Pattern(regexp = "[A-ZĒŪĪĻĶŠĀŽČŅ]{1}[a-zēūīļķšāžčņ\\ ]+", message = "Pirmajam burtam jabut lielajam!")
     private String thesisTitle;
 }
