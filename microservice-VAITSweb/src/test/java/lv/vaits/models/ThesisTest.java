@@ -2,7 +2,12 @@ package lv.vaits.models;
 
 import lv.vaits.models.users.AcademicStaff;
 import lv.vaits.models.users.Student;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,6 +17,22 @@ class ThesisTest {
     AcademicStaff supervisor = new AcademicStaff(); // Mock or create actual instance
     Student student = new Student(); // Mock or create actual instance
     Thesis testThesis = new Thesis("Title LV", "Title EN", "Aim", "Tasks", student, supervisor);
+
+    AcademicStaff staff = new AcademicStaff();
+
+    Comment goodComment = new Comment("Good comment", staff, thesis);
+
+    private Collection<OtherApplications> otherApplications = new ArrayList<>();
+    private Collection<Comment> comments = new ArrayList<>();
+
+    @BeforeEach
+    void setUp() {
+        thesis.setReviewers(new ArrayList<>()); // Initialize reviewers
+        thesis.setComments(new ArrayList<>()); // Initialize comments
+        thesis.setThesisApplications(new ArrayList<>()); // Initialize thesisApplications
+        thesis.setMessages(new ArrayList<>()); // Initialize messages
+
+    }
 
 
     @Test
@@ -97,5 +118,59 @@ class ThesisTest {
         assertEquals(AcceptanceStatus.SUBMITTED, testThesis.getAccStatus());
     }
 
+    @Test
+    void testAddAndRemoveReviewer() {
+        AcademicStaff reviewer = new AcademicStaff();
+        thesis.addReviewer(reviewer);
+        assertTrue(thesis.getReviewers().contains(reviewer), "Reviewer should be added");
+
+        thesis.removeReviewer(reviewer);
+        assertFalse(thesis.getReviewers().contains(reviewer), "Reviewer should be removed");
+    }
+
+    @Test
+    void testAddCommentToThesis() {
+        thesis.addCommentToThesis(goodComment);
+        assertTrue(thesis.getComments().contains(goodComment), "Comment should be added");
+    }
+
+    @Test
+    void testAddThesisApplicationToThesis() {
+        ThesisApplications thesisApplication = new ThesisApplications();
+        thesis.addThesisApplicationToThesis(thesisApplication);
+        assertTrue(thesis.getThesisApplications().contains(thesisApplication), "Thesis application should be added");
+    }
+
+    @Test
+    void testAddMessageToThesis() {
+        Message message = new Message();
+        thesis.addMessageToThesis(message);
+        assertTrue(thesis.getMessages().contains(message), "Message should be added");
+    }
+
+    @Test
+    void testStatusFromSupervisor() {
+        thesis.setStatusFromSupervisor(true);
+        assertTrue(thesis.isStatusFromSupervisor(), "Status from supervisor should be true");
+    }
+
+    @Test
+    void testIsDeleted() {
+        thesis.setDeleted(true);
+        assertTrue(thesis.isDeleted(), "isDeleted should be true");
+    }
+
+    @Test
+    void testSetAccDateTime() {
+        LocalDateTime now = LocalDateTime.now();
+        thesis.setAccDateTime(now);
+        assertEquals(now, thesis.getAccDateTime(), "accDateTime should be set correctly");
+    }
+
+    @Test
+    void testSetAccStatus() {
+        thesis.setAccStatus(AcceptanceStatus.ACCEPTED);
+        assertEquals(AcceptanceStatus.ACCEPTED, thesis.getAccStatus(), "accStatus should be set correctly");
+    }
 
 }
