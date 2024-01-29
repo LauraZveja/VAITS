@@ -78,4 +78,15 @@ class CommentTest {
         assertEquals(newThesis, goodComment.getThesis());
     }
 
+    @Test
+    void testNoArgsConstructor() {
+        Comment comment = new Comment();
+        assertNotNull(comment, "Comment should be instantiated");
+        assertNull(comment.getDescription(), "Description should be null for new Comment");
+        assertNull(comment.getStaff(), "Staff should be null for new Comment");
+        assertNull(comment.getThesis(), "Thesis should be null for new Comment");
+        assertNull(comment.getCommentDate(), "CommentDate should be null for new Comment");
+    }
+
+
 }

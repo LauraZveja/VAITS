@@ -20,7 +20,11 @@ class CommentDTOTest {
     CommentDTO badThesisTitle = new CommentDTO("Good comment", "John", "Doe", "thesis title");
     CommentDTO badDescription = new CommentDTO("Go", "John", "Doe", "Thesis title");
 
+    CommentDTO commentDTO = new CommentDTO();
+
     CommentDTO badThesisLength = new CommentDTO("Good comment", "John", "Doe", "Thesis title that is too long");
+
+    CommentDTO goodConstructorDTO = new CommentDTO("Good comment", "John", "Doe", "Thesis title");
 
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     Validator validator = factory.getValidator();
@@ -77,5 +81,37 @@ class CommentDTOTest {
         assertEquals("Garumam jabut no 3 lidz 25 rakstzimju garam!", violation.getMessage());
         assertEquals("thesisTitle", violation.getPropertyPath().toString());
     }
+
+    @Test
+    void testNoArgsConstructor() {
+        assertNotNull(commentDTO, "No-args constructor should create a non-null object.");
+    }
+
+    @Test
+    void testSetters() {
+
+        commentDTO.setDescription("New Description");
+        assertEquals("New Description", commentDTO.getDescription(), "Setter for description failed.");
+
+        commentDTO.setStaffName("Alice");
+        assertEquals("Alice", commentDTO.getStaffName(), "Setter for staffName failed.");
+
+        commentDTO.setStaffSurname("Smith");
+        assertEquals("Smith", commentDTO.getStaffSurname(), "Setter for staffSurname failed.");
+
+        commentDTO.setThesisTitle("New Thesis Title");
+        assertEquals("New Thesis Title", commentDTO.getThesisTitle(), "Setter for thesisTitle failed.");
+    }
+
+    @Test
+    void testToString() {
+        String expectedString = "CommentDTO(description=Good comment, staffName=John, staffSurname=Doe, thesisTitle=Thesis title)";
+        assertEquals(expectedString, goodConstructorDTO.toString(), "ToString method does not match expected format.");
+    }
+
+
+
+
+
 
 }
