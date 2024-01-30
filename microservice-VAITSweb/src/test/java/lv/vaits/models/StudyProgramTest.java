@@ -44,6 +44,10 @@ class StudyProgramTest {
         StudentStudyProgram studentStudyProgram = new StudentStudyProgram();
         studentStudyProgram.setStudyProgram(studyProgram);
         assertEquals(studyProgram, studentStudyProgram.getStudyProgram());
+        Collection<StudentStudyProgram> studentStudyPrograms = new ArrayList<>();
+        studentStudyPrograms.add(studentStudyProgram);
+        studyProgram.setStudentStudyProgram(studentStudyPrograms);
+        assertTrue(studyProgram.getStudentStudyProgram().contains(studentStudyProgram));
 
 
     }
@@ -90,4 +94,14 @@ class StudyProgramTest {
         assertTrue(goodStudyProgram.getCalendarSchedule().contains(goodCalendarSchedule));
 
     }
+
+    @Test
+    void addDuplicateCalendarSchedule() {
+        CalendarSchedule calendarSchedule = new CalendarSchedule(2024, "Defense", LocalDate.now(), goodStudyProgram);
+        goodStudyProgram.addCalendarSchedule(calendarSchedule);
+        goodStudyProgram.addCalendarSchedule(calendarSchedule);
+        Collection<CalendarSchedule> retrievedCalendarSchedules = goodStudyProgram.getCalendarSchedule();
+        assertEquals(1, retrievedCalendarSchedules.size());
+    }
+
 }
