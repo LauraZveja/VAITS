@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class ThesisTest {
 
     Thesis thesis = new Thesis();
-    AcademicStaff supervisor = new AcademicStaff(); // Mock or create actual instance
-    Student student = new Student(); // Mock or create actual instance
+    AcademicStaff supervisor = new AcademicStaff();
+    Student student = new Student();
     Thesis testThesis = new Thesis("Title LV", "Title EN", "Aim", "Tasks", student, supervisor);
 
     AcademicStaff staff = new AcademicStaff();
@@ -25,7 +25,7 @@ class ThesisTest {
 
     @BeforeEach
     void setUp() {
-        thesis.setReviewers(new ArrayList<>()); // Initialize reviewers
+        thesis.setReviewers(new ArrayList<>());
         thesis.setComments(new ArrayList<>()); // Initialize comments
         thesis.setThesisApplications(new ArrayList<>()); // Initialize thesisApplications
         thesis.setMessages(new ArrayList<>()); // Initialize messages
